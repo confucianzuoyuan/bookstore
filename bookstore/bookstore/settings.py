@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users', # 用户模块
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'bookstore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 这里别忘记配置！
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'bookstore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bj15_dailyfresh',
+        'NAME': 'bookstore',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -104,3 +105,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+] # 调试时使用的静态文件目录
