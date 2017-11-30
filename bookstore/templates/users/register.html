@@ -22,7 +22,8 @@
 				<a href="#">登录</a>
 			</div>
 			<div class="reg_form clearfix">
-				<form>
+				<form method="post" action="/user/register_handle/">
+                    {% csrf_token %}
 				<ul>
 					<li>
 						<label>用户名:</label>
@@ -51,6 +52,7 @@
 					</li>
 					<li class="reg_sub">
 						<input type="submit" value="注 册" name="">
+						{{errmsg}}
 					</li>
 				</ul>
 				</form>
