@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users', # 用户模块
+    'books', # 商品模块
+    'tinymce', # 富文本编辑器
 )
 
 MIDDLEWARE_CLASSES = (
@@ -108,3 +110,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ] # 调试时使用的静态文件目录
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "static")
+
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}
