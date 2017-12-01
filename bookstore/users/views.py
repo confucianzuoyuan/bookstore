@@ -30,4 +30,20 @@ def register_handle(request):
     passport = Passport.objects.add_one_passport(username=username, password=password, email=email)
 
     # 注册完，还是返回注册页。
-    return redirect(reverse('user:register'))
+    return redirect(reverse('books:index'))
+
+def login(request):
+    '''显示登录页面'''
+    username = ''
+    checked = ''
+
+    context = {
+        'username': username,
+        'checked': checked,
+    }
+
+    return render(request, 'users/login.html', context)
+
+
+
+
