@@ -44,6 +44,14 @@ def login(request):
 
     return render(request, 'users/login.html', context)
 
+# /user/logout
+def logout(request):
+    '''用户退出登录'''
+    # 清空用户的session信息
+    request.session.flush()
+    # 跳转到首页
+    return redirect(reverse('books:index'))
+
 def login_check(request):
     '''进行用户登录校验'''
     # 1.获取数据
