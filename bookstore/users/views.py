@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 import re
-from users.models import Passport
+from users.models import Passport, Address
 from django.http import HttpResponse, JsonResponse
+from utils.decorators import login_required
+
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
@@ -93,6 +95,23 @@ def login_check(request):
     else:
         # 用户名或密码错误
         return JsonResponse({'res': 0})
+
+@login_required
+def user(request):
+    '''用户中心-信息页'''
+    passport_id = request.session.get('passport_id')
+    # 获取用户的基本信息
+    addr = Address.objects.get_default_address(passport_id=passport_id)
+
+    books_li = []
+
+    context = {
+        'addr': addr,
+        'page': 'user',
+        'books_li': books_li
+    }
+
+    return render(request, 'users/user_center_info.html', context)
 
 
 
