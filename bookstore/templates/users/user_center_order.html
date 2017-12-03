@@ -31,7 +31,7 @@
 							<td width="55%">
                                 {# 遍历出来的order_goods是一个OrderGoods对象 #}
                                 {% for order_books in order.order_books_li %}
-								<ul class="order_goods_list clearfix">					
+								<ul class="order_book_list clearfix">					
 									<li class="col01"><img src="{% static order_books.books.image %}"></li>
 									<li class="col02">{{ order_books.books.name }}<em>{{ order_books.books.price }}元/{{ order_books.books.unit }}</em></li>
 									<li class="col03">{{ order_books.count }}</li>
@@ -59,3 +59,38 @@
 		</div>
 	</div>
 {% endblock body %}
+{% block bottomfiles%}
+    <script>
+    $(function () {
+        $('.oper_btn').click(function () {
+            // 获取订单id和订单的状态
+            order_id = $(this).attr('order_id')
+            order_status = $(this).attr('order_status')
+            csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            params = {'order_id':order_id, 'csrfmiddlewaretoken':csrf}
+            if (order_status == 1){
+                $.post('/order/pay/', params, function (data) {
+                    if (data.res == 3){
+                        // 把用户引导支付页面
+                        window.open(data.pay_url)
+                        // 查询用户的支付结果
+                        $.post('/order/check_pay/', params, function (data) {
+                            if (data.res == 3){
+                                alert('支付成功')
+                                // 重新刷新页面
+                                location.reload()
+                            }
+                            else{
+                                alert(data.errmsg)
+                            }
+                        })
+                    }
+                    else{
+                        alert(data.errmsg)
+                    }
+                })
+            }
+        })
+    })
+    </script>
+{% endblock bottomfiles %}

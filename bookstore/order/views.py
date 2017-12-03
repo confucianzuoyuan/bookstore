@@ -192,3 +192,104 @@ def order_commit(request):
     transaction.savepoint_commit(sid)
     # 返回应答
     return JsonResponse({'res': 6})
+
+# 前端需要发过来的参数:order_id
+# post
+def order_pay(request):
+    '''订单支付'''
+    # 用户登录判断
+    if not request.session.has_key('islogin'):
+        return JsonResponse({'res': 0, 'errmsg': '用户未登录'})
+
+    # 接收订单id
+    order_id = request.POST.get('order_id')
+
+    # 数据校验
+    if not order_id:
+        return JsonResponse({'res': 1, 'errmsg': '订单不存在'})
+
+    try:
+        order = OrderInfo.objects.get(order_id=order_id,
+                                      status=1,
+                                      pay_method=3)
+    except OrderInfo.DoesNotExist:
+        return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
+
+    # 和支付宝进行交互
+    alipay = AliPay(
+        appid="2016090800464054", # 应用id
+        app_notify_url=None,  # 默认回调url
+        app_private_key_path=os.path.join(settings.BASE_DIR, 'order/app_private_key.pem'),
+        alipay_public_key_path=os.path.join(settings.BASE_DIR, 'order/alipay_public_key.pem'),  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+        sign_type = "RSA2",  # RSA 或者 RSA2
+        debug = True,  # 默认False
+    )
+
+    # 电脑网站支付，需要跳转到https://openapi.alipaydev.com/gateway.do? + order_string
+    total_pay = order.total_price + order.transit_price # decimal
+    order_string = alipay.api_alipay_trade_page_pay(
+        out_trade_no=order_id, # 订单id
+        total_amount=str(total_pay),
+        subject='尚硅谷书城%s' % order_id,
+        return_url=None,
+        notify_url=None  # 可选, 不填则使用默认notify url
+    )
+    # 返回应答
+    pay_url = settings.ALIPAY_URL + '?' + order_string
+    return JsonResponse({'res': 3, 'pay_url': pay_url, 'message': 'OK'})
+
+# 前端需要发过来的参数:order_id
+# post
+def check_pay(request):
+    '''获取用户支付的结果'''
+    # 用户登录判断
+    if not request.session.has_key('islogin'):
+        return JsonResponse({'res': 0, 'errmsg': '用户未登录'})
+
+    passport_id = request.session.get('passport_id')
+    # 接收订单id
+    order_id = request.POST.get('order_id')
+
+    # 数据校验
+    if not order_id:
+        return JsonResponse({'res': 1, 'errmsg': '订单不存在'})
+
+    try:
+        order = OrderInfo.objects.get(order_id=order_id,
+                                      passport_id=passport_id,
+                                      pay_method=3)
+    except OrderInfo.DoesNotExist:
+        return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
+
+    # 和支付宝进行交互
+    alipay = AliPay(
+        appid="2016090800464054",  # 应用id
+        app_notify_url=None,  # 默认回调url
+        app_private_key_path=os.path.join(settings.BASE_DIR, 'df_order/app_private_key.pem'),
+        alipay_public_key_path=os.path.join(settings.BASE_DIR, 'df_order/alipay_public_key.pem'),
+        # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+        sign_type="RSA2",  # RSA 或者 RSA2
+        debug=True,  # 默认False
+    )
+
+    while True:
+        # 进行支付结果查询
+        result = alipay.api_alipay_trade_query(order_id)
+        code = result.get('code')
+        if code == '10000' and result.get('trade_status') == 'TRADE_SUCCESS':
+            # 用户支付成功
+            # 改变订单支付状态
+            order.status = 2 # 待发货
+            # 填写支付宝交易号
+            order.trade_id = result.get('trade_no')
+            order.save()
+            # 返回数据
+            return JsonResponse({'res':3, 'message':'支付成功'})
+        elif code == '40004' or (code == '10000' and result.get('trade_status') == 'WAIT_BUYER_PAY'):
+            # 支付订单还未生成，继续查询
+            # 用户还未完成支付，继续查询
+            time.sleep(5)
+            continue
+        else:
+            # 支付出错
+            return JsonResponse({'res':4, 'errmsg':'支付出错'})
