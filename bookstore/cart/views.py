@@ -55,3 +55,22 @@ def cart_add(request):
 
     # 返回结果
     return JsonResponse({'res': 5})
+
+def cart_count(request):
+    '''获取用户购物车中商品的数目'''
+    # 判断用户是否登录
+    if not request.session.has_key('islogin'):
+        return JsonResponse({'res': 0})
+
+    # 计算用户购物车商品的数量
+    conn = get_redis_connection('default')
+    cart_key = 'cart_%d' % request.session.get('passport_id')
+    # res = conn.hlen(cart_key) 显示商品的条目数
+    res = 0
+    res_list = conn.hvals(cart_key)
+
+    for i in res_list:
+        res += int(i)
+
+    # 返回结果
+    return JsonResponse({'res': res})
