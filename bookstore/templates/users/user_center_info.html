@@ -9,9 +9,9 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="user_center_info.html" class="active">· 个人信息</a></li>
-				<li><a href="user_center_order.html">· 全部订单</a></li>
-				<li><a href="user_center_site.html">· 收货地址</a></li>
+				<li><a href="{% url 'user:user' %}" class="active">· 个人信息</a></li>
+				<li><a href="{% url 'user:order' %}">· 全部订单</a></li>
+				<li><a href="{% url 'user:address' %}">· 收货地址</a></li>
 			</ul>
 		</div>
 		<div class="right_content clearfix">
