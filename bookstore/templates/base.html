@@ -39,7 +39,7 @@
 					<span>|</span>
 					<a href="{% url 'user:user' %}">用户中心</a>
 					<span>|</span>
-					<a href="#">我的购物车</a>
+					<a href="{% url 'cart:show' %}">我的购物车</a>
 					<span>|</span>
 					<a href="#">我的订单</a>
 				</div>
@@ -56,7 +56,7 @@
 			<input type="button" class="input_btn fr" name="" value="搜索">
 		</div>
 		<div class="guest_cart fr">
-			<a href="#" class="cart_name fl">我的购物车</a>
+			<a href="{% url 'cart:show' %}" class="cart_name fl">我的购物车</a>
 			<div class="book_count fl" id="show_count">0</div>
 		</div>
 	</div>
