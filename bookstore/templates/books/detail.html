@@ -116,7 +116,18 @@ $(function () {
 			<div class="operate_btn">
                 {% csrf_token %}
 				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" books_id="{{ books.id }}" class="add_cart" id="add_cart">加入购物车</a>	
+				<a href="javascript:;" books_id="{{ books.id }}" class="add_cart" id="add_cart">加入购物车</a>
+				<a href="#" class="button is-info" id="write-comment">我要写评论</a>
+			</div>
+			<div class="field has-addons" id="comment-input" data-bookid="{{ books.id }}" data-userid="{{ request.session.passport_id }}">
+			  <div class="control">
+			    <input class="input" type="text" placeholder="评论内容">
+			  </div>
+			  <div class="control" id="submit-comment">
+			    <a class="button is-info">
+			      提交评论
+			    </a>
+			  </div>
 			</div>
 		</div>
 	</div>
@@ -139,14 +150,16 @@ $(function () {
 
 		<div class="r_wrap fr clearfix">
 			<ul class="detail_tab clearfix">
-				<li class="active">商品介绍</li>
-				<li>评论</li>
+				<li class="active" id="detail">商品介绍</li>
+				<li id="comment">评论</li>
 			</ul>
 
 			<div class="tab_content">
-				<dl>
+				<dl id="book_detail">
 					<dt>商品详情：</dt>
 					<dd>{{ books.detail | safe }}</dd>
+				</dl>
+				<dl id="book_comment">
 				</dl>
 			</div>
 
@@ -161,6 +174,8 @@ $(function () {
 
 	var $to_x = $('#show_count').offset().top;
 	var $to_y = $('#show_count').offset().left;
+
+	$('#comment-input').hide()
 
 	$('#add_cart').click(function(){
         // 获取商品的id和商品数量
@@ -195,6 +210,66 @@ $(function () {
                 alert(data.errmsg)
             }
         })
+	})
+
+	// 获取评论
+	$.ajax({
+		url: '/comment/comment/' + $('#comment-input').data('bookid'),
+		success: function (res) {
+			if (res.code === 200) {
+				var data = res.data;
+				console.log(data);
+				var div_head = '<div>';
+				var div_tail = '</div>';
+				var dom_element = ''
+				for(i = 0; i < data.length; i++) {
+					var head = '<div>';
+					var tail = '</div>';
+					var temp = head + '<span>' + data[i].user_id + '</span>' + '<br>' + '<span>' + data[i].content + '</span>';
+					dom_element += temp;
+				}
+				dom_element = div_head + dom_element + div_tail;
+				$('#book_comment').append(dom_element);
+			}
+		}
+	})
+
+	$('#detail').click(function () {
+		$(this).addClass('active');
+		$('#comment').removeClass('active');
+		$('#book_comment').hide();
+		$('#book_detail').show();
+	})
+	$('#comment').click(function () {
+		$(this).addClass('active');
+		$('#detail').removeClass('active');
+		$('#book_comment').show();
+		$('#book_detail').hide();
+	})
+	$('#write-comment').click(function () {
+		$('#comment-input').show();
+	})
+	$('#submit-comment').click(function () {
+		var book_id = $('#comment-input').data('bookid');
+		var user_id = $('#comment-input').data('userid');
+		var content = $('#comment-input .input').val();
+		var data = {
+			book_id: book_id,
+			user_id: user_id,
+			content: content,
+		}
+		console.log('content: ', content);
+		$.ajax({
+			type: 'POST',
+			url: '/comment/comment/' + book_id + '/',
+			data: JSON.stringify(data),
+			success: function (res) {
+				if (res.code === 200) {
+					// console.log('res: ', res)
+					$('#comment-input').hide();
+				}
+			}
+		})
 	})
 </script>
 {% endblock bottomfiles %}

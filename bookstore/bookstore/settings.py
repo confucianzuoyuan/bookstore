@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'books', # 商品模块
     'tinymce', # 富文本编辑器
     'order', # 订单信息模块
+    'comments', # 评论模块
 )
 
 MIDDLEWARE_CLASSES = (
