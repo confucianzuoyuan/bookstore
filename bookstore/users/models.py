@@ -24,6 +24,14 @@ class PassportManger(models.Manager):
             # 账户不存在
             passport = None
         return passport
+
+    def check_passport(self, username):
+        '''检查是否存在用户名'''
+        try:
+            passport = self.get(username=username)
+        except self.model.DoesNotExist:
+            passport = None
+        return passport
         
 # Create your models here.
 class Passport(BaseModel):

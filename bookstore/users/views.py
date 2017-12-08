@@ -28,6 +28,11 @@ def register_handle(request):
         # 邮箱不合法
         return render(request, 'users/register.html', {'errmsg':'邮箱不合法!'})
 
+    p = Passport.objects.check_passport(username=username)
+
+    if p:
+        return render(request, 'users/register.html', {'errmsg': '用户名已存在！'})
+
     # 进行业务处理:注册，向账户系统中添加账户
     # Passport.objects.create(username=username, password=password, email=email)
     passport = Passport.objects.add_one_passport(username=username, password=password, email=email)
