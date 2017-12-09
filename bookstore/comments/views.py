@@ -6,7 +6,13 @@ from books.models import Books
 from users.models import Passport
 from django.views.decorators.csrf import csrf_exempt
 import json
+import redis
 # Create your views here.
+
+EXPIRE_TIME = 60 * 10
+
+pool = redis.ConnectionPool(host='localhost', port=6379, db=2)
+redis_db = redis.StrictRedis(connection_pool=pool)
 
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
@@ -14,20 +20,29 @@ def comment(request, books_id):
     # book_id = request.GET.get('books_id')
     book_id = books_id
     if request.method == 'GET':
-        comments = Comments.objects.filter(book_id=book_id)
-        data = []
-        for c in comments: 
-            data.append({
-                'user_id': c.user_id,
-                'content': c.content,
-            })
+        c = redis_db.get('comment_%s' % book_id)
+        if c:
+            return JsonResponse({
+                    'code': 200,
+                    'data': c,
+                })
+        else:
+            comments = Comments.objects.filter(book_id=book_id)
+            data = []
+            for c in comments: 
+                data.append({
+                    'user_id': c.user_id,
+                    'content': c.content,
+                })
 
-        res = {
-            'code': 200,
-            'data': data, 
-        }
+            res = {
+                'code': 200,
+                'data': data, 
+            }
 
-        return JsonResponse(res)
+            redis_db.setex('comment_%s' % book_id, data, EXPIRE_TIME)
+
+            return JsonResponse(res)
 
     else:
         params = json.loads(request.body.decode('utf-8'))
