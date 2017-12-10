@@ -117,16 +117,16 @@ $(function () {
                 {% csrf_token %}
 				<a href="javascript:;" class="buy_btn">立即购买</a>
 				<a href="javascript:;" books_id="{{ books.id }}" class="add_cart" id="add_cart">加入购物车</a>
-				<a href="#" class="button is-info" id="write-comment">我要写评论</a>
+				<a href="#" id="write-comment" class="comment">我要写评论</a>
 			</div>
-			<div class="field has-addons" id="comment-input" data-bookid="{{ books.id }}" data-userid="{{ request.session.passport_id }}">
-			  <div class="control">
-			    <input class="input" type="text" placeholder="评论内容">
+			<div style="display:flex;" id="comment-input" data-bookid="{{ books.id }}" data-userid="{{ request.session.passport_id }}">
+			  <div>
+			    <input type="text" placeholder="评论内容">
 			  </div>
-			  <div class="control" id="submit-comment">
-			    <a class="button is-info">
+			  <div id="submit-comment">
+			    <button>
 			      提交评论
-			    </a>
+			    </button>
 			  </div>
 			</div>
 		</div>
@@ -272,4 +272,21 @@ $(function () {
 		})
 	})
 </script>
+
+<style type="text/css">
+.comment {
+	background-color: #c40000;
+	color: #fff;
+	margin-left: 10px;
+	position: relative;
+	z-index: 10;
+	display: inline-block;
+	width: 178px;
+	height: 38px;
+	border: 1px solid #c40000;
+	font-size: 14px;
+	line-height: 38px;
+	text-align: center;
+}
+</style>
 {% endblock bottomfiles %}
