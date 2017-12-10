@@ -5,7 +5,8 @@ from users.models import Passport, Address
 from django.http import HttpResponse, JsonResponse
 from utils.decorators import login_required
 from order.models import OrderInfo, OrderGoods
-
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import SignatureExpired
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
@@ -36,6 +37,14 @@ def register_handle(request):
     # 进行业务处理:注册，向账户系统中添加账户
     # Passport.objects.create(username=username, password=password, email=email)
     passport = Passport.objects.add_one_passport(username=username, password=password, email=email)
+
+    # 生成激活的token itsdangerous
+    serializer = Serializer(settings.SECRET_KEY, 3600)
+    token = serializer.dumps({'confirm':passport.id}) # 返回bytes
+    token = token.decode()
+
+    # 给用户的邮箱发激活邮件
+    send_mail('尚硅谷书城用户激活', '', settings.EMAIL_FROM, [email], html_message='<a href="http://127.0.0.1:8000/user/active/%s/">http://127.0.0.1:8000/user/active/</a>' % token)
 
     # 注册完，还是返回注册页。
     return redirect(reverse('books:index'))
