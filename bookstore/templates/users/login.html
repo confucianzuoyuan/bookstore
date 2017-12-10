@@ -10,12 +10,20 @@
             password = $('#pwd').val()
             csrf = $('input[name="csrfmiddlewaretoken"]').val()
             remember = $('input[name="remember"]').prop('checked')
+            vc = $('input[name="vc"]').val()
             // 发起ajax请求
-            params = {'username':username, 'password':password,
-                    'csrfmiddlewaretoken':csrf, 'remember':remember}
+            params = {
+            	'username': username,
+            	'password': password,
+                'csrfmiddlewaretoken': csrf,
+                'remember': remember,
+                'verifycode': vc,
+            }
+            console.log('params: ', params)
             $.post('/user/login_check/', params, function (data) {
                 // 用户名密码错误 {'res':0}
                 // 登录成功 {'res':1}
+                console.log('data: ', data)
                 if (data.res == 0){
                     $('#username').next().html('用户名或密码错误').show()
                 }
@@ -52,6 +60,10 @@
 					<div class="user_error">输入错误</div>
 					<input type="password" id="pwd" class="pass_input" placeholder="请输入密码">
 					<div class="pwd_error">输入错误</div>
+					<div style="top: 100px; position: absolute;">
+						<input type="text" id="vc" name="vc">
+						<img id='verifycode' src="/user/verifycode/" alt="CheckCode"/>
+					</div>
 					<div class="more_input clearfix">
 						<input type="checkbox" name="remember" {{ checked }}>
 						<label>记住用户名</label>
