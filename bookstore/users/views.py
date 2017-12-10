@@ -7,6 +7,9 @@ from utils.decorators import login_required
 from order.models import OrderInfo, OrderGoods
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
+from users.tasks import send_active_email
+from django.core.mail import send_mail
+
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
@@ -44,7 +47,8 @@ def register_handle(request):
     token = token.decode()
 
     # 给用户的邮箱发激活邮件
-    send_mail('尚硅谷书城用户激活', '', settings.EMAIL_FROM, [email], html_message='<a href="http://127.0.0.1:8000/user/active/%s/">http://127.0.0.1:8000/user/active/</a>' % token)
+    # send_mail('尚硅谷书城用户激活', '', settings.EMAIL_FROM, [email], html_message='<a href="http://127.0.0.1:8000/user/active/%s/">http://127.0.0.1:8000/user/active/</a>' % token)
+    send_active_email.delay(token, username, email)
 
     # 注册完，还是返回注册页。
     return redirect(reverse('books:index'))
