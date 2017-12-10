@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^cart/', include('cart.urls', namespace='cart')), # 购物车模块
     url(r'^order/', include('order.urls', namespace='order')), # 订单模块
     url(r'^comment/', include('comments.urls', namespace='comment')), # 评论模块
+    url(r'^search/', include('haystack.urls')), # 搜索配置
 ]

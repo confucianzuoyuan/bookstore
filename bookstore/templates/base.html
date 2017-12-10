@@ -53,8 +53,10 @@
 	<div class="search_bar clearfix">
 		<a href="{% url 'books:index' %}" class="logo fl"><img src="{% static 'images/logo.png' %}" style="width: 160px; height: 53px;"></a>
 		<div class="search_con fl">
-			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
-			<input type="button" class="input_btn fr" name="" value="搜索">
+            <form method="get" action="/search/">
+                <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+                <input type="submit" class="input_btn fr" name="" value="搜索">
+            </form>
 		</div>
 		<div class="guest_cart fr">
 			<a href="{% url 'cart:show' %}" class="cart_name fl">我的购物车</a>
