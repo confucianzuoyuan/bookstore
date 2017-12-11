@@ -1,7 +1,7 @@
-{% extends 'detail_list_base.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书城-书籍搜索结果列表{% endblock title %}
-{% block main_content %}
+{% block body %}
 	<div class="breadcrumb">
 		<a href="#">{{ query }}</a>
 		<span>></span>
@@ -38,4 +38,4 @@
                 {% endif %}
 			</div>
 	</div>
-{% endblock main_content %}
+{% endblock body %}
