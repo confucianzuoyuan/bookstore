@@ -51,11 +51,33 @@ def detail(request, books_id):
         # 商品不存在，跳转到首页
         return redirect(reverse('books:index'))
 
+    # 获取商品的详情图片
+    images = BooksImage.objects.filter(books_id=books_id)
+    if images.exists():
+        # 有图片
+        image = images[0]
+    else:
+        # 没有图片
+        image = ''
+
     # 新品推荐
     books_li = Books.objects.get_books_by_type(type_id=books.type_id, limit=2, sort='new')
 
+    # 用户登录之后，才记录浏览记录
+    # 每个用户浏览记录对应redis中的一条信息 格式:'history_用户id':[10,9,2,3,4]
+    # [9, 10, 2, 3, 4]
+    if request.session.has_key('islogin'):
+        # 用户已登录，记录浏览记录
+        con = get_redis_connection('default')
+        key = 'history_%d' % request.session.get('passport_id')
+        # 先从redis列表中移除books.id
+        con.lrem(key, 0, books.id)
+        con.lpush(key, books.id)
+        # 保存用户最近浏览的5个商品
+        con.ltrim(key, 0, 4)
+
     # 定义上下文
-    context = {'books': books, 'books_li': books_li}
+    context = {'books': books, 'books_li': books_li, 'image': image}
 
     # 使用模板
     return render(request, 'books/detail.html', context)

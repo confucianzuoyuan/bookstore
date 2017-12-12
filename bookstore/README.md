@@ -10,6 +10,9 @@
 - [9，发送邮件功能实现](#9)
 - [10，登陆验证码功能实现](#10)
 - [11，全文检索的实现](#11)
+- [12，用户激活功能实现](#12)
+- [13，用户中心最近浏览功能](#13)
+- [14，过滤器功能实现](#14)
 
 
 # <a id="1">1，新建项目</a>
@@ -3773,3 +3776,151 @@ $ python manage.py rebuild_index
     <input type="submit" value="查询">
 </form>
 ```
+
+# <a id="12">12，用户激活功能的实现</a>
+首先编写视图函数：
+```
+def register_active(request, token):
+    '''用户账户激活'''
+    serializer = Serializer(settings.SECRET_KEY, 3600)
+    try:
+        info = serializer.loads(token)
+        passport_id = info['confirm']
+        # 进行用户激活
+        passport = Passport.objects.get(id=passport_id)
+        passport.is_active = True
+        passport.save()
+        # 跳转的登录页
+        return redirect(reverse('user:login'))
+    except SignatureExpired:
+        # 链接过期
+        return HttpResponse('激活链接已过期')
+```
+然后配置url就完成了。
+```
+    url(r'^active/(?P<token>.*)/$', views.register_active, name='active'), # 用户激活
+```
+
+# <a id="13">13，用户中心最近浏览功能的实现</a>
+最近浏览使用redis实现。重新编写books/views.py中的detail函数，每次点击商品，都将商品信息写入redis，作为最近浏览的数据。
+```
+# books/views.py
+def detail(request, books_id):
+    '''显示商品的详情页面'''
+    # 获取商品的详情信息
+    books = Books.objects.get_books_by_id(books_id=books_id)
+
+    if books is None:
+        # 商品不存在，跳转到首页
+        return redirect(reverse('books:index'))
+
+    # 获取商品的详情图片
+    images = BooksImage.objects.filter(books_id=books_id)
+    if images.exists():
+        # 有图片
+        image = images[0]
+    else:
+        # 没有图片
+        image = ''
+
+    # 新品推荐
+    books_li = Books.objects.get_books_by_type(type_id=books.type_id, limit=2, sort='new')
+
+    # 用户登录之后，才记录浏览记录
+    # 每个用户浏览记录对应redis中的一条信息 格式:'history_用户id':[10,9,2,3,4]
+    # [9, 10, 2, 3, 4]
+    if request.session.has_key('islogin'):
+        # 用户已登录，记录浏览记录
+        con = get_redis_connection('default')
+        key = 'history_%d' % request.session.get('passport_id')
+        # 先从redis列表中移除books.id
+        con.lrem(key, 0, books.id)
+        con.lpush(key, books.id)
+        # 保存用户最近浏览的5个商品
+        con.ltrim(key, 0, 4)
+
+    # 定义上下文
+    context = {'books': books, 'books_li': books_li, 'image': image}
+
+    # 使用模板
+    return render(request, 'books/detail.html', context)
+```
+然后重写用户中心的视图函数代码：users/views.py中的user函数。
+```
+@login_required
+def user(request):
+    '''用户中心-信息页'''
+    passport_id = request.session.get('passport_id')
+    # 获取用户的基本信息
+    addr = Address.objects.get_default_address(passport_id=passport_id)
+
+    # 获取用户的最近浏览信息
+    con = get_redis_connection('default')
+    key = 'history_%d' % passport_id
+    # 取出用户最近浏览的5个商品的id
+    history_li = con.lrange(key, 0, 4)
+    # history_li = [21,20,11]
+    # print(history_li)
+    # 查询数据库,获取用户最近浏览的商品信息
+    # books_li = Books.objects.filter(id__in=history_li)
+    books_li = []
+    for id in history_li:
+        books = Books.objects.get_books_by_id(books_id=id)
+        books_li.append(books)
+
+    return render(request, 'users/user_center_info.html', {'addr': addr,
+                                                           'page': 'user',
+                                                           'books_li': books_li})
+```
+然后编写前端页面。重写user_center_info.html中最近浏览下面的html内容。
+```
+<h3 class="common_title2">最近浏览</h3>
+<div class="has_view_list">
+    <ul class="books_type_list clearfix">
+        {% for books in books_li %}
+            <li>
+                <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
+                <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
+                <div class="operate">
+                    <span class="prize">￥{{ books.price }}</span>
+                    <span class="unit">{{ books.unite }}</span>
+                    <a href="#" class="add_books" title="加入购物车"></a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+```
+最近浏览功能就实现了。
+
+# <a id="14">14，前端过滤器实现</a>
+在users文件夹中新建templatetags文件夹。然后新建__init__.py文件，这是空文件。然后新建filters.py文件。
+```
+from django.template import Library
+
+# 创建一个Library类的对象
+register = Library()
+
+
+# 创建一个过滤器函数
+@register.filter
+def order_status(status):
+    '''返回订单状态对应的字符串'''
+    status_dict =  {
+        1:"待支付",
+        2:"待发货",
+        3:"待收货",
+        4:"待评价",
+        5:"已完成",
+    }
+    return status_dict[status]
+```
+这样我们就能在前端使用这个过滤器了。
+```
+<td width="15%">{{ order.status|order_status }}</td>
+```
+
+
+
+
+

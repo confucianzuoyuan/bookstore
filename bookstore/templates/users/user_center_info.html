@@ -31,58 +31,20 @@
 				
 				<h3 class="common_title2">最近浏览</h3>
 				<div class="has_view_list">
-					<ul class="book_type_list clearfix">
-				<li>
-					<a href="detail.html"><img src="images/book/book003.jpg"></a>
-					<h4><a href="detail.html">Python Cookbook</a></h4>
-					<div class="operate">
-						<span class="prize">￥16.80</span>
-						<span class="unit">/册</span>
-						<a href="#" class="add_book" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/book/book004.jpg"></a>
-					<h4><a href="#">Python高性能编程</a></h4>
-					<div class="operate">
-						<span class="prize">￥5.50</span>
-						<span class="unit">/册</span>
-						<a href="#" class="add_book" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/book/book005.jpg"></a>
-					<h4><a href="#">Javascript高级程序设计</a></h4>
-					<div class="operate">
-						<span class="prize">￥10.00</span>
-						<span class="unit">/册</span>
-						<a href="#" class="add_book" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/book/book006.jpg"></a>
-					<h4><a href="#">Javascript权威指南</a></h4>
-					<div class="operate">
-						<span class="prize">￥28.80</span>
-						<span class="unit">/册</span>
-						<a href="#" class="add_book" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/book/book007.jpg"></a>
-					<h4><a href="#">Javascript语言精粹</a></h4>
-					<div class="operate">
-						<span class="prize">￥6.45</span>
-						<span class="unit">/册</span>
-						<a href="#" class="add_book" title="加入购物车"></a>
-					</div>
-				</li>
-			</ul>
-		</div>
+				    <ul class="books_type_list clearfix">
+				        {% for books in books_li %}
+				            <li>
+				                <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
+				                <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
+				                <div class="operate">
+				                    <span class="prize">￥{{ books.price }}</span>
+				                    <span class="unit">{{ books.unite }}</span>
+				                    <a href="#" class="add_books" title="加入购物车"></a>
+				                </div>
+				            </li>
+				        {% endfor %}
+				    </ul>
+				</div>
 		</div>
 	</div>
 {% endblock body %}

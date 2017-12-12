@@ -126,15 +126,23 @@ def user(request):
     # 获取用户的基本信息
     addr = Address.objects.get_default_address(passport_id=passport_id)
 
+    # 获取用户的最近浏览信息
+    con = get_redis_connection('default')
+    key = 'history_%d' % passport_id
+    # 取出用户最近浏览的5个商品的id
+    history_li = con.lrange(key, 0, 4)
+    # history_li = [21,20,11]
+    # print(history_li)
+    # 查询数据库,获取用户最近浏览的商品信息
+    # books_li = Books.objects.filter(id__in=history_li)
     books_li = []
+    for id in history_li:
+        books = Books.objects.get_books_by_id(books_id=id)
+        books_li.append(books)
 
-    context = {
-        'addr': addr,
-        'page': 'user',
-        'books_li': books_li
-    }
-
-    return render(request, 'users/user_center_info.html', context)
+    return render(request, 'users/user_center_info.html', {'addr': addr,
+                                                           'page': 'user',
+                                                           'books_li': books_li})
 
 @login_required
 def address(request):
@@ -250,3 +258,19 @@ def verifycode(request):
     im.save(buf, 'png')
     #将内存中的图片数据返回给客户端，MIME类型为图片png
     return HttpResponse(buf.getvalue(), 'image/png')
+
+def register_active(request, token):
+    '''用户账户激活'''
+    serializer = Serializer(settings.SECRET_KEY, 3600)
+    try:
+        info = serializer.loads(token)
+        passport_id = info['confirm']
+        # 进行用户激活
+        passport = Passport.objects.get(id=passport_id)
+        passport.is_active = True
+        passport.save()
+        # 跳转的登录页
+        return redirect(reverse('user:login'))
+    except SignatureExpired:
+        # 链接过期
+        return HttpResponse('激活链接已过期')
