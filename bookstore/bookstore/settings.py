@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'order', # 订单信息模块
     'comments', # 评论模块
     'haystack', # 全文检索框架
+    'users.templatetags.filters', # 过滤器功能
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1364,32 +1364,32 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 ```
 商品列表
 ```
-{% for goods in goods_li %}
+{% for books in books_li %}
     <li>
-        <a href="{% url 'goods:detail' goods_id=goods.id %}"><img src="{% static goods.image %}"></a>
-        <h4><a href="{% url 'goods:detail' goods_id=goods.id %}">{{ goods.name }}</a></h4>
+        <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
+        <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
         <div class="operate">
-            <span class="prize">￥{{ goods.price }}</span>
-            <span class="unit">{{ goods.unite }}</span>
-            <a href="#" class="add_goods" title="加入购物车"></a>
+            <span class="prize">￥{{ books.price }}</span>
+            <span class="unit">{{ books.unite }}</span>
+            <a href="#" class="add_books" title="加入购物车"></a>
         </div>
     </li>
 {% endfor %}
 ```
 前端分页功能的实现。
 ```
-{% if goods_li.has_previous %}
-    <a href="/list/{{ type_id }}/{{ goods_li.previous_page_number }}/?sort={{ sort }}"><上一页</a>
+{% if books_li.has_previous %}
+    <a href="/list/{{ type_id }}/{{ books_li.previous_page_number }}/?sort={{ sort }}"><上一页</a>
 {% endif %}
 {% for pindex in pages %}
-    {% if pindex == goods_li.number %}
+    {% if pindex == books_li.number %}
         <a href="/list/{{ type_id }}/{{ pindex }}/?sort={{ sort }}" class="active">{{ pindex }}</a>
     {% else %}
         <a href="/list/{{ type_id }}/{{ pindex }}/?sort={{ sort }}">{{ pindex }}</a>
     {% endif %}
 {% endfor %}
-{% if goods_li.has_next %}
-    <a href="/list/{{ type_id }}/{{ goods_li.next_page_number }}/?sort={{ sort }}">下一页></a>
+{% if books_li.has_next %}
+    <a href="/list/{{ type_id }}/{{ books_li.next_page_number }}/?sort={{ sort }}">下一页></a>
 {% endif %}
 ```
 
@@ -2503,7 +2503,7 @@ urlpatterns = [
             <li class="col05">小计</li>       
         </ul>
         {% for book in books_li %}
-        <ul class="goods_list_td clearfix">
+        <ul class="books_list_td clearfix">
             <li class="col01">{{ forloop.counter }}</li>
             <li class="col02"><img src="{% static book.image %}"></li>
             <li class="col03">{{ book.name }}</li>
@@ -2885,7 +2885,7 @@ def order(request):
             # 保存订单中每一个商品的小计
             order_books.amount = amount
 
-        # 给order对象动态增加一个属性order_goods_li,保存订单中商品的信息
+        # 给order对象动态增加一个属性order_books_li,保存订单中商品的信息
         order.order_books_li = order_books_li
 
         context = {
@@ -2933,7 +2933,7 @@ def order(request):
                     <tbody>
                         <tr>
                             <td width="55%">
-                                {# 遍历出来的order_goods是一个OrderGoods对象 #}
+                                {# 遍历出来的order_books是一个OrderGoods对象 #}
                                 {% for order_books in order.order_books_li %}
                                 <ul class="order_book_list clearfix">                   
                                     <li class="col01"><img src="{% static order_books.books.image %}"></li>
@@ -3697,15 +3697,15 @@ class BooksIndex(indexes.SearchIndex, indexes.Indexable):
     </div>
 
     <div class="main_wrap clearfix">
-            <ul class="goods_type_list clearfix">
+            <ul class="books_type_list clearfix">
                 {% for item in page %}
                     <li>
-                        <a href="{% url 'goods:detail' goods_id=item.object.id %}"><img src="{% static item.object.image %}"></a>
-                        <h4><a href="{% url 'goods:detail' goods_id=item.object.id %}">{{ item.object.name }}</a></h4>
+                        <a href="{% url 'books:detail' books_id=item.object.id %}"><img src="{% static item.object.image %}"></a>
+                        <h4><a href="{% url 'books:detail' books_id=item.object.id %}">{{ item.object.name }}</a></h4>
                         <div class="operate">
                             <span class="prize">￥{{ item.object.price }}</span>
                             <span class="unit">{{ item.object.unite }}</span>
-                            <a href="#" class="add_goods" title="加入购物车"></a>
+                            <a href="#" class="add_books" title="加入购物车"></a>
                         </div>
                     </li>
                 {% endfor %}
@@ -3814,15 +3814,6 @@ def detail(request, books_id):
         # 商品不存在，跳转到首页
         return redirect(reverse('books:index'))
 
-    # 获取商品的详情图片
-    images = BooksImage.objects.filter(books_id=books_id)
-    if images.exists():
-        # 有图片
-        image = images[0]
-    else:
-        # 没有图片
-        image = ''
-
     # 新品推荐
     books_li = Books.objects.get_books_by_type(type_id=books.type_id, limit=2, sort='new')
 
@@ -3840,7 +3831,7 @@ def detail(request, books_id):
         con.ltrim(key, 0, 4)
 
     # 定义上下文
-    context = {'books': books, 'books_li': books_li, 'image': image}
+    context = {'books': books, 'books_li': books_li}
 
     # 使用模板
     return render(request, 'books/detail.html', context)

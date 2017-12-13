@@ -51,15 +51,6 @@ def detail(request, books_id):
         # 商品不存在，跳转到首页
         return redirect(reverse('books:index'))
 
-    # 获取商品的详情图片
-    images = BooksImage.objects.filter(books_id=books_id)
-    if images.exists():
-        # 有图片
-        image = images[0]
-    else:
-        # 没有图片
-        image = ''
-
     # 新品推荐
     books_li = Books.objects.get_books_by_type(type_id=books.type_id, limit=2, sort='new')
 
@@ -77,7 +68,7 @@ def detail(request, books_id):
         con.ltrim(key, 0, 4)
 
     # 定义上下文
-    context = {'books': books, 'books_li': books_li, 'image': image}
+    context = {'books': books, 'books_li': books_li}
 
     # 使用模板
     return render(request, 'books/detail.html', context)
