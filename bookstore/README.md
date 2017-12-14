@@ -13,6 +13,7 @@
 - [12，用户激活功能实现](#12)
 - [13，用户中心最近浏览功能](#13)
 - [14，过滤器功能实现](#14)
+- [15，部署](#15)
 
 
 # <a id="1">1，新建项目</a>
@@ -3911,7 +3912,209 @@ def order_status(status):
 <td width="15%">{{ order.status|order_status }}</td>
 ```
 
+# <a id="15">15，部署</a>
+## 1，安装uWSGI。
+```
+$ pip install uwsgi
+```
+配置uWSGI，在项目中新建文件uwsgi.ini，编写如下配置：
+```
+[uwsgi]
+socket=外网ip:端口（使用nginx连接时，使用socket）
+http=外网ip:端口（直接做web服务器，使用http）
+chdir=项目根目录
+wsgi-file=项目中wsgi.py文件的目录，相对于项目根目录
+processes=4
+threads=2
+master=True
+pidfile=uwsgi.pid
+daemonize=uswgi.log
+```
+示例，我的配置文件。
+```
+[uwsgi]
+socket=127.0.0.1:9001
+module=uwsgi
+chdir=/home/atguigu/桌面/bookstoredata/bookstore/bookstore
+wsgi-file=bookstore/wsgi.py
+processes=4
+threads=2
+master=True
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+virtualenv=/home/atguigu/py3
+```
+- 启动：uwsgi --ini uwsgi.ini
+- 停止：uwsgi --stop uwsgi.pid
+- 重启：uwsgi --reload uwsgi.pid
+- 使用http协议查看网站运行情况，运行正常，但是静态文件无法加载
+
+# 2，安装nginx
+```
+$ sudo apt-get nginx
+```
+解压缩：(大家看自己的nginx版本，这个是例子)
+```
+$ tar zxvf nginx-1.6.3.tar.gz
+```
+进入nginx-1.6.3目录依次执行如下命令进行安装：
+```
+$ ./configure
+$ make
+$ sudo make install
+```
+- 默认安装到/usr/local/nginx目录，进入此目录执行命令
+- 查看版本：sudo sbin/nginx -v
+- 启动：sudo sbin/nginx
+- 停止：sudo sbin/nginx -s stop
+- 重启：sudo sbin/nginx -s reload
+- 通过浏览器查看nginx运行结果
+- 指向uwsgi项目：编辑conf/nginx.conf文件
+```
+sudo conf/nginx.conf
+
+# 在server下添加新的location项，指向uwsgi的ip与端口
+location / {
+    include uwsgi_params;将所有的参数转到uwsgi下
+    uwsgi_pass uwsgi的ip与端口;
+}
+```
+- 修改uwsgi.ini文件，启动socket，禁用http
+- 重启nginx、uwsgi
+- 在浏览器中查看项目，发现静态文件加载不正常，接下来解决静态文件的问题
+- 静态文件一直都找不到，现在终于可以解决了
+- 所有的静态文件都会由nginx处理，不会将请求转到uwsgi
+- 配置nginx的静态项，打开conf/nginx.conf文件，找到server，添加新location
+
+```
+location /static {
+    alias /var/www/test5/static/;
+}
+```
+- 在服务器上创建目录结构“/var/www/test5/”
+- 修改目录权限
+```
+$ sudo chmod 777 /var/www/test5
+```
+创建static目录，注意顺序是先分配权限，再创建目录
+```
+$ mkdir static
+```
+修改settings.py文件
+```
+STATIC_ROOT='/var/www/test5/static/'
+STATIC_URL='/static/'
+```
+- 收集所有静态文件到static_root指定目录：python manage.py collectstatic
+- 重启nginx、uwsgi
+示例：
+```
+# nginx.conf
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 768;
+    # multi_accept on;
+}
+
+http {
+
+    ##
+    # Basic Settings
+    ##
+
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+    # server_tokens off;
+
+    # server_names_hash_bucket_size 64;
+    # server_name_in_redirect off;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    ##
+    # SSL Settings
+    ##
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+    ssl_prefer_server_ciphers on;
+
+    ##
+    # Logging Settings
+    ##
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    ##
+    # Gzip Settings
+    ##
+
+    gzip on;
+    gzip_disable "msie6";
+
+    # gzip_vary on;
+    # gzip_proxied any;
+    # gzip_comp_level 6;
+    # gzip_buffers 16 8k;
+    # gzip_http_version 1.1;
+    # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+    ##
+    # Virtual Host Configs
+    ##
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+        
+        server {
+            listen 8080;
+            server_name localhost;
+            location / {
+                include uwsgi_params;
+                uwsgi_pass 127.0.0.1:9001;
+                uwsgi_read_timeout 2;
+            }
+            error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+                root html;
+            }
+            location /media {
+                alias /home/atguigu/桌面/bookstoredata/bookstore/bookstore/static;
+            }
+            location /static {
+                alias /home/atguigu/桌面/bookstoredata/bookstore/bookstore/static;
+            }
+        }
+
+}
 
 
-
-
+#mail {
+#   # See sample authentication script at:
+#   # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+# 
+#   # auth_http localhost/auth.php;
+#   # pop3_capabilities "TOP" "USER";
+#   # imap_capabilities "IMAP4rev1" "UIDPLUS";
+# 
+#   server {
+#       listen     localhost:110;
+#       protocol   pop3;
+#       proxy      on;
+#   }
+# 
+#   server {
+#       listen     localhost:143;
+#       protocol   imap;
+#       proxy      on;
+#   }
+#}
+```
+重启uwsgi，nginx。就部署好了。
