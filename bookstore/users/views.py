@@ -239,7 +239,7 @@ def verifycode(request):
     for i in range(0, 4):
         rand_str += str1[random.randrange(0, len(str1))]
     #构造字体对象
-    font = ImageFont.truetype("/Library/Fonts/Arial.ttf", 15)
+    font = ImageFont.truetype("/usr/share/fonts/truetype/abyssinica.ttf", 15)
     #构造字体颜色
     fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
     #绘制4个字

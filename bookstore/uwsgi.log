@@ -1,0 +1,90 @@
+*** Starting uWSGI 2.0.15 (64bit) on [Thu Dec 14 16:30:31 2017] ***
+compiled with version: 5.4.0 20160609 on 14 December 2017 16:27:05
+os: Linux-4.10.0-42-generic #46~16.04.1-Ubuntu SMP Mon Dec 4 15:57:59 UTC 2017
+nodename: ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 1
+current working directory: /home/atguigu/桌面/bookstoredata/bookstore/bookstore
+writing pidfile to uwsgi.pid
+detected binary path: /home/atguigu/py3/bin/uwsgi
+chdir() to /home/atguigu/桌面/bookstoredata/bookstore/bookstore
+your processes number limit is 7744
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:9001 fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/atguigu/py3
+Python main interpreter initialized at 0x13dc7b0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 415280 bytes (405 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+unable to load app 0 (mountpoint='') (callable not found or import error)
+WSGI app 0 (mountpoint='') ready in 4 seconds on interpreter 0x13dc7b0 pid: 5835 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 5835)
+spawned uWSGI worker 1 (pid: 5837, cores: 2)
+spawned uWSGI worker 2 (pid: 5838, cores: 2)
+spawned uWSGI worker 3 (pid: 5840, cores: 2)
+spawned uWSGI worker 4 (pid: 5842, cores: 2)
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+Middleware executed
+Another middleware executed
+Middleware executed
+Another middleware executed
+AnotherMiddleware process_response executed
+[pid: 5842|app: 0|req: 2/1] 127.0.0.1 () {40 vars in 747 bytes} [Thu Dec 14 09:04:19 2017] GET /favicon.ico => generated 3153 bytes in 1055 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+AnotherMiddleware process_response executed
+Thu Dec 14 09:04:20 2017 - SIGPIPE: writing to a closed pipe/socket/fd (probably the client disconnected) !!!
+Thu Dec 14 09:04:20 2017 - uwsgi_response_write_body_do(): Broken pipe [core/writer.c line 331] during GET / (127.0.0.1)
+OSError: write error
+[pid: 5842|app: 0|req: 2/2] 127.0.0.1 () {42 vars in 760 bytes} [Thu Dec 14 09:04:16 2017] GET / => generated 21782 bytes in 4595 msecs (HTTP/1.1 500) 3 headers in 106 bytes (0 switches on core 0)
+Middleware executed
+Another middleware executed
+AnotherMiddleware process_response executed
+[pid: 5842|app: 0|req: 3/3] 127.0.0.1 () {42 vars in 770 bytes} [Thu Dec 14 09:04:45 2017] GET /books => generated 3135 bytes in 31 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+Middleware executed
+Another middleware executed
+AnotherMiddleware process_response executed
+[pid: 5842|app: 0|req: 4/4] 127.0.0.1 () {42 vars in 760 bytes} [Thu Dec 14 09:04:52 2017] GET / => generated 113934 bytes in 631 msecs (HTTP/1.1 500) 3 headers in 106 bytes (1 switches on core 0)
+Middleware executed
+Another middleware executed
+ssssssss
+AnotherMiddleware process_response executed
+[pid: 5842|app: 0|req: 5/5] 127.0.0.1 () {42 vars in 760 bytes} [Thu Dec 14 09:05:17 2017] GET / => generated 7010 bytes in 3233 msecs (HTTP/1.1 200) 7 headers in 347 bytes (1 switches on core 1)
+Middleware executed
+Another middleware executed
+AnotherMiddleware process_response executed
+[pid: 5842|app: 0|req: 6/6] 127.0.0.1 () {44 vars in 791 bytes} [Thu Dec 14 09:05:27 2017] GET / => generated 7010 bytes in 16 msecs (HTTP/1.1 200) 7 headers in 347 bytes (1 switches on core 0)
+Middleware executed
+Another middleware executed
+AnotherMiddleware process_response executed
+[pid: 5842|app: 0|req: 7/7] 127.0.0.1 () {42 vars in 760 bytes} [Thu Dec 14 09:05:36 2017] GET / => generated 7010 bytes in 11 msecs (HTTP/1.1 200) 7 headers in 347 bytes (1 switches on core 1)
+Middleware executed
+Another middleware executed
+AnotherMiddleware process_response executed
+[pid: 5840|app: 0|req: 1/8] 127.0.0.1 () {44 vars in 764 bytes} [Thu Dec 14 09:05:37 2017] GET /cart/count/ => generated 10 bytes in 2458 msecs (HTTP/1.1 200) 3 headers in 94 bytes (1 switches on core 0)
