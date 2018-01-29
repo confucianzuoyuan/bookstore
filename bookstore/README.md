@@ -3919,9 +3919,20 @@ def order_status(status):
     }
     return status_dict[status]
 ```
+然后在根应用settings.py里面添加应用：
+```
+INSTALLED_APPS = (
+    ...
+    'users.templatetags.filters', # 过滤器功能
+)
+```
 这样我们就能在前端使用这个过滤器了。
 ```
 <td width="15%">{{ order.status|order_status }}</td>
+```
+注意要在页面里
+```
+{% load filters %}
 ```
 
 # <a id="15">15，部署</a>
