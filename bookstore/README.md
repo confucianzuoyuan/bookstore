@@ -3495,6 +3495,18 @@ def register_handle(request):
     send_active_email.delay(token, username, email)
     ...
 ```
+然后改写根应用文件夹里的__init__.py，将整个文件改为：
+```
+from __future__ import absolute_import, unicode_literals
+
+import pymysql
+pymysql.install_as_MySQLdb()
+# This will make sure the app is always imported when
+# Django starts so that shared_task will use this app.
+from .celery import app as celery_app
+
+__all__ = ['celery_app']
+```
 然后运行:(在根目录，和manage.py同级)
 ```
 $ celery -A bookstore worker -l info
