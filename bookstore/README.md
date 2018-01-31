@@ -14,7 +14,7 @@
 - [13，用户中心最近浏览功能](#13)
 - [14，过滤器功能实现](#14)
 - [15，部署](#15)
-
+- [16，使用nginx+gunicorn+django进行部署](#16)
 
 # <a id="1">1，新建项目</a>
 
@@ -4141,3 +4141,108 @@ http {
 #}
 ```
 重启uwsgi，nginx。就部署好了。
+
+# <a id="16">16，使用gunicorn+nginx+django进行部署</a>
+先看nginx配置文件nginx.conf
+```
+er www-data;
+user root;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+        worker_connections 768;
+        # multi_accept on;
+}
+
+http {
+
+        ##
+        # Basic Settings
+        ##
+
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        # server_tokens off;
+
+        # server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        ##
+        # SSL Settings
+        ##
+
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+        ssl_prefer_server_ciphers on;
+
+        ##
+        # Logging Settings
+        ##
+
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+
+        ##
+        # Gzip Settings
+        ##
+
+        gzip on;
+        gzip_disable "msie6";
+        # gzip_vary on;
+        # gzip_proxied any;
+        # gzip_comp_level 6;
+        # gzip_buffers 16 8k;
+        # gzip_http_version 1.1;
+        # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+        ##
+        # Virtual Host Configs
+        ##
+
+        include /etc/nginx/conf.d/*.conf;
+        #include /etc/nginx/sites-enabled/*;
+
+        server {
+            listen 80;
+            server_name localhost;
+            location / {
+                proxy_pass http://0.0.0.0:8000;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            }
+            error_page 500 502 503 504 /50x.html;
+
+            location = /50x.html {
+                root html;
+            }
+            location /media {
+                alias /root/bookstore/bookstore/static;
+            }
+            location /static {
+                alias /root/bookstore/bookstore/collect_static;
+            }
+        }
+}
+```
+然后在根目录bookstore新建文件夹collect_static。
+然后在根目录运行python manage.py collectstatic命令。
+并将books/models.py中添加代码：
+```
+from django.core.files.storage import FileSystemStorage
+fs = FileSystemStorage(location='/root/bookstore/bookstore/collect_static')
+class Books(BaseModel):
+    ...
+    image = models.ImageField(storage=fs, upload_to='books', verbose_name='商品图片')
+    ...
+```
+然后在根目录运行gunicorn。
+```
+nohup gunicorn -w 3 -b 0.0.0.0:8000 bookstore.wsgi:application &
+```

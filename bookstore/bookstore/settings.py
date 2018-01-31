@@ -28,16 +28,16 @@ SECRET_KEY = '!wmny(x@pmwo&h36*w47=)-h+f+38w+ecdq*3im!a9w_@ryi)z'
 DEBUG = True
 
 # 允许访问的host
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 # 安装的app
 INSTALLED_APPS = (
-    'django.contrib.admin',　# django自带的后台管理系统
-    'django.contrib.auth',   # 鉴权
-    'django.contrib.contenttypes',  # 包装response，比如text/html，image/gif
-    'django.contrib.sessions',  # 处理session和cookie
+    'django.contrib.admin', # django自带的后台管理系统
+    'django.contrib.auth', # 鉴权
+    'django.contrib.contenttypes', # 包装response，比如text/html，image/gif
+    'django.contrib.sessions', # 处理session和cookie
     'django.contrib.messages',  # 日志系统
     'django.contrib.staticfiles',  # 静态文件处理器
     'users', # 用户模块
