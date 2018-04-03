@@ -94,7 +94,7 @@ class BaseModel(models.Model):
     '''模型抽象基类'''
     is_delete = models.BooleanField(default=False, verbose_name='删除标记')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    update_time = models.DateTimeField(auto_now=TabError, verbose_name='更新时间')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
     class Meta:
         abstract = True
@@ -109,7 +109,7 @@ class Passport(BaseModel):
     is_active = models.BooleanField(default=False, verbose_name='激活状态')
 
     # 用户表的管理器
-    objects = PassportManger()
+    objects = PassportManager()
 
     class Meta:
         db_table = 's_user_account'
@@ -117,7 +117,7 @@ class Passport(BaseModel):
 接下来我们在PassportManager()中实现添加和查找账户信息的功能，这样抽象性更好。
 ```
 # Create your models here.
-class PassportManger(models.Manager):
+class PassportManager(models.Manager):
     def add_one_passport(self, username, password, email):
         '''添加一个账户信息'''
         passport = self.create(username=username, password=get_hash(password), email=email)
@@ -133,9 +133,9 @@ class PassportManger(models.Manager):
             passport = None
         return passport
 ```
-我们这里有一个get_hash函数，这个函数用来避免存储明文密码。所以我们来编写这个函数。
+我们这里有一个get_hash函数，这个函数用来避免存储明文密码。所以我们来编写这个函数。在根目录新建一个文件夹utils，用来存放功能函数，比如get_hash，别忘了__init__.py文件。
 ```
-# bookstore/users/models.py
+# bookstore/utils/get_hash.py
 from hashlib import sha1
 
 def get_hash(str):
@@ -356,7 +356,7 @@ class Books(BaseModel):
     name = models.CharField(max_length=20, verbose_name='商品名称')
     desc = models.CharField(max_length=128, verbose_name='商品简介')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='商品价格')
-    unite = models.CharField(max_length=20, verbose_name='商品单位')
+    unit = models.CharField(max_length=20, verbose_name='商品单位')
     stock = models.IntegerField(default=1, verbose_name='商品库存')
     sales = models.IntegerField(default=0, verbose_name='商品销量')
     detail = HTMLField(verbose_name='商品详情')
@@ -582,7 +582,15 @@ def login_check(request):
         # 用户名或密码错误
         return JsonResponse({'res': 0})
 ```
-这个函数在前端发送数据是调用。我们在前端编写一段发送ajax post请求的html代码和jquery代码。
+
+这个函数在前端发送数据是调用。我们在前端编写一段发送ajax post请求的html代码和jquery代码。将下面这段代码替换掉表单代码：
+
+```html
+<form>
+  ...
+</form>
+```
+
 ```
     {% csrf_token %}
     <input type="text" id="username" class="name_input" value="{{ username }}" placeholder="请输入用户名">
@@ -596,6 +604,7 @@ def login_check(request):
     </div>
     <input type="button" id="btnLogin" value="登录" class="input_submit">
 ```
+
 ```
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
     <script>
