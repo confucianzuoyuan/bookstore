@@ -85,9 +85,9 @@ INSTALLED_APPS = (
 )
 ```
 然后我们需要设计表结构，我们要思考一下，这个users数据表结构应该包含哪些字段？
-我们需要先抽象出一个BaseModel，一个基本模型，什么意思呢？因为数据表有共同的字段，我们可以把它抽象出来，比如create_at（创建时间），update_at（更新时间），is_delete（软删除）。
+我们需要先抽象出一个BaseModel，一个基本模型，什么意思呢？因为数据表有共同的字段，我们可以把它抽象出来，比如create_at（创建时间），update_at（更新时间），is_delete（软删除）。注意！这个base_model.py要保存在根目录下面的db文件夹中，别忘了db文件夹中的__init__.py。
 ```
-# bookstore/base_model.py
+# bookstore/db/base_model.py
 from django.db import models
 
 class BaseModel(models.Model):
