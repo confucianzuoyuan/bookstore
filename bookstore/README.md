@@ -707,7 +707,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 ```
 <h3>{{ books.name }}</h3>
 <p>{{ books.desc }}</p>
-<div class="prize_bar">
+<div class="price_bar">
     <span class="show_pirze">¥<em>{{ books.price }}</em></span>
     <span class="show_unit">单  位：{{ books.unit }}</span>
 </div>
@@ -717,7 +717,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 <li>
     <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static book.image %}"></a>
     <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ book.name }}</a></h4>
-    <div class="prize">￥{{ book.price }}</div>
+    <div class="price">￥{{ book.price }}</div>
 </li>
 {% endfor %}
 ```
@@ -1016,7 +1016,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                 <li>
                     <h4><a href="{% url 'books:detail' books_id=book.id  %}">{{ book.name }}</a></h4>
                     <a href="{% url 'books:detail' books_id=book.id  %}"><img src="{% static book.image %}"></a>
-                    <div class="prize">¥ {{ book.price }}</div>
+                    <div class="price">¥ {{ book.price }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -1042,7 +1042,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                 <li>
                     <h4><a href="#">{{ book.name }}</a></h4>
                     <a href="#"><img src="{% static book.image %}"></a>
-                    <div class="prize">¥ {{ book.price }}</div>
+                    <div class="price">¥ {{ book.price }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -1068,7 +1068,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                 <li>
                     <h4><a href="#">{{ book.name }}</a></h4>
                     <a href="#"><img src="{% static book.image %}"></a>
-                    <div class="prize">¥ {{ book.price }}</div>
+                    <div class="price">¥ {{ book.price }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -1094,7 +1094,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                 <li>
                     <h4><a href="#">{{ book.name }}</a></h4>
                     <a href="#"><img src="{% static book.image %}"></a>
-                    <div class="prize">¥ {{ book.price }}</div>
+                    <div class="price">¥ {{ book.price }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -1120,7 +1120,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                 <li>
                     <h4><a href="#">{{ book.name }}</a></h4>
                     <a href="#"><img src="{% static book.image %}"></a>
-                    <div class="prize">¥ {{ book.price }}</div>
+                    <div class="price">¥ {{ book.price }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -1146,7 +1146,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                 <li>
                     <h4><a href="#">{{ book.name }}</a></h4>
                     <a href="#"><img src="{% static book.image %}"></a>
-                    <div class="prize">¥ {{ book.price }}</div>
+                    <div class="price">¥ {{ book.price }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -1199,7 +1199,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
         <div class="book_detail_list fr">
             <h3>{{ books.name }}</h3>
             <p>{{ books.desc }}</p>
-            <div class="prize_bar">
+            <div class="price_bar">
                 <span class="show_pirze">¥<em>{{ books.price }}</em></span>
                 <span class="show_unit">单  位：{{ books.unit }}</span>
             </div>
@@ -1228,7 +1228,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                     <li>
                         <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static book.image %}"></a>
                         <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ book.name }}</a></h4>
-                        <div class="prize">￥{{ book.price }}</div>
+                        <div class="price">￥{{ book.price }}</div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -1362,7 +1362,7 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 <li>
     <a href="{% url 'books:detail' books_id=book.id %}"><img src="{% static book.image %}"></a>
     <h4><a href="{% url 'books:detail' books_id=book.id %}">{{ book.name }}</a></h4>
-    <div class="prize">￥{{ book.price }}</div>
+    <div class="price">￥{{ book.price }}</div>
 </li>
 {% endfor %}
 ```
@@ -1379,7 +1379,7 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
         <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
         <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
         <div class="operate">
-            <span class="prize">￥{{ books.price }}</span>
+            <span class="price">￥{{ books.price }}</span>
             <span class="unit">{{ books.unite }}</span>
             <a href="#" class="add_books" title="加入购物车"></a>
         </div>
@@ -3725,7 +3725,7 @@ class BooksIndex(indexes.SearchIndex, indexes.Indexable):
                         <a href="{% url 'books:detail' books_id=item.object.id %}"><img src="{% static item.object.image %}"></a>
                         <h4><a href="{% url 'books:detail' books_id=item.object.id %}">{{ item.object.name }}</a></h4>
                         <div class="operate">
-                            <span class="prize">￥{{ item.object.price }}</span>
+                            <span class="price">￥{{ item.object.price }}</span>
                             <span class="unit">{{ item.object.unite }}</span>
                             <a href="#" class="add_books" title="加入购物车"></a>
                         </div>
@@ -3895,7 +3895,7 @@ def user(request):
                 <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
                 <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
                 <div class="operate">
-                    <span class="prize">￥{{ books.price }}</span>
+                    <span class="price">￥{{ books.price }}</span>
                     <span class="unit">{{ books.unite }}</span>
                     <a href="#" class="add_books" title="加入购物车"></a>
                 </div>
