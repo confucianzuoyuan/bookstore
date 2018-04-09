@@ -1,4 +1,5 @@
 # 目录
+
 - [1，新建项目](#1)
 - [2，用户系统开发](#2)
 - [3，书籍商品模块](#3)
@@ -24,12 +25,15 @@ $ django-admin startproject bookstore
 ```
 
 ## 2，将需要用的包添加进来
+
 ```
 # wq保存
 $ vim requirements.txt
 ```
+
 安装包文件如下:
-```
+
+```python
 # requirements.txt
 amqp==2.2.2
 billiard==3.5.0.3
@@ -52,12 +56,16 @@ uWSGI==2.0.15
 vine==1.1.4
 Whoosh==2.7.4
 ```
+
 安装环境（在虚拟环境中）
+
 ```
 $ pip install -r requirements.txt
 ```
+
 ## 3，修改项目配置文件，将默认sqlite改为mysql
-```
+
+```python
 # bookstore/settings.py
 DATABASES = {
     'default': {
@@ -70,23 +78,31 @@ DATABASES = {
     }
 }
 ```
+
 # <a id="2">2，用户系统开发</a>
+
 ## 1，用户系统的开发
+
 新建users这个app，也就是用户app，先从注册页做起。
+
 ```
 $ python manage.py startapp users
 ```
+
 我们建好users app后，需要将它添加到配置文件中去。
-```
+
+```python
 bookstore/settings.py
 INSTALLED_APPS = (
     ...
     'users', # 用户模块
 )
 ```
+
 然后我们需要设计表结构，我们要思考一下，这个users数据表结构应该包含哪些字段？
 我们需要先抽象出一个BaseModel，一个基本模型，什么意思呢？因为数据表有共同的字段，我们可以把它抽象出来，比如create_at（创建时间），update_at（更新时间），is_delete（软删除）。注意！这个base_model.py要保存在根目录下面的db文件夹中，别忘了db文件夹中的__init__.py。
-```
+
+```python
 # bookstore/db/base_model.py
 from django.db import models
 
@@ -99,8 +115,10 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 ```
+
 然后我们针对Users设计一张表出来。
-```
+
+```python
 class Passport(BaseModel):
     '''用户模型类'''
     username = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
@@ -114,8 +132,10 @@ class Passport(BaseModel):
     class Meta:
         db_table = 's_user_account'
 ```
+
 接下来我们在PassportManager()中实现添加和查找账户信息的功能，这样抽象性更好。
-```
+
+```python
 # Create your models here.
 class PassportManager(models.Manager):
     def add_one_passport(self, username, password, email):
@@ -133,8 +153,10 @@ class PassportManager(models.Manager):
             passport = None
         return passport
 ```
+
 我们这里有一个get_hash函数，这个函数用来避免存储明文密码。所以我们来编写这个函数。在根目录新建一个文件夹utils，用来存放功能函数，比如get_hash，别忘了__init__.py文件。
-```
+
+```python
 # bookstore/utils/get_hash.py
 from hashlib import sha1
 
@@ -144,17 +166,23 @@ def get_hash(str):
     sh.update(str.encode('utf8'))
     return sh.hexdigest()
 ```
+
 接下来我们将Users的表映射到数据库中去。
+
 ```
 mysql> create database bookstore;
 $ python manage.py makemigrations users
 $ python manage.py migrate
 ```
+
 ## 2，用户系统前端模板编写
+
 接下来我们要将前端模板写一下，先建一个模板文件夹。
+
 ```
 $ mkdir templates
 ```
+
 我们第一个实现的功能是渲染注册页。将register.html拷贝到templates/users。
 将js，css，images文件夹拷贝到static文件夹下。作为静态文件。
 接下来我们将程序跑起来。看到了Django的欢迎页面。
@@ -178,7 +206,7 @@ urlpatterns = [
 ```
 '^'表示只匹配user为开头的url。
 然后在users app里面的urls配置url映射。
-```
+```python
 # users/urls.py
 from django.conf.urls import url
 from users import views
@@ -188,7 +216,7 @@ urlpatterns = [
 ]
 ```
 将templates的路径写入配置文件中。
-```
+```python
 # settings.py
 TEMPLATES = [
     {
@@ -200,7 +228,7 @@ TEMPLATES = [
 ```
 我们可以看到静态文件没有加载出来，所以我们要改一下html文件中的路径。将静态文件的路径前面加上'/static/'
 然后在配置文件中加入调试时使用的静态文件目录。
-```
+```python
 # settings.py
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
@@ -216,7 +244,7 @@ STATICFILES_DIRS = [
 2，校验数据。
 3，写入数据库。
 4，返回注册页（因为还没做首页）。
-```
+```python
 # users/views.py
 def register_handle(request):
     '''进行用户注册处理'''
@@ -243,7 +271,7 @@ def register_handle(request):
     return redirect(reverse('user:register'))
 ```
 配置urls.py
-```
+```python
 # users/urls.py
 url(r'^register_handle/$', views.register_handle, name='register_handle'), # 用户注册处理
 ```
@@ -303,21 +331,11 @@ urlpatterns = [
 ]
 ```
 
-- 在应用中定义模型的属性
-``` python
-from django.db import models
-from tinymce.models import HTMLField
-
-class HeroInfo(models.Model):
-    ...
-    hcontent = HTMLField()
-```
-- 在后台管理界面中，就会显示为富文本编辑器，而不是多行文本框
-
 下面在我们的应用中添加富文本编辑器。
 然后我们就可以设计我们的商品表结构了，我们可以通过观察detail.html来设计表结构。
 我们先把一些常用的常量存储到books/enums.py文件中
-```
+
+```python
 PYTHON = 1
 JAVASCRIPT = 2
 ALGORITHMS = 3
@@ -342,8 +360,10 @@ STATUS_CHOICE = {
     ONLINE: '上线'
 }
 ```
+
 然后再来设计表结构：
-```
+
+```python
 from db.base_model import BaseModel
 from tinymce.models import HTMLField
 from books.enums import *
@@ -368,8 +388,10 @@ class Books(BaseModel):
     class Meta:
         db_table = 's_books'
 ```
+
 同样，我们这里再写一下BooksManager()，有一些基本功能在这里抽象出来。
-```
+
+```python
 class BooksManager(models.Manager):
     '''商品模型管理器类'''
     # sort='new' 按照创建时间进行排序
@@ -404,17 +426,23 @@ class BooksManager(models.Manager):
             books = None
         return books
 ```
+
 做数据库迁移。
+
 ```
 $ python manage.py makemigrations books
 $ python manage.py migrate
 ```
+
 好，接下来我们就可以将首页index.html渲染出来了。现在根urls.py中配置url。
-```
+
+```python
 url(r'^', include('books.urls', namespace='books')), # 商品模块
 ```
+
 然后在books app中的urls.py中配置url。
-```
+
+```python
 from django.conf.urls import url
 from books import views
 
@@ -422,9 +450,12 @@ urlpatterns = [
     url(r'^$', views.index, name='index'), # 首页
 ]
 ```
+
 ## 2，编写书籍表视图函数。
+
 然后编写视图文件views.py。
-```
+
+```python
 # books/views.py
 from django.shortcuts import render
 from books.models import Books
@@ -468,12 +499,15 @@ def index(request):
     # 使用模板
     return render(request, 'books/index.html', context)
 ```
+
 然后将index.html拷贝到templates/books。
 
 
 ## 3，将Books注册到后台管理系统admin
+
 再将Books这个model注册到admin里面，方便管理，可以用来在后台编辑商品信息。
-```
+
+```python
 # books/admin.py
 from django.contrib import admin
 from books.models import Books
@@ -481,43 +515,57 @@ from books.models import Books
 
 admin.site.register(Books) # 在admin中添加有关商品的编辑功能。
 ```
+
 然后我们创建超级管理员账户。
+
 ```
 $ python manage.py createsuperuser
 ```
+
 这样我们就可以登陆admin来管理商品信息了，admin功能是django的杀手锏之一。
 接下来我们要把index.html中的文件路径改一下，要不然显示不出来。
 我们通过分析模板来改写成后端渲染出来的模板。比如：
-```
+
+```python
 {% for book in python_new %}
     <a href="#">{{ book.name }}</a>
 {% endfor %}
 ```
+
 由于我们在编辑商品信息时，需要上传书籍的图片，所以在配置文件中设置图片存放目录。
-```
+
+```python
 # settings.py
 MEDIA_ROOT = os.path.join(BASE_DIR, "static")
 ```
+
 我们将'/static/images/...'的格式改成django里面推荐的用法。
 在index.html开头添加
+
 ```
 {% load staticfiles %}
 ```
+
 并改写静态文件url格式为：
+
 ```
 <img src="{% static book.image %}">
 ```
+
 好，那我们首页的渲染工作也就完成了。
 
 ## 4，从注册页跳转到首页
 接下来我们将register.html注册完以后，跳转到首页去。
+
 ```
 # user/views.py
 return redirect(reverse('books:index'))
 ```
+
 做完注册和首页，我们可以来做登陆页面了。将login.html拷贝到templates/users/下。
 注意修改静态文件路径。然后编写/users/views.py文件中的login功能。
-```
+
+```python
 def login(request):
     '''显示登录页面'''
     username = ''
@@ -527,18 +575,23 @@ def login(request):
         'username': username,
         'checked': checked,
     }
-    
+
     return render(request, 'users/login.html', context)
 ```
+
 将url配置到urls.py
-```
+
+```python
 url(r'^login/$', views.login, name='login') # 显示登陆页面
 ```
+
 好，我们显示登陆页面也做完了。
 
 ## 5，登陆功能的实现。
+
 我们先来实现登录数据校验的功能。还有记住用户名的功能。
-```
+
+```python
 # users/views.py
 def login_check(request):
     '''进行用户登录校验'''
@@ -591,7 +644,7 @@ def login_check(request):
 </form>
 ```
 
-```
+```html
     {% csrf_token %}
     <input type="text" id="username" class="name_input" value="{{ username }}" placeholder="请输入用户名">
     <div class="user_error">输入错误</div>
@@ -605,7 +658,7 @@ def login_check(request):
     <input type="button" id="btnLogin" value="登录" class="input_submit">
 ```
 
-```
+```html
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
     <script>
         $(function () {
@@ -634,20 +687,24 @@ def login_check(request):
         })
     </script>
 ```
+
 配置urls.py
-```
+
+```python
 url(r'^login_check/$', views.login_check, name='login_check'), # 用户登录校验
 ```
 
 ## 6，首页上的登陆和注册按钮redirect到相关页面。
 
-```
+```html
 <a href="{% url 'user:login' %}">登录</a>
 <span>|</span>
 <a href="{% url 'user:register' %}">注册</a>
 ```
+
 现在登陆以后还是显示登陆和注册，应该显示用户名才对。我们来修改一下index.html。这里就会用到session这个概念了。顺便把logout功能也实现了。
-```
+
+```python
 # /user/logout
 def logout(request):
     '''用户退出登录'''
@@ -656,8 +713,10 @@ def logout(request):
     # 跳转到首页
     return redirect(reverse('books:index'))
 ```
+
 然后改写index.html
-```
+
+```python
 {% if request.session.islogin %}
 <div class="login_btn fl">
     欢迎您：<em>{{ request.session.username }}</em>
@@ -672,13 +731,16 @@ def logout(request):
 </div>
 {% endif %}
 ```
+
 配置urls.py
-```
+
+```python
 url(r'^logout/$', views.logout, name='logout'), # 退出用户登录
 ```
 
 ## 7，实现商品详情页的功能
-```
+
+```python
 # books/views.py
 def detail(request, books_id):
     '''显示商品的详情页面'''
@@ -698,13 +760,17 @@ def detail(request, books_id):
     # 使用模板
     return render(request, 'books/detail.html', context)
 ```
+
 配置urls.py
-```
+
+```python
 url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 ```
+
 将detail.html页面拷贝到templates/books下。
 然后将detail.html页面改写成django可以渲染的模板。
-```
+
+```html
 <h3>{{ books.name }}</h3>
 <p>{{ books.desc }}</p>
 <div class="price_bar">
@@ -712,7 +778,8 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
     <span class="show_unit">单  位：{{ books.unit }}</span>
 </div>
 ```
-```
+
+```html
 {% for book in books_li %}
 <li>
     <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static book.image %}"></a>
@@ -847,7 +914,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
                         <label>用户名:</label>
                         <input type="text" name="user_name" id="user_name">
                         <span class="error_tip">提示信息</span>
-                    </li>                   
+                    </li>
                     <li>
                         <label>密码:</label>
                         <input type="password" name="pwd" id="pwd">
@@ -1422,7 +1489,7 @@ class Address(BaseModel):
         db_table = 's_user_address'
 ```
 然后实现AddressManager()，对一些常用函数做抽象。
-```
+```python
 class AddressManager(models.Manager):
     '''地址模型管理器类'''
     def get_default_address(self, passport_id):
@@ -1973,7 +2040,7 @@ url(r'^del/$', views.cart_del, name='delete'), # 购物车商品记录删除
 
 ## 5，实现购物车页面编辑商品数量的功能。
 我们先来编写更新购物车的接口。
-```
+```python
 # cart/views.py
 # 前端传过来的参数:商品id books_id 更新数目 books_count
 # post
@@ -2014,7 +2081,8 @@ def cart_update(request):
     return JsonResponse({'res': 5})
 ```
 然后编写jquery代码来实现前端更新数量以及全选这样的功能。
-```
+
+```javascript
         // 全选和全不选
         $('.settlements').find(':checkbox').change(function () {
             // 获取全选checkbox的选中状态
@@ -2194,7 +2262,8 @@ def cart_update(request):
 $ python manage.py startapp order
 ```
 然后订单信息model的设计如下：
-```
+
+```python
 from django.db import models
 from db.base_model import BaseModel
 # Create your models here.
@@ -2274,7 +2343,7 @@ $ python manage.py migrate
 ## 2，开发有关订单的接口。
 我们先把订单显示页面来渲染出来。
 先来开发后台接口。
-```
+```python
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from utils.decorators import login_required
@@ -2364,7 +2433,7 @@ urlpatterns = [
 ]
 ```
 然后将place_order.html拷贝到templates/order文件夹下。并用继承base.html的方式来改写。
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书店-首页{% endblock title %}
@@ -2417,13 +2486,13 @@ urlpatterns = [
             <li class="col07">25.80元</li>   
         </ul>
         <ul class="book_list_td clearfix">
-            <li class="col01">2</li>            
+            <li class="col01">2</li>
             <li class="col02"><img src="images/book/book003.jpg"></li>
             <li class="col03">Python Cookbook</li>
             <li class="col04">册</li>
             <li class="col05">16.80元</li>
             <li class="col06">1</li>
-            <li class="col07">16.80元</li>   
+            <li class="col07">16.80元</li>
         </ul>
     </div>
 
@@ -2438,15 +2507,14 @@ urlpatterns = [
     </div>
 
     <div class="order_submit clearfix">
-        <a href="javascript:;" id="order_btn">提交订单</a>
-    </div>  
+        <a href="javascript:;" id="order_btn" books_ids="{{ books_ids }}">提交订单</a> 
+    </div>
 {% endblock body %}
 {% block bottom %}
     <div class="popup_con">
         <div class="popup">
             <p>订单提交成功！</p>
         </div>
-        
         <div class="mask"></div>
     </div>
 {% endblock bottom %}
@@ -2460,23 +2528,24 @@ urlpatterns = [
                 setTimeout(function(){
                     $('.popup_con').fadeOut('fast',function(){
                         window.location.href = 'index.html';
-                    }); 
+                    });
                 },3000)
-                
             });
         });
     </script>
 {% endblock bottomfiles %}
 ```
+
 然后将模板中的对应元素修改为后端渲染的代码。
-```
+
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书店-我的订单{% endblock title %}
 {% block topfiles %}
 {% endblock topfiles %}
 {% block body %}
-    
+
     <h3 class="common_title">确认收货地址</h3>
 
     <div class="common_list_con clearfix">
@@ -2487,8 +2556,8 @@ urlpatterns = [
         <a href="user_center_site.html" class="edit_site">编辑收货地址</a>
 
     </div>
-    
-    <h3 class="common_title">支付方式</h3>  
+
+    <h3 class="common_title">支付方式</h3>
     <div class="common_list_con clearfix">
         <div class="pay_style_con clearfix">
             <input type="radio" name="pay_style" checked>
@@ -2503,14 +2572,13 @@ urlpatterns = [
     </div>
 
     <h3 class="common_title">商品列表</h3>
-    
     <div class="common_list_con clearfix">
         <ul class="book_list_th clearfix">
             <li class="col01">商品名称</li>
             <li class="col02">商品单位</li>
             <li class="col03">商品价格</li>
             <li class="col04">数量</li>
-            <li class="col05">小计</li>       
+            <li class="col05">小计</li>
         </ul>
         {% for book in books_li %}
         <ul class="books_list_td clearfix">
@@ -2536,15 +2604,14 @@ urlpatterns = [
     </div>
 
     <div class="order_submit clearfix">
-        <a href="javascript:;" id="order_btn">提交订单</a>
-    </div>  
+        <a href="javascript:;" id="order_btn" books_ids="{{ books_ids }}">提交订单</a>
+    </div>
 {% endblock body %}
 {% block bottom %}
     <div class="popup_con">
         <div class="popup">
             <p>订单提交成功！</p>
         </div>
-        
         <div class="mask"></div>
     </div>
 {% endblock bottom %}
@@ -2558,9 +2625,8 @@ urlpatterns = [
                 setTimeout(function(){
                     $('.popup_con').fadeOut('fast',function(){
                         window.location.href = 'index.html';
-                    }); 
+                    });
                 },3000)
-                
             });
         });
     </script>
@@ -2570,7 +2636,8 @@ urlpatterns = [
 
 ## 3，订单提交功能
 接下来我们来开发提交订单的功能。先开发后端接口，这里要用到事务，transaction，原子操作的概念。
-```
+
+```python
 # order/views.py
 # 提交订单，需要向两张表中添加信息
 # s_order_info:订单信息表 添加一条
@@ -2736,12 +2803,13 @@ def order_commit(request):
     </script>
 {% endblock bottomfiles %}
 ```
+
 那么，我们提交订单的功能也就开发好了。
 
 ## 4，接下来我们回过头去把购物车中的提交功能给做了，然后就能做支付功能了。
 将cart.html中的去结算功能给出如下的实现。
 
-```
+```html
     <form method="post" action="/order/place/">
     {% for book in books_li %}
     <ul class="cart_list_td clearfix">
@@ -2762,7 +2830,7 @@ def order_commit(request):
         <li class="col08"><a href="javascript:;">删除</a></li>
     </ul>
     {% endfor %}
-    
+
 
     <ul class="settlements">
         {% csrf_token %}
@@ -2788,7 +2856,7 @@ def order_commit(request):
 <label class="bank">银行卡支付</label>
 ```
 查缺补漏，发现编辑收货地址功能还没有实现。我们先来编写用户中心地址页的接口。
-```
+```python
 @login_required
 def address(request):
     '''用户中心-地址页'''
@@ -2867,7 +2935,7 @@ def address(request):
 
 ## 6，完善用户中心
 接下来我们进一步完善一下用户中心，把用户中心的订单显示页面给做了。先来实现订单显示的后台接口。
-```
+```python
 # users/views.py
 
 @login_required
@@ -2911,7 +2979,7 @@ def order(request):
 ```
 然后将user_center_order.html拷贝到templates/users文件夹下，并继承base.html。
 然后改写模板中的元素，使得后端可以渲染。
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书店-首页{% endblock title %}
@@ -2979,7 +3047,7 @@ def order(request):
 ## 7，“去付款”功能的实现
 接下来我们需要实现“去付款”功能。这里需要集成阿里的支付宝sdk。
 我们先来编写后端代码。
-```
+```python
 # order/views.py
 # 前端需要发过来的参数:order_id
 # post
@@ -3169,7 +3237,8 @@ SESSION_CACHE_ALIAS = "default"
 $ python manage.py startapp comments
 ```
 然后设计数据库表结构。
-```
+
+```python
 from django.db import models
 from db.base_model import BaseModel
 from users.models import Passport
@@ -3184,9 +3253,11 @@ class Comments(BaseModel):
     class Meta:
         db_table = 's_comment_table'
 ```
+
 这里要注意外键的使用和理解。
 然后我们要在配置文件里注册app。
-```
+
+```python
 # bookstore/settings.py
 INSTALLED_APPS = (
     ...
@@ -3195,7 +3266,7 @@ INSTALLED_APPS = (
 )
 ```
 然后我们来写评论应用的视图函数。视图函数使用redis作为缓存，缓存了get请求的结果。
-```
+```python
 # comments/views.py
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -3270,7 +3341,7 @@ def comment(request, books_id):
 
 ```
 然后注册url。
-```
+```python
 # 根urls.py: bookstore: urls.py
 urlpatterns = [
     ...
@@ -3279,7 +3350,7 @@ urlpatterns = [
 ]
 ```
 comments app的url注册。
-```
+```python
 from django.conf.urls import url
 from comments import views
 
@@ -3288,7 +3359,7 @@ urlpatterns = [
 ]
 ```
 注册好url以后，我们要编写detail.html里面的前端代码了。
-```
+```html
             <div class="operate_btn">
                 {% csrf_token %}
                 <a href="javascript:;" class="buy_btn">立即购买</a>
@@ -3307,7 +3378,7 @@ urlpatterns = [
             </div>
 ```
 然后写样式。
-```
+```css
 <style type="text/css">
 .comment {
     background-color: #c40000;
@@ -3326,7 +3397,7 @@ urlpatterns = [
 </style>
 ```
 以及提交评论的js代码。
-```
+```javascript
     // 获取评论
     $.ajax({
         url: '/comment/comment/' + $('#comment-input').data('bookid'),
@@ -3390,9 +3461,12 @@ urlpatterns = [
 这样评论功能就做好了。
 
 # <a id="9">9，发送邮件功能实现。</a>
+
 ## 1，同步发送邮件
+
 先在配置文件中配置邮件相关参数。
-```
+
+```python
 # settings.py
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.126.com'
@@ -3405,13 +3479,13 @@ EMAIL_HOST_PASSWORD = 'xxxxxxxx'
 EMAIL_FROM = 'shangguigu<xxxxxxxx@126.com>'
 ```
 在注册页的视图函数里写发邮件的代码。
-```
+```python
 # users/views.py
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 ```
 itsdangerous是一个产生token的库，有flask的作者编写。
-```
+```python
 def register_handle(request):
     '''进行用户注册处理'''
     # 接收数据
@@ -3449,11 +3523,25 @@ def register_handle(request):
     # 注册完，还是返回注册页。
     return redirect(reverse('books:index'))
 ```
-register_handle函数变为以上代码，增加了发送邮件的功能。
+
+register_handle函数变为以上代码，增加了发送邮件的功能。注意这里我们没有实现check_passport函数。所以要在`users/models.py`中的`PassportManager`中实现这个函数。
+
+```python
+class PassportManager(models.Manager):
+    ...
+    def check_passport(self, username):
+        try:
+            passport = self.get(username=username)
+        except self.model.DoesNotExist:
+            passport = None
+        if passport:
+            return True
+        return False
+```
 
 ## 2，使用消息队列celery来异步发送邮件。
 首先配置celery。在bookstore文件夹下面。
-```
+```python
 # bookstore/celery.py
 from __future__ import absolute_import, unicode_literals
 import os
@@ -3479,7 +3567,7 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 ```
 然后在users app中编写异步任务。
-```
+```python
 # users/tasks.py
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
@@ -3497,7 +3585,7 @@ def send_active_email(token, username, email):
     send_mail(subject, message, sender, receiver, html_message=html_message)
 ```
 然后在视图函数中导入异步任务。
-```
+```python
 from users.tasks import send_active_email
 def register_handle(request):
     ...
@@ -3505,7 +3593,7 @@ def register_handle(request):
     ...
 ```
 然后改写根应用文件夹里的__init__.py，将整个文件改为：
-```
+```python
 from __future__ import absolute_import, unicode_literals
 
 import pymysql
@@ -3522,7 +3610,8 @@ $ celery -A bookstore worker -l info
 ```
 
 # <a id="10">10，登陆验证码功能实现</a>
-```
+
+```python
 # users/views.py
 from django.http import HttpResponse
 def verifycode(request):
@@ -3584,7 +3673,7 @@ def verifycode(request):
 </div>
 ```
 前端需要向后端post数据。post以下数据
-```
+```javascript
             username = $('#username').val()
             password = $('#pwd').val()
             csrf = $('input[name="csrfmiddlewaretoken"]').val()
@@ -3600,7 +3689,7 @@ def verifycode(request):
             }
 ```
 然后在后端进行校验。login_check函数改为以下代码实现。
-```
+```python
 def login_check(request):
     '''进行用户登录校验'''
     # 1.获取数据
@@ -3908,7 +3997,7 @@ def user(request):
 
 # <a id="14">14，前端过滤器实现</a>
 在users文件夹中新建templatetags文件夹。然后新建__init__.py文件，这是空文件。然后新建filters.py文件。
-```
+```python
 from django.template import Library
 
 # 创建一个Library类的对象
@@ -3929,18 +4018,18 @@ def order_status(status):
     return status_dict[status]
 ```
 然后在根应用settings.py里面添加应用：
-```
+```python
 INSTALLED_APPS = (
     ...
     'users.templatetags.filters', # 过滤器功能
 )
 ```
 这样我们就能在前端使用这个过滤器了。
-```
-<td width="15%">{{ order.status|order_status }}</td>
+```html
+<td width="15%">{{ order.status | order_status }}</td>
 ```
 注意要在页面里
-```
+```html
 {% load filters %}
 ```
 
