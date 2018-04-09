@@ -2810,7 +2810,7 @@ def address(request):
 
         # 2.进行校验
         if not all([recipient_name, recipient_addr, zip_code, recipient_phone]):
-            return render(request, 'users/user_center_site.html', {'errmsg': '参数不必为空!'})
+            return render(request, 'users/user_center_site.html', {'errmsg': '参数不能为空!'})
 
         # 3.添加收货地址
         Address.objects.add_one_address(passport_id=passport_id,
