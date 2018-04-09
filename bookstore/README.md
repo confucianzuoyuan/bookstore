@@ -3367,7 +3367,7 @@ urlpatterns = [
     $('#submit-comment').click(function () {
         var book_id = $('#comment-input').data('bookid');
         var user_id = $('#comment-input').data('userid');
-        var content = $('#comment-input .input').val();
+        var content = $('#comment-input input').val();
         var data = {
             book_id: book_id,
             user_id: user_id,
