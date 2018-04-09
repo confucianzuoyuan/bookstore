@@ -3340,7 +3340,7 @@ urlpatterns = [
                 for(i = 0; i < data.length; i++) {
                     var head = '<div>';
                     var tail = '</div>';
-                    var temp = head + '<span>' + data[i].user_id + '</span>' + '<br>' + '<span>' + data[i].content + '</span>';
+                    var temp = head + '<span>' + data[i].user_id + '</span>' + '<br>' + '<span>' + data[i].content + '</span>' + tail;
                     dom_element += temp;
                 }
                 dom_element = div_head + dom_element + div_tail;
