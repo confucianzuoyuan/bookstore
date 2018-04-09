@@ -2878,7 +2878,7 @@ def address(request):
 
         # 2.进行校验
         if not all([recipient_name, recipient_addr, zip_code, recipient_phone]):
-            return render(request, 'users/user_center_site.html', {'errmsg': '参数不必为空!'})
+            return render(request, 'users/user_center_site.html', {'errmsg': '参数不能为空!'})
 
         # 3.添加收货地址
         Address.objects.add_one_address(passport_id=passport_id,
@@ -3411,7 +3411,7 @@ urlpatterns = [
                 for(i = 0; i < data.length; i++) {
                     var head = '<div>';
                     var tail = '</div>';
-                    var temp = head + '<span>' + data[i].user_id + '</span>' + '<br>' + '<span>' + data[i].content + '</span>';
+                    var temp = head + '<span>' + data[i].user_id + '</span>' + '<br>' + '<span>' + data[i].content + '</span>' + tail;
                     dom_element += temp;
                 }
                 dom_element = div_head + dom_element + div_tail;
@@ -3438,7 +3438,7 @@ urlpatterns = [
     $('#submit-comment').click(function () {
         var book_id = $('#comment-input').data('bookid');
         var user_id = $('#comment-input').data('userid');
-        var content = $('#comment-input .input').val();
+        var content = $('#comment-input input').val();
         var data = {
             book_id: book_id,
             user_id: user_id,
