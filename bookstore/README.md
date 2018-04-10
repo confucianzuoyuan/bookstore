@@ -2229,7 +2229,7 @@ url(r'^update/$', views.cart_update, name="update")
         })
 ```
 这里要注意看看jquery是怎么发送ajax post请求的。
-```
+```js
         // 更新redis中购物车商品数目
         error_update = false
         function update_remote_cart_info(books_id, books_count) {
@@ -2320,7 +2320,7 @@ class OrderInfo(BaseModel):
         db_table = 's_order_info'
 ```
 由于每一笔订单都是由不同的商品组成，所以我们需要把一笔订单拆分开，来建立一个订单中每种商品的信息数据表。关系数据库的一个好处就是强约束，冗余也很少，这点比mongodb好。
-```
+```py
 class OrderGoodsManager(models.Manager):
     '''订单商品模型管理器类'''
     pass
@@ -2424,11 +2424,11 @@ def order_place(request):
     return render(request, 'order/place_order.html', context)
 ```
 然后配置urls.py。
-```
+```py
 # urls.py
     url(r'^order/', include('order.urls', namespace='order')), # 订单模块
 ```
-```
+```py
 # order/urls.py
 from django.conf.urls import url
 from order import views
@@ -2765,11 +2765,11 @@ def order_commit(request):
     return JsonResponse({'res': 6})
 ```
 然后配置urls.py
-```
+```py
     url(r'^commit/$', views.order_commit, name='commit'), # 生成订单
 ```
 然后改写前端页面，来调用后端提交订单的接口。
-```
+```js
 {% block bottomfiles %}
     <script type="text/javascript">
         $('#order_btn').click(function() {
@@ -2850,7 +2850,7 @@ def order_commit(request):
 
 ## 5，接下来我们将提交订单页面完善一下，完成去支付功能。将支付方式绑定value值，供提交。
 
-```
+```html
 <input type="radio" name="pay_style" value="1" checked>
 <label class="cash">货到付款</label>
 <input type="radio" name="pay_style" value="2">
@@ -2860,7 +2860,7 @@ def order_commit(request):
 <input type="radio" name="pay_style" value="4">
 <label class="bank">银行卡支付</label>
 ```
-查缺补漏，发现编辑收货地址功能还没有实现。我们先来编写用户中心地址页的接口。
+查缺补漏，发现编辑收货地址功能还没有实现。我们先来编写用户中心地址页的接口。注意，要写在`users/views.py`中。
 ```python
 @login_required
 def address(request):
@@ -2896,12 +2896,12 @@ def address(request):
         return redirect(reverse('user:address'))
 ```
 然后配置urls.py
-```
+```py
     url(r'^address/$', views.address, name='address'), # 用户中心-地址页
 ```
 然后将user_center_site.html拷贝到templates/users文件夹下。并继承base.html。
 然后改写模板。
-```
+```html
 <div class="site_con">
     <dl>
         <dt>当前地址：</dt>
@@ -2914,7 +2914,7 @@ def address(request):
 </div>
 ```
 改写form提交表单。
-```
+```html
 <form method="post" action="/user/address/">
     {% csrf_token %}
     <div class="form_group">
@@ -3101,9 +3101,10 @@ def order_pay(request):
 ```
 然后我们把公钥和私钥拷贝到order文件夹下。
 然后我们需要获取用户的支付结果。
-```
+```py
 # 前端需要发过来的参数:order_id
 # post
+from alipay import AliPay
 def check_pay(request):
     '''获取用户支付的结果'''
     # 用户登录判断
@@ -3159,16 +3160,16 @@ def check_pay(request):
             return JsonResponse({'res':4, 'errmsg':'支付出错'})
 ```
 配置支付宝gateway到配置文件中。
-```
+```py
 ALIPAY_URL='https://openapi.alipaydev.com/gateway.do'
 ```
 配置urls.py。
-```
+```py
     url(r'^pay/$', views.order_pay, name='pay'), # 订单支付
     url(r'^check_pay/$', views.check_pay, name='check_pay'), # 查询支付结果
 ```
 然后编写前端jquery代码，来处理支付后的结果，比如支付成功以后刷新页面。
-```
+```js
 {% block bottomfiles%}
     <script>
     $(function () {
@@ -3209,7 +3210,7 @@ ALIPAY_URL='https://openapi.alipaydev.com/gateway.do'
 
 # <a id="7">7，使用缓存</a>
 使用redis缓存首页的页面。
-```
+```py
 from django.views.decorators.cache import cache_page
 @cache_page(60 * 15)
 def index(request):
@@ -3218,7 +3219,7 @@ def index(request):
 ```
 别忘了把redis启动起来。
 在settings.py中配置redis缓存。
-```
+```py
 # pip install django-redis
 CACHES = {
     "default": {
