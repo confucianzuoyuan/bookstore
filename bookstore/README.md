@@ -2080,6 +2080,11 @@ def cart_update(request):
 
     return JsonResponse({'res': 5})
 ```
+
+注意别忘了配置cart app的urls.py。
+```python
+url(r'^update/$', views.cart_update, name="update")
+```
 然后编写jquery代码来实现前端更新数量以及全选这样的功能。
 
 ```javascript
