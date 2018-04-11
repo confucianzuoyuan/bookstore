@@ -121,7 +121,7 @@ class BaseModel(models.Model):
 ```python
 class Passport(BaseModel):
     '''用户模型类'''
-    username = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
+    username = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
     password = models.CharField(max_length=40, verbose_name='用户密码')
     email = models.EmailField(verbose_name='用户邮箱')
     is_active = models.BooleanField(default=False, verbose_name='激活状态')
@@ -2883,7 +2883,7 @@ def address(request):
 
         # 2.进行校验
         if not all([recipient_name, recipient_addr, zip_code, recipient_phone]):
-            return render(request, 'users/user_center_site.html', {'errmsg': '参数不能为空!'})
+            return render(request, 'users/user_center_site.html', {'errmsg': '参数不能为空!'})
 
         # 3.添加收货地址
         Address.objects.add_one_address(passport_id=passport_id,
@@ -3052,10 +3052,47 @@ def order(request):
 ## 7，“去付款”功能的实现
 接下来我们需要实现“去付款”功能。这里需要集成阿里的支付宝sdk。
 我们先来编写后端代码。
+
+生成秘钥文件
+```
+openssl
+OpenSSL> genrsa -out app_private_key.pem 2048  # 私钥
+OpenSSL> rsa -in app_private_key.pem -pubout -out app_public_key.pem # 导出公钥
+OpenSSL> exit
+```
+设置支付宝沙箱公钥
+支付宝逐渐转换为RSA2秘钥，可以使用官方工具生成秘钥
+```
+支付宝沙箱地址：https://openhome.alipay.com/platform/appDaily.htm?tab=info
+生成RSA2教程：https://docs.open.alipay.com/291/106130
+```
+设置本地公钥&私钥格式
+```
+app_private_key_string.pem
+
+-----BEGIN RSA PRIVATE KEY-----
+         私钥内容
+-----END RSA PRIVATE KEY-----
+
+
+alipay_public_key_string.pem
+
+-----BEGIN PUBLIC KEY-----
+         公钥内容
+-----END PUBLIC KEY-----
+```
+
+
 ```python
 # order/views.py
 # 前端需要发过来的参数:order_id
 # post
+# 接口文档：https://github.com/fzlee/alipay/blob/master/README.zh-hans.md
+# 安装python-alipay-sdk
+# pip install python-alipay-sdk --upgrade
+
+from alipay import AliPay
+
 def order_pay(request):
     '''订单支付'''
     # 用户登录判断
@@ -3076,12 +3113,15 @@ def order_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
+	app_private_key_string = open("/path/app_private_key.pem").read()
+    alipay_public_key_string = open("/path/app_public_key.pem").read()
+
     # 和支付宝进行交互
     alipay = AliPay(
         appid="2016090800464054", # 应用id
         app_notify_url=None,  # 默认回调url
-        app_private_key_path=os.path.join(settings.BASE_DIR, 'order/app_private_key.pem'),
-        alipay_public_key_path=os.path.join(settings.BASE_DIR, 'order/alipay_public_key.pem'),  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+        app_private_key_path=app_private_key_string,
+        alipay_public_key_path=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
         sign_type = "RSA2",  # RSA 或者 RSA2
         debug = True,  # 默认False
     )
@@ -3090,7 +3130,7 @@ def order_pay(request):
     total_pay = order.total_price + order.transit_price # decimal
     order_string = alipay.api_alipay_trade_page_pay(
         out_trade_no=order_id, # 订单id
-        total_amount=str(total_pay),
+        total_amount=str(total_pay), # Json传递，需要将浮点转换为字符串
         subject='尚硅谷书城%s' % order_id,
         return_url=None,
         notify_url=None  # 可选, 不填则使用默认notify url
@@ -3126,15 +3166,17 @@ def check_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
+	app_private_key_string = open("/path/app_private_key.pem").read()
+    alipay_public_key_string = open("/path/app_public_key.pem").read()
+
     # 和支付宝进行交互
     alipay = AliPay(
-        appid="2016090800464054",  # 应用id
+        appid="2016090800464054", # 应用id
         app_notify_url=None,  # 默认回调url
-        app_private_key_path=os.path.join(settings.BASE_DIR, 'df_order/app_private_key.pem'),
-        alipay_public_key_path=os.path.join(settings.BASE_DIR, 'df_order/alipay_public_key.pem'),
-        # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
-        sign_type="RSA2",  # RSA 或者 RSA2
-        debug=True,  # 默认False
+        app_private_key_path=app_private_key_string,
+        alipay_public_key_path=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+        sign_type = "RSA2",  # RSA 或者 RSA2
+        debug = True,  # 默认False
     )
 
     while True:
