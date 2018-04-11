@@ -1447,7 +1447,7 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
         <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
         <div class="operate">
             <span class="price">￥{{ books.price }}</span>
-            <span class="unit">{{ books.unite }}</span>
+            <span class="unit">{{ books.unit }}</span>
             <a href="#" class="add_books" title="加入购物车"></a>
         </div>
     </li>
@@ -2590,7 +2590,7 @@ urlpatterns = [
             <li class="col01">{{ forloop.counter }}</li>
             <li class="col02"><img src="{% static book.image %}"></li>
             <li class="col03">{{ book.name }}</li>
-            <li class="col04">{{ book.unite }}</li>
+            <li class="col04">{{ book.unit }}</li>
             <li class="col05">{{ book.price }}元</li>
             <li class="col06">{{ book.count }}</li>
             <li class="col07">{{ book.amount }}元</li>
@@ -3814,14 +3814,14 @@ class BooksIndex(indexes.SearchIndex, indexes.Indexable):
     </div>
 
     <div class="main_wrap clearfix">
-            <ul class="books_type_list clearfix">
+            <ul class="book_type_list clearfix">
                 {% for item in page %}
                     <li>
                         <a href="{% url 'books:detail' books_id=item.object.id %}"><img src="{% static item.object.image %}"></a>
                         <h4><a href="{% url 'books:detail' books_id=item.object.id %}">{{ item.object.name }}</a></h4>
                         <div class="operate">
                             <span class="price">￥{{ item.object.price }}</span>
-                            <span class="unit">{{ item.object.unite }}</span>
+                            <span class="unit">{{ item.object.unit }}</span>
                             <a href="#" class="add_books" title="加入购物车"></a>
                         </div>
                     </li>
@@ -3984,14 +3984,14 @@ def user(request):
 ```
 <h3 class="common_title2">最近浏览</h3>
 <div class="has_view_list">
-    <ul class="books_type_list clearfix">
+    <ul class="book_type_list clearfix">
         {% for books in books_li %}
             <li>
                 <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
                 <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ books.name }}</a></h4>
                 <div class="operate">
                     <span class="price">￥{{ books.price }}</span>
-                    <span class="unit">{{ books.unite }}</span>
+                    <span class="unit">{{ books.unit }}</span>
                     <a href="#" class="add_books" title="加入购物车"></a>
                 </div>
             </li>
