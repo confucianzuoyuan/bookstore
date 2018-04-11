@@ -3476,7 +3476,10 @@ urlpatterns = [
 # settings.py
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.126.com'
+# 126和163邮箱的SMTP端口为25； QQ邮箱使用的SMTP端口为465
 EMAIL_PORT = 25
+# 如果使用QQ邮箱发送邮件，需要开启SSL加密
+# EMAIL_USE_SSL = True
 # 发送邮件的邮箱
 EMAIL_HOST_USER = 'xxxxxxxx@126.com'
 # 在邮箱中设置的客户端授权密码
@@ -3549,7 +3552,6 @@ class PassportManager(models.Manager):
 首先配置celery。在bookstore文件夹下面。
 ```python
 # bookstore/celery.py
-from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 
@@ -3575,7 +3577,6 @@ def debug_task(self):
 然后在users app中编写异步任务。
 ```python
 # users/tasks.py
-from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from django.conf import settings
 from django.core.mail import send_mail
@@ -3583,7 +3584,7 @@ from django.core.mail import send_mail
 @shared_task
 def send_active_email(token, username, email):
     '''发送激活邮件'''
-    subject = '天天生鲜用户激活' # 标题
+    subject = '尚硅谷书城用户激活' # 标题
     message = ''
     sender = settings.EMAIL_FROM # 发件人
     receiver = [email] # 收件人列表
@@ -3600,7 +3601,6 @@ def register_handle(request):
 ```
 然后改写根应用文件夹里的__init__.py，将整个文件改为：
 ```python
-from __future__ import absolute_import, unicode_literals
 
 import pymysql
 pymysql.install_as_MySQLdb()
