@@ -1349,6 +1349,8 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 ```py
 # 商品种类 页码 排序方式
 # /list/(种类id)/(页码)/?sort=排序方式
+from django.core.paginator import Paginator
+
 def list(request, type_id, page):
     '''商品列表页面'''
     # 获取排序方式
@@ -1473,6 +1475,8 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 接下来我们来实现用户中心的功能，先不实现最近浏览这个功能。首先来看一下这个前端页面，那我们知道我们还得给User这个model添加地址表。
 那我们先来建model
 ```py
+# user/models.py
+
 class Address(BaseModel):
     '''地址模型类'''
     recipient_name = models.CharField(max_length=20, verbose_name='收件人')
@@ -1566,7 +1570,6 @@ url(r'^$', views.user, name='user'), # 用户中心-信息页
 ```py
 # utils/decorators.py
 from django.shortcuts import redirect
-from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 
 
@@ -1626,11 +1629,10 @@ from django_redis import get_redis_connection
 
 # 前端发过来的数据：商品id 商品数目 books_id books_count
 # 涉及到数据的修改，使用post方式
+
+@login_required
 def cart_add(request):
     '''向购物车中添加数据'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res':0, 'errmsg':'请先登录'})
 
     # 接收数据
     books_id = request.POST.get('books_id')
@@ -1680,11 +1682,10 @@ def cart_add(request):
 在登陆以后，我们应该能够看到购物车里的商品数量，现在我们就来实现这个功能。
 ```py
 # cart/views.py
+
+@login_required
 def cart_count(request):
     '''获取用户购物车中商品的数目'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0})
 
     # 计算用户购物车商品的数量
     conn = get_redis_connection('default')
@@ -1728,6 +1729,7 @@ def cart_count(request):
 ```
 然后在前端编写添加到购物车的jquery代码。
 ```html
+
 <script type="text/javascript">
     var $add_x = $('#add_cart').offset().top;
     var $add_y = $('#add_cart').offset().left;
@@ -1848,6 +1850,8 @@ $(function () {
 接下来我们来实现展示购物车页面的功能。
 编写views.py。
 ```py
+# cart/views.py
+
 @login_required
 def cart_show(request):
     '''显示用户购物车页面'''
@@ -1925,11 +1929,10 @@ def cart_show(request):
 # 前端传过来的参数:商品id books_id
 # post
 # /cart/del/
+
+@login_required
 def cart_del(request):
     '''删除用户购物车中商品的信息'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg': '请先登录'})
 
     # 接收数据
     books_id = request.POST.get('books_id')
@@ -1940,7 +1943,7 @@ def cart_del(request):
 
     books = Books.objects.get_books_by_id(books_id=books_id)
     if books is None:
-        return JsonResponse({'res': 2, 'errmsg': '商品不存存'})
+        return JsonResponse({'res': 2, 'errmsg': '商品不存在'})
 
     # 删除购物车商品信息
     conn = get_redis_connection('default')
@@ -2044,11 +2047,10 @@ url(r'^del/$', views.cart_del, name='delete'), # 购物车商品记录删除
 # 前端传过来的参数:商品id books_id 更新数目 books_count
 # post
 # /cart/update/
+
+@login_required
 def cart_update(request):
     '''更新购物车商品数目'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg':'请先登录'})
 
     # 接收数据
     books_id = request.POST.get('books_id')
@@ -2861,6 +2863,7 @@ def order_commit(request):
 ```
 查缺补漏，发现编辑收货地址功能还没有实现。我们先来编写用户中心地址页的接口。注意，要写在`users/views.py`中。
 ```python
+
 @login_required
 def address(request):
     '''用户中心-地址页'''
@@ -3123,11 +3126,9 @@ alipay_public_key_string.pem
 
 from alipay import AliPay
 
+@login_required
 def order_pay(request):
     '''订单支付'''
-    # 用户登录判断
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg': '用户未登录'})
 
     # 接收订单id
     order_id = request.POST.get('order_id')
@@ -3180,11 +3181,10 @@ def order_pay(request):
 # 前端需要发过来的参数:order_id
 # post
 from alipay import AliPay
+
+@login_required
 def check_pay(request):
     '''获取用户支付的结果'''
-    # 用户登录判断
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg': '用户未登录'})
 
     passport_id = request.session.get('passport_id')
     # 接收订单id
@@ -3253,7 +3253,7 @@ ALIPAY_URL='https://openapi.alipaydev.com/gateway.do'
 {% block bottomfiles%}
     <script>
     $(function () {
-        $('.oper_btn').click(function () {
+        $('.oper_btn').click(function () {
             // 获取订单id和订单的状态
             order_id = $(this).attr('order_id')
             order_status = $(this).attr('order_status')
@@ -3453,16 +3453,39 @@ urlpatterns = [
                 <a href="#" id="write-comment" class="comment">我要写评论</a>
             </div>
             <div style="display:flex;" id="comment-input" data-bookid="{{ books.id }}" data-userid="{{ request.session.passport_id }}">
-              <div>
-                <input type="text" placeholder="评论内容">
-              </div>
-              <div id="submit-comment">
-                <button>
-                  提交评论
-                </button>
-              </div>
+                <div>
+                    <input type="text" placeholder="评论内容">
+                </div>
+                <div id="submit-comment">
+                    <button>
+                      提交评论
+                    </button>
+                </div>
             </div>
 ```
+
+再增加id-book_detail 和id-book_comment 增加点击效果 
+```html
+    <div class="r_wrap fr clearfix">
+        <ul class="detail_tab clearfix">
+            <li class="active" id="detail">商品介绍</li>
+            <li id="comment">评论</li>
+        </ul>
+
+        <div class="tab_content" >
+            <dl id="book_detail">
+                <dt>商品详情：</dt>
+                <dd>{{ books.detail | safe }}</dd>
+            </dl>
+            <dl id="book_comment" style="display: none; font-size: 15px; color: #0a0a0a">
+                <dt>用户评论:</dt>
+                <dd></dd>
+            </dl>
+        </div>
+    </div>
+```
+
+
 然后写样式。
 ```css
 <style type="text/css">
