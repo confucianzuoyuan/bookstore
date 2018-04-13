@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # 配置为mysql
         'NAME': 'bookstore', # 数据库的名字
         'USER': 'root', # 用户名
-        'PASSWORD': 'atguigu', # 密码
+        'PASSWORD': 'BaiYuan329064BY', # 密码
         'HOST': '127.0.0.1',  # host
         'PORT': 3306,  # 端口
     }
@@ -121,7 +121,7 @@ STATIC_URL = '/static/' # 静态文件的路径
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ] # 调试时使用的静态文件目录
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'collect_static')
 # 上传文件指定的路径，在生产环境中会上传到CDN，七牛云，又拍云，阿里云，也有可能将静态文件放在nginx的服务器上．
 MEDIA_ROOT = os.path.join(BASE_DIR, "static")
 
@@ -130,11 +130,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.126.com'
 EMAIL_PORT = 25
 # 发送邮件的邮箱
-EMAIL_HOST_USER = 'xxxxxxxx@126.com'
+EMAIL_HOST_USER = 'zuoyuantc@126.com'
 # 在邮箱中设置的客户端授权密码
 EMAIL_HOST_PASSWORD = 'xxxxxxxx'
 # 收件人看到的发件人
-EMAIL_FROM = 'bookstore<xxxxxxxx@126.com>'
+EMAIL_FROM = 'bookstore<zuoyuantc@126.com>'
 
 # 富文本编辑器相关配置
 TINYMCE_DEFAULT_CONFIG = {
