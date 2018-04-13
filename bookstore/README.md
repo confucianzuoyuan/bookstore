@@ -3115,8 +3115,8 @@ def order_pay(request):
 
 
     # 将app_private_key.pem和app_public_key.pem拷贝到order文件夹下。
-    app_private_key_path = os.path.join(BASE_DIR, 'order/app_private_key.pem')
-    alipay_public_key_path = os.path.join(BASE_DIR, 'order/app_public_key.pem')
+    app_private_key_path = os.path.join(settings.BASE_DIR, 'order/app_private_key.pem')
+    alipay_public_key_path = os.path.join(settings.BASE_DIR, 'order/app_public_key.pem')
 
     app_private_key_string = open(app_private_key_path).read()
     alipay_public_key_string = open(alipay_public_key_path).read()
@@ -3171,8 +3171,8 @@ def check_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
-    app_private_key_path = os.path.join(BASE_DIR, 'order/app_private_key.pem')
-    alipay_public_key_path = os.path.join(BASE_DIR, 'order/app_public_key.pem')
+    app_private_key_path = os.path.join(settings.BASE_DIR, 'order/app_private_key.pem')
+    alipay_public_key_path = os.path.join(settings.BASE_DIR, 'order/app_public_key.pem')
 
     app_private_key_string = open(app_private_key_path).read()
     alipay_public_key_string = open(alipay_public_key_path).read()
