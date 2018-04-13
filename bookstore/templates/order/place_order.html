@@ -12,7 +12,7 @@
 			<dt>寄送到：</dt>
 			<dd><input type="radio" name="addr_id" value="{{ addr.id }}" checked="">{{ addr.recipient_addr }} （{{ addr.recipient_name }} 收） {{ addr.recipient_phone }}</dd>
 		</dl>
-		<a href="user_center_site.html" class="edit_site">编辑收货地址</a>
+		<a href="{% url 'user:address' %}" class="edit_site">编辑收货地址</a>
 
 	</div>
 	
