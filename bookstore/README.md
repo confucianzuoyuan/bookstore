@@ -3065,6 +3065,7 @@ OpenSSL> exit
 ```
 支付宝沙箱地址：https://openhome.alipay.com/platform/appDaily.htm?tab=info
 生成RSA2教程：https://docs.open.alipay.com/291/106130
+测试用秘钥： 链接: https://pan.baidu.com/s/1HpAoD8heei18rXdjRIZdUg 密码: rcip
 ```
 设置本地公钥&私钥格式
 ```
@@ -3118,7 +3119,7 @@ def order_pay(request):
 
     # 和支付宝进行交互
     alipay = AliPay(
-        appid="2016090800464054", # 应用id
+        appid="2016091500515408", # 应用id
         app_notify_url=None,  # 默认回调url
         app_private_key_path=app_private_key_string,
         alipay_public_key_path=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
@@ -3171,7 +3172,7 @@ def check_pay(request):
 
     # 和支付宝进行交互
     alipay = AliPay(
-        appid="2016090800464054", # 应用id
+        appid="2016091500515408", # 应用id
         app_notify_url=None,  # 默认回调url
         app_private_key_path=app_private_key_string,
         alipay_public_key_path=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
