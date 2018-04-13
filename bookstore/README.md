@@ -3113,8 +3113,13 @@ def order_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
-    app_private_key_string = open("/path/app_private_key.pem").read()
-    alipay_public_key_string = open("/path/app_public_key.pem").read()
+
+    # 将app_private_key.pem和app_public_key.pem拷贝到order文件夹下。
+    app_private_key_path = os.path.join(BASE_DIR, 'order/app_private_key.pem')
+    alipay_public_key_path = os.path.join(BASE_DIR, 'order/app_public_key.pem')
+
+    app_private_key_string = open(app_private_key_path).read()
+    alipay_public_key_string = open(alipay_public_key_path).read()
 
     # 和支付宝进行交互
     alipay = AliPay(
@@ -3166,8 +3171,11 @@ def check_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
-    app_private_key_string = open("/path/app_private_key.pem").read()
-    alipay_public_key_string = open("/path/app_public_key.pem").read()
+    app_private_key_path = os.path.join(BASE_DIR, 'order/app_private_key.pem')
+    alipay_public_key_path = os.path.join(BASE_DIR, 'order/app_public_key.pem')
+
+    app_private_key_string = open(app_private_key_path).read()
+    alipay_public_key_string = open(alipay_public_key_path).read()
 
     # 和支付宝进行交互
     alipay = AliPay(
@@ -3520,7 +3528,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.126.com'
 # 126和163邮箱的SMTP端口为25； QQ邮箱使用的SMTP端口为465
 EMAIL_PORT = 25
-# 如果使用QQ邮箱发送邮件，需要开启SSL加密
+# 如果使用QQ邮箱发送邮件，需要开启SSL加密, 如果在aliyun上部署，也需要开启ssl加密，同时修改端口为EMAIL_PORT = 465
 # EMAIL_USE_SSL = True
 # 发送邮件的邮箱
 EMAIL_HOST_USER = 'xxxxxxxx@126.com'
