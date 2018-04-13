@@ -9,7 +9,7 @@ def get_hash(str):
     return sh.hexdigest()
 
 # Create your models here.
-class PassportManger(models.Manager):
+class PassportManager(models.Manager):
     def add_one_passport(self, username, password, email):
         '''添加一个账户信息'''
         passport = self.create(username=username, password=get_hash(password), email=email)
@@ -41,7 +41,7 @@ class Passport(BaseModel):
     email = models.EmailField(verbose_name='用户邮箱')
     is_active = models.BooleanField(default=False, verbose_name='激活状态')
 
-    objects = PassportManger()
+    objects = PassportManager()
 
     class Meta:
         db_table = 's_user_account'

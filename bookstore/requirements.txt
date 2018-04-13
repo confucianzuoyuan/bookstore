@@ -12,7 +12,7 @@ olefile==0.44
 Pillow==4.3.0
 pycryptodome==3.4.7
 PyMySQL==0.7.11
-python-alipay-sdk==1.4.0
+python-alipay-sdk==1.7.0
 pytz==2017.2
 redis==2.10.6
 uWSGI==2.0.15
