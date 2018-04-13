@@ -795,7 +795,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 然后将登陆后的用户名等显示出来。那商品详情页就开发的差不多了。
 
 ## 8，抽象出一个通用的模板，供别的模板继承。
-```
+```html
 {# 首页 登录 注册 的父模板 #}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -4082,7 +4082,11 @@ INSTALLED_APPS = (
 ```
 
 # <a id="15">15，使用gunicorn+nginx+django进行部署</a>
-先看nginx配置文件nginx.conf
+安装nginx。
+```
+sudo apt install nginx
+```
+先看nginx配置文件nginx.conf, 一般情况下, 路径为`/etc/nginx/nginx.conf`
 ```
 user root;
 worker_processes auto;
@@ -4170,9 +4174,13 @@ http {
 }
 ```
 然后在根目录bookstore新建文件夹collect_static。
+注意要在配置文件settings.py中写一行
+```py
+STATIC_ROOT = os.path.join(BASE_DIR, 'collect_static')
+```
 然后在根目录运行python manage.py collectstatic命令。
 并将books/models.py中添加代码：
-```
+```py
 from django.core.files.storage import FileSystemStorage
 fs = FileSystemStorage(location='/root/bookstore/bookstore/collect_static')
 class Books(BaseModel):
@@ -4180,7 +4188,7 @@ class Books(BaseModel):
     image = models.ImageField(storage=fs, upload_to='books', verbose_name='商品图片')
     ...
 ```
-然后在根目录运行gunicorn。
+然后在根目录运行gunicorn。安装gunicorn，`pip install gunicorn`
 ```
 nohup gunicorn -w 3 -b 0.0.0.0:8000 bookstore.wsgi:application &
 ```
