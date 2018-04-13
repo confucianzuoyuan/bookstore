@@ -14,8 +14,7 @@
 - [12，用户激活功能实现](#12)
 - [13，用户中心最近浏览功能](#13)
 - [14，过滤器功能实现](#14)
-- [15，部署](#15)
-- [16，使用nginx+gunicorn+django进行部署](#16)
+- [15，使用nginx+gunicorn+django进行部署](#15)
 
 # <a id="1">1，新建项目</a>
 
@@ -49,7 +48,7 @@ olefile==0.44
 Pillow==4.3.0
 pycryptodome==3.4.7
 PyMySQL==0.7.11
-python-alipay-sdk==1.4.0
+python-alipay-sdk==1.7.0
 pytz==2017.2
 redis==2.10.6
 uWSGI==2.0.15
@@ -885,7 +884,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 ```
 然后在别的模板中继承base.html，这就是抽象的好处。现在的组件化思路也是这样的，松耦合，紧内聚，复用的思路。
 比如改写register.html
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书城-注册{% endblock title %}
@@ -949,7 +948,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 {% endblock body %}
 ```
 然后改写login.html
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书城-登录{% endblock title %}
@@ -1017,7 +1016,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 {% endblock body %}
 ```
 改写index.html
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书店-首页{% endblock title %}
@@ -1223,7 +1222,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 {% endblock body %}
 ```
 改写detail.html
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书店-首页{% endblock title %}
@@ -1347,7 +1346,7 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 ## 9，列表页的开发
 
 接下来我们来实现列表页。通过观察list.html我们可以发现，这里有分页的功能，以及按照不同特征来进行排序，比如价格，比如人气这样的特征。这里要注意分页功能的实现，以及为什么要分页，一下读取所有数据，数据库的压力很大。
-```
+```py
 # 商品种类 页码 排序方式
 # /list/(种类id)/(页码)/?sort=排序方式
 def list(request, type_id, page):
@@ -1409,14 +1408,14 @@ def list(request, type_id, page):
     return render(request, 'books/list.html', context)
 ```
 然后配置urls.py
-```
+```py
 # books/urls.py
 url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列表页
 ```
 将list.html拷贝到templates/books
 先继承base.html。
 将index.html首页里面的查看更多，修改url定向。
-```
+```py
 {% url 'books:list' type_id=1 page=1 %}
 ```
 修改名称。
@@ -1424,7 +1423,7 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 {{ type_title }}
 ```
 新品推荐。
-```
+```html
 {% for book in books_new %}
 <li>
     <a href="{% url 'books:detail' books_id=book.id %}"><img src="{% static book.image %}"></a>
@@ -1434,13 +1433,13 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 {% endfor %}
 ```
 按不同的特征排序。
-```
+```html
 <a href="/list/{{ type_id }}/1/" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
 <a href="/list/{{ type_id }}/1/?sort=price" {% if sort == 'price' %}class="active"{% endif %}>价格</a>
 <a href="/list/{{ type_id }}/1/?sort=hot" {% if sort == 'hot' %}class="active"{% endif %}>人气</a>
 ```
 商品列表
-```
+```html
 {% for books in books_li %}
     <li>
         <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static books.image %}"></a>
@@ -1454,7 +1453,7 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 {% endfor %}
 ```
 前端分页功能的实现。
-```
+```html
 {% if books_li.has_previous %}
     <a href="/list/{{ type_id }}/{{ books_li.previous_page_number }}/?sort={{ sort }}"><上一页</a>
 {% endif %}
@@ -1473,7 +1472,7 @@ url(r'^list/(?P<type_id>\d+)/(?P<page>\d+)/$', views.list, name='list'), # 列�
 # <a id="4">4，用户中心的实现</a>
 接下来我们来实现用户中心的功能，先不实现最近浏览这个功能。首先来看一下这个前端页面，那我们知道我们还得给User这个model添加地址表。
 那我们先来建model
-```
+```py
 class Address(BaseModel):
     '''地址模型类'''
     recipient_name = models.CharField(max_length=20, verbose_name='收件人')
@@ -1528,7 +1527,7 @@ $ python manage.py makemigrations users
 $ python manage.py migrate
 ```
 然后编写视图函数views.py
-```
+```py
 def user(request):
     '''用户中心-信息页'''
     passport_id = request.session.get('passport_id')
@@ -1564,7 +1563,7 @@ url(r'^$', views.user, name='user'), # 用户中心-信息页
 我们这里思考一下，用户中心必须登录以后才可以使用，我们应该怎么实现这个功能呢？
 在这里，python的装饰器功能就派上用场了。
 新建一个utils文件夹，用来存放自己编写的一些常用功能函数。
-```
+```py
 # utils/decorators.py
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -1593,7 +1592,7 @@ def login_required(view_func):
 这里我们要引进redis的使用。大家可以参考《redis实战》这本书，有很多redis的妙用，网上有电子版。
 我们使用redis实现购物车的功能。因为购物车里的数据相对不是那么重要，而且更新频繁。当然如果要是考虑到安全性，还是要持久化到数据库中比较好。redis在内存中不是很安全，比如之前redis就被攻击过。
 我们现在配置文件中配置缓存有关的东西。
-```
+```py
 # settings.py
 # pip install django-redis
 CACHES = {
@@ -1615,7 +1614,7 @@ SESSION_CACHE_ALIAS = "default"
 $ python manage.py startapp cart
 ```
 然后开始编写视图函数。先来编写向购物车中添加商品的功能。
-```
+```py
 # cart/views.py
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -1679,7 +1678,7 @@ def cart_add(request):
 
 ## 2，渲染购物车页面
 在登陆以后，我们应该能够看到购物车里的商品数量，现在我们就来实现这个功能。
-```
+```py
 # cart/views.py
 def cart_count(request):
     '''获取用户购物车中商品的数目'''
@@ -1702,7 +1701,7 @@ def cart_count(request):
 ```
 然后在前端页面调用这个接口，并渲染出来。
 在base.html中添加：
-```
+```html
 # base.html
     {# 获取用户购物车中商品的数目 #}
     {% block cart_count %}
@@ -1715,7 +1714,7 @@ def cart_count(request):
     {% endblock cart_count %}
 ```
 而在登陆和注册页面，不需要显示这个，所以我们override掉这个块。
-```
+```html
 {% block cart_count %}{% endblock cart_count %}
 ```
 然后配置urls.py
@@ -1728,7 +1727,7 @@ def cart_count(request):
     url(r'^cart/', include('cart.urls', namespace='cart')), # 购物车模块
 ```
 然后在前端编写添加到购物车的jquery代码。
-```
+```html
 <script type="text/javascript">
     var $add_x = $('#add_cart').offset().top;
     var $add_y = $('#add_cart').offset().left;
@@ -1781,7 +1780,7 @@ def cart_count(request):
 ```
 现在我们可以将商品添加到购物车中去了。
 然后我们再编写一段jquery代码，实现+/-商品数量的功能。并且可以自动更新总价格。
-```
+```html
 {% block topfiles %}
 <script>
 $(function () {
@@ -1848,7 +1847,7 @@ $(function () {
 ## 3，购物车页面的开发
 接下来我们来实现展示购物车页面的功能。
 编写views.py。
-```
+```py
 @login_required
 def cart_show(request):
     '''显示用户购物车页面'''
@@ -1897,7 +1896,7 @@ def cart_show(request):
 {% url 'cart:show' %}
 ```
 接下来，我们把订单列表渲染出来。
-```
+```html
     {% for book in books_li %}
     <ul class="cart_list_td clearfix">
         {# 提交表单时，如果checkbox没有被选中，它的值不会被提交 #}
@@ -1921,7 +1920,7 @@ def cart_show(request):
 
 ## 4，购物车中删除商品的功能
 先来编写views.py函数。
-```
+```py
 # cart/views.py
 # 前端传过来的参数:商品id books_id
 # post
@@ -1956,7 +1955,7 @@ def cart_del(request):
 url(r'^del/$', views.cart_del, name='delete'), # 购物车商品记录删除
 ```
 然后在购物车页面cart.html编写jquery代码来调用del接口。
-```
+```js
 {% block topfiles %}
     <script>
     $(function () {
@@ -3113,15 +3112,15 @@ def order_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
-	app_private_key_string = open("/path/app_private_key.pem").read()
+    app_private_key_string = open("/path/app_private_key.pem").read()
     alipay_public_key_string = open("/path/app_public_key.pem").read()
 
     # 和支付宝进行交互
     alipay = AliPay(
         appid="2016090800464054", # 应用id
         app_notify_url=None,  # 默认回调url
-        app_private_key_path=app_private_key_string,
-        alipay_public_key_path=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+        app_private_key_string=app_private_key_string,
+        alipay_public_key_string=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
         sign_type = "RSA2",  # RSA 或者 RSA2
         debug = True,  # 默认False
     )
@@ -3166,15 +3165,15 @@ def check_pay(request):
     except OrderInfo.DoesNotExist:
         return JsonResponse({'res': 2, 'errmsg': '订单信息出错'})
 
-	app_private_key_string = open("/path/app_private_key.pem").read()
+    app_private_key_string = open("/path/app_private_key.pem").read()
     alipay_public_key_string = open("/path/app_public_key.pem").read()
 
     # 和支付宝进行交互
     alipay = AliPay(
         appid="2016090800464054", # 应用id
         app_notify_url=None,  # 默认回调url
-        app_private_key_path=app_private_key_string,
-        alipay_public_key_path=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+        app_private_key_string=app_private_key_string,
+        alipay_public_key_string=alipay_public_key_string,  # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
         sign_type = "RSA2",  # RSA 或者 RSA2
         debug = True,  # 默认False
     )
@@ -3788,14 +3787,14 @@ def login_check(request):
 
 # <a id="11">11，全文检索的实现</a>
 添加全文检索应用，在配置文件中。
-```
+```py
 INSTALLED_APPS = (
     ...
     'haystack',
 )
 ```
 在配置文件中写入以下配置。
-```
+```py
 # 全文检索配置
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -3820,7 +3819,7 @@ urlpatterns = [
 ]
 ```
 在books应用目录下建立search_indexes.py文件。
-```
+```py
 from haystack import indexes
 from books.models import Books
 
@@ -3844,7 +3843,7 @@ class BooksIndex(indexes.SearchIndex, indexes.Indexable):
 {{ object.detail }} # 根据书籍的详情建立索引
 ```
 在目录“templates/search/”下建立search.html。
-```
+```html
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}尚硅谷书城-书籍搜索结果列表{% endblock title %}
@@ -3889,7 +3888,7 @@ class BooksIndex(indexes.SearchIndex, indexes.Indexable):
 ```
 建立ChineseAnalyzer.py文件。
 保存在haystack的安装文件夹下，路径如“/home/python/.virtualenvs/django_py2/lib/python3.5/site-packages/haystack/backends”
-```
+```py
 import jieba
 from whoosh.analysis import Tokenizer, Token
 
@@ -3938,7 +3937,7 @@ $ python manage.py rebuild_index
 
 # <a id="12">12，用户激活功能的实现</a>
 首先编写视图函数：
-```
+```py
 def register_active(request, token):
     '''用户账户激活'''
     serializer = Serializer(settings.SECRET_KEY, 3600)
@@ -3962,7 +3961,7 @@ def register_active(request, token):
 
 # <a id="13">13，用户中心最近浏览功能的实现</a>
 最近浏览使用redis实现。重新编写books/views.py中的detail函数，每次点击商品，都将商品信息写入redis，作为最近浏览的数据。
-```
+```py
 # books/views.py
 def detail(request, books_id):
     '''显示商品的详情页面'''
@@ -3996,7 +3995,7 @@ def detail(request, books_id):
     return render(request, 'books/detail.html', context)
 ```
 然后重写用户中心的视图函数代码：users/views.py中的user函数。
-```
+```py
 @login_required
 def user(request):
     '''用户中心-信息页'''
@@ -4023,7 +4022,7 @@ def user(request):
                                                            'books_li': books_li})
 ```
 然后编写前端页面。重写user_center_info.html中最近浏览下面的html内容。
-```
+```html
 <h3 class="common_title2">最近浏览</h3>
 <div class="has_view_list">
     <ul class="book_type_list clearfix">
@@ -4081,214 +4080,7 @@ INSTALLED_APPS = (
 {% load filters %}
 ```
 
-# <a id="15">15，部署</a>
-## 1，安装uWSGI。
-```
-$ pip install uwsgi
-```
-配置uWSGI，在项目中新建文件uwsgi.ini，编写如下配置：
-```
-[uwsgi]
-socket=外网ip:端口（使用nginx连接时，使用socket）
-http=外网ip:端口（直接做web服务器，使用http）
-chdir=项目根目录
-wsgi-file=项目中wsgi.py文件的目录，相对于项目根目录
-processes=4
-threads=2
-master=True
-pidfile=uwsgi.pid
-daemonize=uswgi.log
-```
-示例，我的配置文件。
-```
-[uwsgi]
-socket=127.0.0.1:9001
-module=uwsgi
-chdir=/home/atguigu/桌面/bookstoredata/bookstore/bookstore
-wsgi-file=bookstore/wsgi.py
-processes=4
-threads=2
-master=True
-pidfile=uwsgi.pid
-daemonize=uwsgi.log
-virtualenv=/home/atguigu/py3
-```
-- 启动：uwsgi --ini uwsgi.ini
-- 停止：uwsgi --stop uwsgi.pid
-- 重启：uwsgi --reload uwsgi.pid
-- 使用http协议查看网站运行情况，运行正常，但是静态文件无法加载
-
-# 2，安装nginx
-```
-$ sudo apt-get nginx
-```
-解压缩：(大家看自己的nginx版本，这个是例子)
-```
-$ tar zxvf nginx-1.6.3.tar.gz
-```
-进入nginx-1.6.3目录依次执行如下命令进行安装：
-```
-$ ./configure
-$ make
-$ sudo make install
-```
-- 默认安装到/usr/local/nginx目录，进入此目录执行命令
-- 查看版本：sudo sbin/nginx -v
-- 启动：sudo sbin/nginx
-- 停止：sudo sbin/nginx -s stop
-- 重启：sudo sbin/nginx -s reload
-- 通过浏览器查看nginx运行结果
-- 指向uwsgi项目：编辑conf/nginx.conf文件
-```
-sudo conf/nginx.conf
-
-# 在server下添加新的location项，指向uwsgi的ip与端口
-location / {
-    include uwsgi_params;将所有的参数转到uwsgi下
-    uwsgi_pass uwsgi的ip与端口;
-}
-```
-- 修改uwsgi.ini文件，启动socket，禁用http
-- 重启nginx、uwsgi
-- 在浏览器中查看项目，发现静态文件加载不正常，接下来解决静态文件的问题
-- 静态文件一直都找不到，现在终于可以解决了
-- 所有的静态文件都会由nginx处理，不会将请求转到uwsgi
-- 配置nginx的静态项，打开conf/nginx.conf文件，找到server，添加新location
-
-```
-location /static {
-    alias /var/www/test5/static/;
-}
-```
-- 在服务器上创建目录结构“/var/www/test5/”
-- 修改目录权限
-```
-$ sudo chmod 777 /var/www/test5
-```
-创建static目录，注意顺序是先分配权限，再创建目录
-```
-$ mkdir static
-```
-修改settings.py文件
-```
-STATIC_ROOT='/var/www/test5/static/'
-STATIC_URL='/static/'
-```
-- 收集所有静态文件到static_root指定目录：python manage.py collectstatic
-- 重启nginx、uwsgi
-示例：
-```
-# nginx.conf
-user www-data;
-worker_processes auto;
-pid /run/nginx.pid;
-
-events {
-    worker_connections 768;
-    # multi_accept on;
-}
-
-http {
-
-    ##
-    # Basic Settings
-    ##
-
-    sendfile on;
-    tcp_nopush on;
-    tcp_nodelay on;
-    keepalive_timeout 65;
-    types_hash_max_size 2048;
-    # server_tokens off;
-
-    # server_names_hash_bucket_size 64;
-    # server_name_in_redirect off;
-
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-
-    ##
-    # SSL Settings
-    ##
-
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
-    ssl_prefer_server_ciphers on;
-
-    ##
-    # Logging Settings
-    ##
-
-    access_log /var/log/nginx/access.log;
-    error_log /var/log/nginx/error.log;
-
-    ##
-    # Gzip Settings
-    ##
-
-    gzip on;
-    gzip_disable "msie6";
-
-    # gzip_vary on;
-    # gzip_proxied any;
-    # gzip_comp_level 6;
-    # gzip_buffers 16 8k;
-    # gzip_http_version 1.1;
-    # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-
-    ##
-    # Virtual Host Configs
-    ##
-
-    include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/sites-enabled/*;
-        
-        server {
-            listen 8080;
-            server_name localhost;
-            location / {
-                include uwsgi_params;
-                uwsgi_pass 127.0.0.1:9001;
-                uwsgi_read_timeout 2;
-            }
-            error_page 500 502 503 504 /50x.html;
-            location = /50x.html {
-                root html;
-            }
-            location /media {
-                alias /home/atguigu/桌面/bookstoredata/bookstore/bookstore/static;
-            }
-            location /static {
-                alias /home/atguigu/桌面/bookstoredata/bookstore/bookstore/static;
-            }
-        }
-
-}
-
-
-#mail {
-#   # See sample authentication script at:
-#   # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
-# 
-#   # auth_http localhost/auth.php;
-#   # pop3_capabilities "TOP" "USER";
-#   # imap_capabilities "IMAP4rev1" "UIDPLUS";
-# 
-#   server {
-#       listen     localhost:110;
-#       protocol   pop3;
-#       proxy      on;
-#   }
-# 
-#   server {
-#       listen     localhost:143;
-#       protocol   imap;
-#       proxy      on;
-#   }
-#}
-```
-重启uwsgi，nginx。就部署好了。
-
-# <a id="16">16，使用gunicorn+nginx+django进行部署</a>
+# <a id="15">15，使用gunicorn+nginx+django进行部署</a>
 先看nginx配置文件nginx.conf
 ```
 user root;
