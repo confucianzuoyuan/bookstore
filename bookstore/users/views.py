@@ -11,6 +11,7 @@ from users.tasks import send_active_email
 from django.core.mail import send_mail
 from django.conf import settings
 import os
+from django_redis import get_redis_connection
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
