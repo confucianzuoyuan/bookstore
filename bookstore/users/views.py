@@ -9,7 +9,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 from users.tasks import send_active_email
 from django.core.mail import send_mail
-
+from django.conf import settings
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
