@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load filters %}
 {% block title %}尚硅谷书店-首页{% endblock title %}
 {% block topfiles %}
 {% endblock topfiles %}
@@ -40,7 +41,7 @@
                                 {% endfor %}
 							</td>
 							<td width="15%">{{ order.total_price }}元</td>
-							<td width="15%">{{ order.status|order_status }}</td>
+							<td width="15%">{{ order.status | order_status }}</td>
 							<td width="15%"><a href="#" pay_method="{{ order.pay_method }}" order_id="{{ order.order_id }}" order_status="{{ order.status }}" class="oper_btn">去付款</a></td>
 						</tr>
 					</tbody>
