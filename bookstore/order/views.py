@@ -11,6 +11,7 @@ from django.conf import settings
 import os
 import time
 from django.db import transaction
+from alipay import AliPay
 # Create your views here.
 
 
