@@ -4085,7 +4085,7 @@ INSTALLED_APPS = (
 <td width="15%">{{ order.status | order_status }}</td>
 ```
 注意要在页面里
-```html
+```django
 {% load filters %}
 ```
 
@@ -4197,6 +4197,6 @@ class Books(BaseModel):
     ...
 ```
 然后在根目录运行gunicorn。安装gunicorn，`pip install gunicorn`
-```
+```shell
 nohup gunicorn -w 3 -b 0.0.0.0:8000 bookstore.wsgi:application &
 ```
