@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import os
 from django_redis import get_redis_connection
+from books.models import Books
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
