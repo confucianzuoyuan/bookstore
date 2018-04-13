@@ -3096,11 +3096,9 @@ alipay_public_key_string.pem
 
 from alipay import AliPay
 
+@login_required
 def order_pay(request):
     '''订单支付'''
-    # 用户登录判断
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg': '用户未登录'})
 
     # 接收订单id
     order_id = request.POST.get('order_id')
@@ -3153,11 +3151,10 @@ def order_pay(request):
 # 前端需要发过来的参数:order_id
 # post
 from alipay import AliPay
+
+@login_required
 def check_pay(request):
     '''获取用户支付的结果'''
-    # 用户登录判断
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg': '用户未登录'})
 
     passport_id = request.session.get('passport_id')
     # 接收订单id
@@ -3226,7 +3223,7 @@ ALIPAY_URL='https://openapi.alipaydev.com/gateway.do'
 {% block bottomfiles%}
     <script>
     $(function () {
-        $('.oper_btn').click(function () {
+        $('.oper_btn').click(function () {
             // 获取订单id和订单的状态
             order_id = $(this).attr('order_id')
             order_status = $(this).attr('order_status')
@@ -3426,16 +3423,39 @@ urlpatterns = [
                 <a href="#" id="write-comment" class="comment">我要写评论</a>
             </div>
             <div style="display:flex;" id="comment-input" data-bookid="{{ books.id }}" data-userid="{{ request.session.passport_id }}">
-              <div>
-                <input type="text" placeholder="评论内容">
-              </div>
-              <div id="submit-comment">
-                <button>
-                  提交评论
-                </button>
-              </div>
+                <div>
+                    <input type="text" placeholder="评论内容">
+                </div>
+                <div id="submit-comment">
+                    <button>
+                      提交评论
+                    </button>
+                </div>
             </div>
 ```
+
+再增加id-book_detail 和id-book_comment 增加点击效果 
+```html
+    <div class="r_wrap fr clearfix">
+        <ul class="detail_tab clearfix">
+            <li class="active" id="detail">商品介绍</li>
+            <li id="comment">评论</li>
+        </ul>
+
+        <div class="tab_content" >
+            <dl id="book_detail">
+                <dt>商品详情：</dt>
+                <dd>{{ books.detail | safe }}</dd>
+            </dl>
+            <dl id="book_comment" style="display: none; font-size: 15px; color: #0a0a0a">
+                <dt>用户评论:</dt>
+                <dd></dd>
+            </dl>
+        </div>
+    </div>
+```
+
+
 然后写样式。
 ```css
 <style type="text/css">
