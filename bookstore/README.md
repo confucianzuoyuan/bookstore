@@ -2941,6 +2941,7 @@ def address(request):
 接下来我们进一步完善一下用户中心，把用户中心的订单显示页面给做了。先来实现订单显示的后台接口。
 ```python
 # users/views.py
+from django.core.paginator import Paginator
 
 @login_required
 def order(request):
@@ -2969,17 +2970,39 @@ def order(request):
 
         # 给order对象动态增加一个属性order_books_li,保存订单中商品的信息
         order.order_books_li = order_books_li
+    
+    paginator = Paginator(order_li, 3)      # 每页显示3个订单
+    
+    num_pages = paginator.num_pages
+    
+    if not page:        # 首次进入时默认进入第一页
+        page = 1
+    if page == '' or int(page) > num_pages:
+        page = 1
+    else:
+        page = int(page)
+        
+    order_li = paginator.page(page)
+    
+    if num_pages < 5:
+        pages = range(1, num_pages + 1)
+    elif page <= 3:
+        pages = range(1, 6)
+    elif num_pages - page <= 2:
+        pages = range(num_pages - 4, num_pages + 1)
+    else:
+        pages = range(page - 2, page + 3)
 
-        context = {
-            'order_li': order_li,
-            'page': 'order'
-        }
+    context = {
+        'order_li': order_li,
+        'pages': pages,
+    }
 
     return render(request, 'users/user_center_order.html', context)
 ```
 然后配置urls.py。
 ```
-    url(r'^order/$', views.order, name='order'), # 用户中心-订单页
+    url(r'^order/(?P<page>\d+)?/?$', views.order, name='order'), # 用户中心-订单页  增加分页功能
 ```
 然后将user_center_order.html拷贝到templates/users文件夹下，并继承base.html。
 然后改写模板中的元素，使得后端可以渲染。
@@ -3034,19 +3057,26 @@ def order(request):
                 {% endfor %}
 
                 <div class="pagenation">
-                    <a href="#"><上一页</a>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">下一页></a>
+                    {% if books_li.has_previous %}
+                        <a href="{% url 'user:order' page=books_li.previous_page_number %}">上一页</a>
+                    {% endif %}
+                    {% for page in pages %}
+                        {% ifequal page books_li.number %}
+                            <a href="{% url 'user:order' page=page %}" class="active">{{ page }}</a>
+                        {% else %}
+                            <a href="{% url 'user:order' page=page %}">{{ page }}</a>
+                        {% endifequal %}
+                    {% endfor %}
+                    {% if books_li.has_next %}
+                        <a href="{% url 'user:order' page=books_li.next_page_number %}">下一页</a>
+                    {% endif %}
                 </div>
         </div>
     </div>
 {% endblock body %}
 ```
 这样我们个人中心的订单的显示页面也就做完了。
+
 
 ## 7，“去付款”功能的实现
 接下来我们需要实现“去付款”功能。这里需要集成阿里的支付宝sdk。
