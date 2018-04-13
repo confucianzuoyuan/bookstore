@@ -4291,7 +4291,6 @@ http {
 # <a id="16">16，使用gunicorn+nginx+django进行部署</a>
 先看nginx配置文件nginx.conf
 ```
-er www-data;
 user root;
 worker_processes auto;
 pid /run/nginx.pid;
