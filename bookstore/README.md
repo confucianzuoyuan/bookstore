@@ -671,14 +671,17 @@ def login_check(request):
     <script>
         $(function () {
             $('#btnLogin').click(function () {
-                // 获取用户名和密码
-                username = $('#username').val()
-                password = $('#pwd').val()
-                csrf = $('input[name="csrfmiddlewaretoken"]').val()
-                remember = $('input[name="remember"]').prop('checked')
-                // 发起ajax请求
-                params = {'username':username, 'password':password,
-                        'csrfmiddlewaretoken':csrf, 'remember':remember}
+                var username = $("#username").val()
+                var password = $("#pwd").val()
+                var remember = $('input[name="remember"]').prop('checked')
+                var csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val()
+
+                var params = {
+                    username: username,
+                    password: password,
+                    remember: remember,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken
+                }
                 $.post('/user/login_check/', params, function (data) {
                     // 用户名密码错误 {'res': 0}
                     // 登录成功 {'res': 1}
