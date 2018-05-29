@@ -198,14 +198,14 @@ $ mkdir templates
 $ python manage.py runserver 9000
 ```
 然后呢？我们想把register.html渲染出来。我们先来看views.py这个视图文件。
-```
+```py
 # users/views.py
 def register(request):
     '''显示用户注册页面'''
     return render(request, 'users/register.html')
 ```
 然后我们将url映射做好。主应用的urls.py为
-```
+```py
 # bookstore/urls.py
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -682,13 +682,13 @@ def login_check(request):
                 $.post('/user/login_check/', params, function (data) {
                     // 用户名密码错误 {'res': 0}
                     // 登录成功 {'res': 1}
-                    if (data.res == 0){
-                        $('#username').next().html('用户名或密码错误').show()
-                    }
-                    else
-                    {
+                    if (data.res == 1) {
                         // 跳转页面
-                        location.href = data.next_url // /user/
+                        location.href = data.next_url;
+                    } else if (data.res == 2) {
+                        alert("数据不完整");
+                    } else if (data.res == 0) {
+                        alert("用户名或者密码错误");
                     }
                 })
             })
