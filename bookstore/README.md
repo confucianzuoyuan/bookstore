@@ -576,12 +576,15 @@ return redirect(reverse('books:index'))
 ```python
 def login(request):
     '''显示登录页面'''
-    username = ''
-    checked = ''
-
+    if request.COOKIES.get("username"):
+        username = request.COOKIES.get("username")
+        checked = True
+    else:
+        username = ''
+        checked = ''
     context = {
         'username': username,
-        'checked': checked,
+        'checked' : checked,
     }
 
     return render(request, 'users/login.html', context)
