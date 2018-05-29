@@ -115,9 +115,11 @@ class BaseModel(models.Model):
         abstract = True
 ```
 
-然后我们针对Users设计一张表出来。
+然后我们针对Users设计一张表出来。以下代码写入`users/models.py`文件中。
 
 ```python
+from db.base_model import BaseModel
+
 class Passport(BaseModel):
     '''用户模型类'''
     username = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
