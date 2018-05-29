@@ -78,6 +78,13 @@ DATABASES = {
 }
 ```
 
+为了使用mysql的驱动，在根应用的`__init__.py`文件中加入以下两行代码：
+
+```py
+import pymysql
+pymysql.install_as_MySQLdb()
+```
+
 # <a id="2">2，用户系统开发</a>
 
 ## 1，用户系统的开发
