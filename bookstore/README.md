@@ -393,8 +393,14 @@ class Books(BaseModel):
 
     objects = BooksManager()
 
+    # admin显示书籍的名字
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = 's_books'
+        verbose_name = '书籍'
+        verbose_name_plural = '书籍'
 ```
 
 同样，我们这里再写一下BooksManager()，有一些基本功能在这里抽象出来。
@@ -476,10 +482,10 @@ from django.core.paginator import Paginator
 def index(request):
     '''显示首页'''
     # 查询每个种类的3个新品信息和4个销量最好的商品信息
-    python_new = Books.objects.get_books_by_type(PYTHON, 3, sort='new')
-    python_hot = Books.objects.get_books_by_type(PYTHON, 4, sort='hot')
-    javascript_new = Books.objects.get_books_by_type(JAVASCRIPT, 3, sort='new')
-    javascript_hot = Books.objects.get_books_by_type(JAVASCRIPT, 4, sort='hot')
+    python_new = Books.objects.get_books_by_type(PYTHON, limit=3, sort='new')
+    python_hot = Books.objects.get_books_by_type(PYTHON, limit=4, sort='hot')
+    javascript_new = Books.objects.get_books_by_type(JAVASCRIPT,limit= 3, sort='new')
+    javascript_hot = Books.objects.get_books_by_type(JAVASCRIPT, limit=4, sort='hot')
     algorithms_new = Books.objects.get_books_by_type(ALGORITHMS, 3, sort='new')
     algorithms_hot = Books.objects.get_books_by_type(ALGORITHMS, 4, sort='hot')
     machinelearning_new = Books.objects.get_books_by_type(MACHINELEARNING, 3, sort='new')
@@ -584,7 +590,7 @@ def login(request):
         checked = ''
     context = {
         'username': username,
-        'checked' : checked,
+        'checked': checked,
     }
 
     return render(request, 'users/login.html', context)
