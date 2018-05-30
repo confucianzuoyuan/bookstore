@@ -626,13 +626,7 @@ def login_check(request):
     passport = Passport.objects.get_one_passport(username=username, password=password)
 
     if passport:
-        # 用户名密码正确
-        # 获取session中的url_path
-        # if request.session.has_key('url_path'):
-        #     next_url = request.session.get('url_path')
-        # else:
-        #     next_url = reverse('books:index')
-        next_url = request.session.get('url_path', reverse('books:index')) # /user/
+        next_url = reverse('books:index') # /user/
         jres = JsonResponse({'res': 1, 'next_url': next_url})
 
         # 判断是否需要记住用户名
