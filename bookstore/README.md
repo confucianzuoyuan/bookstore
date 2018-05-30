@@ -1041,7 +1041,6 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 {% block header_con %}{% endblock header_con %}
 {% block search_bar %}{% endblock search_bar %}
 {% block body %}
-<body>
     <div class="login_top clearfix">
         <a href="index.html" class="login_logo"><img src="{% static 'images/logo.png' %}" style="width: 160px; height: 53px;"></a>
     </div>
