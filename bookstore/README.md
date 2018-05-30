@@ -545,6 +545,46 @@ $ python manage.py createsuperuser
     <a href="#">{{ book.name }}</a>
 {% endfor %}
 ```
+用来替换掉`index.html`中的：
+```html
+<a href="#">Python核心编程</a>
+<a href="#">笨办法学Python</a>
+<a href="#">Python学习手册</a>
+```
+
+用代码：
+```html
+{% for book in python_hot %}
+    <li>
+        <h4><a href="#">{{ book.name }}</a></h4>
+        <a href="#"><img src="{% static book.image %}"></a>
+        <div class="prize">¥ {{ book.price }}</div>
+    </li>
+{% endfor %}
+```
+替换掉`index.html`中的：
+```html
+<li>
+    <h4><a href="#">Python核心编程</a></h4>
+    <a href="#"><img src="images/book/book001.jpg"></a>
+    <div class="prize">¥ 30.00</div>
+</li>
+<li>
+    <h4><a href="#">Python学习手册</a></h4>
+    <a href="#"><img src="images/book/book002.jpg"></a>
+    <div class="prize">¥ 5.50</div>
+</li>
+<li>
+    <h4><a href="#">Python Cookbook</a></h4>
+    <a href="#"><img src="images/book/book003.jpg"></a>
+    <div class="prize">¥ 3.90</div>
+</li>
+<li>
+    <h4><a href="#">Python高性能编程</a></h4>
+    <a href="#"><img src="images/book/book004.jpg"></a>
+    <div class="prize">¥ 25.80</div>
+</li>
+```
 
 由于我们在编辑商品信息时，需要上传书籍的图片，所以在配置文件中设置图片存放目录。
 
