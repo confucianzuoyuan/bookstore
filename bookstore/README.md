@@ -839,8 +839,8 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
 ```html
 {% for book in books_li %}
 <li>
-    <a href="{% url 'books:detail' books_id=books.id %}"><img src="{% static book.image %}"></a>
-    <h4><a href="{% url 'books:detail' books_id=books.id %}">{{ book.name }}</a></h4>
+    <a href="{% url 'books:detail' books_id=book.id %}"><img src="{% static book.image %}"></a>
+    <h4><a href="{% url 'books:detail' books_id=book.id %}">{{ book.name }}</a></h4>
     <div class="price">￥{{ book.price }}</div>
 </li>
 {% endfor %}
