@@ -6,9 +6,11 @@ from django.core.paginator import Paginator
 from django.views.decorators.cache import cache_page
 from django_redis import get_redis_connection
 # Create your views here.
-
+import logging
+logger = logging.getLogger('django.request')
 # @cache_page(60 * 15)
 def index(request):
+    print(__name__)
     '''显示首页'''
     # 查询每个种类的3个新品信息和4个销量最好的商品信息
     python_new = Books.objects.get_books_by_type(PYTHON, 3, sort='new')
@@ -39,8 +41,8 @@ def index(request):
         'database_new': database_new,
         'database_hot': database_hot,
     }
-    print('ssssssss')
     # 使用模板
+    logger.info(request)
     return render(request, 'books/index.html', context)
 
 def detail(request, books_id):
