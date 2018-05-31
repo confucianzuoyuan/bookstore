@@ -148,14 +148,14 @@ class Passport(BaseModel):
 class PassportManager(models.Manager):
     def add_one_passport(self, username, password, email):
         '''添加一个账户信息'''
-        passport = self.create(username=username, password=get_hash(password), email=email)
+        passport = self.create(username=username, password=get_hash(password,username), email=email)
         # 3.返回passport
         return passport
 
     def get_one_passport(self, username, password):
         '''根据用户名密码查找账户的信息'''
         try:
-            passport = self.get(username=username, password=get_hash(password))
+            passport = self.get(username=username, password=get_hash(password,username))
         except self.model.DoesNotExist:
             # 账户不存在
             passport = None
@@ -166,11 +166,12 @@ class PassportManager(models.Manager):
 
 ```python
 # bookstore/utils/get_hash.py
-from hashlib import sha1
+from hashlib import sha256
 
-def get_hash(str):
+def get_hash(str,salt1='salt1',salt2='salt2'):
     '''取一个字符串的hash值'''
-    sh = sha1()
+    sh = sha256()
+    str=str+salt1[:4]+salt2[:4]
     sh.update(str.encode('utf8'))
     return sh.hexdigest()
 ```
