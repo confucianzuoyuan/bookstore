@@ -627,7 +627,7 @@ def login(request):
     '''显示登录页面'''
     if request.COOKIES.get("username"):
         username = request.COOKIES.get("username")
-        checked = True
+        checked = 'checked'
     else:
         username = ''
         checked = ''
