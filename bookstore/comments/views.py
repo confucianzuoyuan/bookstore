@@ -24,7 +24,6 @@ def comment(request, books_id):
             c = c.decode('utf-8')
         except:
             pass
-        print('c: ', c)
         if c:
             return JsonResponse({
                     'code': 200,
