@@ -169,21 +169,15 @@ $(function () {
 {% endblock body %}
 {% block bottomfiles %}
 <script type="text/javascript">
-	var $add_x = $('#add_cart').offset().top;
-	var $add_y = $('#add_cart').offset().left;
-
-	var $to_x = $('#show_count').offset().top;
-	var $to_y = $('#show_count').offset().left;
-
 	$('#comment-input').hide()
 
 	$('#add_cart').click(function(){
         // 获取商品的id和商品数量
-        books_id = $(this).attr('books_id')
-        books_count = $('.num_show').val()
-        csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        var books_id = $(this).attr('books_id');
+        var books_count = $('.num_show').val();
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val();
         // 发起请求，访问/cart/add/, 进行购物车数据的添加
-        params = {
+        var params = {
         	'books_id': books_id, 
         	'books_count': books_count,
             'csrfmiddlewaretoken': csrf
@@ -192,22 +186,13 @@ $(function () {
         $.post('/cart/add/', params, function (data) {
             if (data.res == 5){
                 // 添加成功
-                $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
-                $(".add_jump").stop().animate({
-                    'left': $to_y+7,
-                    'top': $to_x+7},
-                    "fast", function() {
-                        $(".add_jump").fadeOut('fast',function(){
-                            // 获取原有show_count的值
-                            count = $('#show_count').html()
-                            count = parseInt(count) + parseInt(books_count)
-                            $('#show_count').html(count);
-                        });
-                });
+				var count = $('#show_count').html();
+				var count = parseInt(count) + parseInt(books_count);
+				$('#show_count').html(count);
             }
             else {
                 // 添加失败
-                alert(data.errmsg)
+                alert(data.errmsg);
             }
         })
 	})
