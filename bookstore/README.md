@@ -1664,6 +1664,11 @@ def login_required(view_func):
 ## 1，创建models
 这里我们要引进redis的使用。大家可以参考《redis实战》这本书，有很多redis的妙用，网上有电子版。
 我们使用redis实现购物车的功能。因为购物车里的数据相对不是那么重要，而且更新频繁。当然如果要是考虑到安全性，还是要持久化到数据库中比较好。redis在内存中不是很安全，比如之前redis就被攻击过。
+使用shell命令
+```
+ps -ef | grep redis
+```
+来检查redis server是否启动。
 我们现在配置文件中配置缓存有关的东西。
 ```py
 # settings.py
@@ -1797,7 +1802,7 @@ def cart_count(request):
 ```
     url(r'^cart/', include('cart.urls', namespace='cart')), # 购物车模块
 ```
-然后在前端编写添加到购物车的jquery代码。
+然后在前端详情页`detail.html`编写添加到购物车的jquery代码。
 ```html
 
 <script type="text/javascript">
@@ -1837,6 +1842,7 @@ def cart_count(request):
 现在我们可以将商品添加到购物车中去了。
 然后我们再编写一段jquery代码，实现+/-商品数量的功能。并且可以自动更新总价格。
 ```html
+// detail.html
 {% block topfiles %}
 <script>
 $(function () {
