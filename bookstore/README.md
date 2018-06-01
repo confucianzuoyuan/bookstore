@@ -1015,13 +1015,17 @@ url(r'books/(?P<books_id>\d+)/$', views.detail, name='detail'), # 详情页
     $(function () {
         $('#btnLogin').click(function () {
             // 获取用户名和密码
-            username = $('#username').val()
-            password = $('#pwd').val()
-            csrf = $('input[name="csrfmiddlewaretoken"]').val()
-            remember = $('input[name="remember"]').prop('checked')
+            var username = $('#username').val()
+            var password = $('#pwd').val()
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            var remember = $('input[name="remember"]').prop('checked')
             // 发起ajax请求
-            params = {'username':username, 'password':password,
-                    'csrfmiddlewaretoken':csrf, 'remember':remember}
+            var params = {
+                'username': username,
+                'password': password,
+                'csrfmiddlewaretoken': csrf,
+                'remember': remember
+            }
             $.post('/user/login_check/', params, function (data) {
                 // 用户名密码错误 {'res':0}
                 // 登录成功 {'res':1}
@@ -1611,7 +1615,7 @@ url(r'^$', views.user, name='user'), # 用户中心-信息页
 ```
 然后将user_center_info.html拷贝到templates/users文件夹下。
 还是继承base.html，然后对模板进行渲染。
-```
+```html
 <li><span>用户名：</span>{{ request.session.username }}</li>
 {% if addr %}
     <li><span>联系方式：</span>{{ addr.recipient_phone }}</li>
@@ -1796,11 +1800,11 @@ def cart_count(request):
 
     $('#add_cart').click(function(){
         // 获取商品的id和商品数量
-        books_id = $(this).attr('books_id')
-        books_count = $('.num_show').val()
-        csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        var books_id = $(this).attr('books_id');
+        var books_count = $('.num_show').val();
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val();
         // 发起请求，访问/cart/add/, 进行购物车数据的添加
-        params = {
+        var params = {
             'books_id': books_id, 
             'books_count': books_count,
             'csrfmiddlewaretoken': csrf
@@ -1809,20 +1813,10 @@ def cart_count(request):
         $.post('/cart/add/', params, function (data) {
             if (data.res == 5){
                 // 添加成功
-                $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
-                $(".add_jump").stop().animate({
-                    'left': $to_y+7,
-                    'top': $to_x+7},
-                    "fast", function() {
-                        $(".add_jump").fadeOut('fast',function(){
-                            // 获取原有show_count的值
-                            count = $('#show_count').html()
-                            count = parseInt(count) + parseInt(books_count)
-                            $('#show_count').html(count);
-                        });
-                });
-            }
-            else {
+                var count = $('#show_count').html();
+                var count = parseInt(count) + parseInt(books_count);
+                $('#show_count').html(count);
+            } else {
                 // 添加失败
                 alert(data.errmsg)
             }
