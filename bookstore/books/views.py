@@ -42,7 +42,7 @@ def index(request):
         'database_hot': database_hot,
     }
     # 使用模板
-    logger.info(request)
+    logger.info(request.body)
     return render(request, 'books/index.html', context)
 
 def detail(request, books_id):

@@ -15,6 +15,7 @@
 - [13，用户中心最近浏览功能](#13)
 - [14，过滤器功能实现](#14)
 - [15，使用nginx+gunicorn+django进行部署](#15)
+- [16, django日志模块的使用](#16)
 
 # <a id="1">1，新建项目</a>
 
@@ -4304,3 +4305,59 @@ class Books(BaseModel):
 ```
 nohup gunicorn -w 3 -b 0.0.0.0:8000 bookstore.wsgi:application &
 ```
+
+# <a id="16">16，django日志模块的使用</a>
+
+首先将下面的代码添加到配置文件`settings.py`。
+
+```py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {             # 日志输出的格式
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {               # 处理日志的函数
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR + '/log/debug.log',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+        },
+        'django.request': {     # 日志的命名空间
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+```
+
+然后在根目录新建文件夹`log`。
+```
+mkdir log
+```
+
+然后在代码中添加日志相关的代码。例如，在`books/views.py`中，添加以下代码：
+
+```py
+import logging
+logger = logging.getLogger('django.request')
+```
+在`books/views.py`中的`index`函数中添加一行：
+```py
+logger.info(request.body)
+```
+
+就会发现当我们访问首页的时候，在`log/debug.log`中有日志信息。
