@@ -15,7 +15,8 @@
 - [13，用户中心最近浏览功能](#13)
 - [14，过滤器功能实现](#14)
 - [15，使用nginx+gunicorn+django进行部署](#15)
-- [16, django日志模块的使用](#16)
+- [16，django日志模块的使用](#16)
+- [17，中间件的编写](#17)
 
 # <a id="1">1，新建项目</a>
 
@@ -4347,3 +4348,57 @@ logger.info(request.body)
 ```
 
 就会发现当我们访问首页的时候，在`log/debug.log`中有日志信息。
+
+
+# <a id="17">17，中间件的编写</a>
+
+在`utils`文件夹中新建`middleware.py`文件。
+
+```py
+# 中间件示例，打印中间件执行语句
+class BookMiddleware(object):
+    def process_request(self, request):
+        print("Middleware executed")
+
+# 分别处理收到的请求和发出去的相应，要理解中间件的原理。
+class AnotherMiddleware(object):
+    def process_request(self, request):
+        print("Another middleware executed")
+
+    def process_response(self, request, response):
+        print("AnotherMiddleware process_response executed")
+        return response
+
+# 记录用户访问的url地址
+class UrlPathRecordMiddleware(object):
+    '''记录用户访问的url地址'''
+    EXCLUDE_URLS = ['/user/login/', '/user/logout/', '/user/register/']
+    # 1./user/ 记录 url_path = /user/
+    # 2./user/login/ url_path = /user/
+    # 3./user/login_check/  url_path = /user/
+    def process_view(self, request, view_func, *view_args, **view_kwargs):
+        # 当用户请求的地址不在排除的列表中，同时不是ajax的get请求
+        if request.path not in UrlPathRecordMiddleware.EXCLUDE_URLS and not request.is_ajax() and request.method == 'GET':
+            request.session['url_path'] = request.path
+
+BLOCKED_IPS = []
+# 拦截在BLOCKED_IPS中的IP
+class BlockedIpMiddleware(object):
+    def process_request(self, request):
+        if request.META['REMOTE_ADDR'] in BLOCKED_IPS:
+            return http.HttpResponseForbidden('<h1>Forbidden</h1>')
+```
+
+然后在配置文件`settings.py`中，写入中间件类的名字。
+
+```py
+MIDDLEWARE_CLASSES = (
+    ...
+    'utils.middleware.BookMiddleware',
+    'utils.middleware.AnotherMiddleware',
+    'utils.middleware.UrlPathRecordMiddleware',
+    'utils.middleware.BlockedIpMiddleware',
+)
+```
+
+这样就可以使用中间件了。
