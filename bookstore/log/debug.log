@@ -10,3 +10,617 @@ INFO b''
 INFO b''
 INFO b''
 INFO b''
+INFO b''
+INFO b''
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+ERROR Internal Server Error: /admin/books/books/add/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/views/decorators/cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/sites.py", line 233, in inner
+    return view(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1516, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 34, in _wrapper
+    return bound_func(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 110, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/decorators.py", line 30, in bound_func
+    return func.__get__(self, type(self))(*args2, **kwargs2)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py", line 52, in inner
+    return func(*args, **kwds)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1467, in changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/admin/options.py", line 1078, in save_model
+    obj.save()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 973, in execute_sql
+    for sql, params in self.as_sql():
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in as_sql
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 931, in <listcomp>
+    for obj in self.query.objs
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 929, in <listcomp>
+    ) for f in fields
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 315, in pre_save
+    file.save(file.name, file, save=False)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/files.py", line 94, in save
+    self.name = self.storage.save(name, content, max_length=self.field.max_length)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 64, in save
+    name = self._save(name, content)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/files/storage.py", line 223, in _save
+    os.makedirs(directory)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 210, in makedirs
+    makedirs(head, mode, exist_ok)
+  File "/Users/yuanzuo/bookstore/bin/../lib/python3.6/os.py", line 220, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/media'
+INFO b''
+INFO b''

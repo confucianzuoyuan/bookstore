@@ -3,7 +3,11 @@ from db.base_model import BaseModel
 from tinymce.models import HTMLField
 from books.enums import *
 from django.core.files.storage import FileSystemStorage
-fs = FileSystemStorage(location='/media/photos')
+from django.conf import settings
+import os
+
+fs = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'static'))
+
 class BooksManager(models.Manager):
     '''商品模型管理器类'''
     # sort='new' 按照创建时间进行排序
@@ -56,5 +60,10 @@ class Books(BaseModel):
 
     objects = BooksManager()
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = 's_books'
+        verbose_name = '书籍'
+        verbose_name_plural = verbose_name
