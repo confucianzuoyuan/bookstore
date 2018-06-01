@@ -1793,12 +1793,6 @@ def cart_count(request):
 ```html
 
 <script type="text/javascript">
-    var $add_x = $('#add_cart').offset().top;
-    var $add_y = $('#add_cart').offset().left;
-
-    var $to_x = $('#show_count').offset().top;
-    var $to_y = $('#show_count').offset().left;
-
     $('#add_cart').click(function(){
         // 获取商品的id和商品数量
         var books_id = $(this).attr('books_id');
@@ -1806,7 +1800,7 @@ def cart_count(request):
         var csrf = $('input[name="csrfmiddlewaretoken"]').val();
         // 发起请求，访问/cart/add/, 进行购物车数据的添加
         var params = {
-            'books_id': books_id, 
+            'books_id': books_id,
             'books_count': books_count,
             'csrfmiddlewaretoken': csrf
         }
