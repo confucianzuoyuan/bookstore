@@ -2,3 +2,81 @@ INFO b''
 INFO b''
 INFO zuoyuan
 INFO zuoyuan
+ERROR Internal Server Error: /books/1/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 54, in detail
+    return redirect(reverse('books:index'))
+NameError: name 'redirect' is not defined
+ERROR Internal Server Error: /books/1/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 54, in detail
+    return redirect(reverse('books:index'))
+NameError: name 'redirect' is not defined
+ERROR Internal Server Error: /books/1/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 54, in detail
+    return redirect(reverse('books:index'))
+NameError: name 'redirect' is not defined
+ERROR Internal Server Error: /books/1/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 54, in detail
+    return redirect(reverse('books:index'))
+NameError: name 'redirect' is not defined
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+ERROR Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 44, in index
+    logger.info(request.session["username"])
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/sessions/backends/base.py", line 48, in __getitem__
+    return self._session[key]
+KeyError: 'username'
+ERROR Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 44, in index
+    logger.info(request.session["username"])
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/sessions/backends/base.py", line 48, in __getitem__
+    return self._session[key]
+KeyError: 'username'
+ERROR Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 44, in index
+    logger.info(request.session["username"])
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/sessions/backends/base.py", line 48, in __getitem__
+    return self._session[key]
+KeyError: 'username'
+ERROR Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 44, in index
+    logger.info(request.session["username"])
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/contrib/sessions/backends/base.py", line 48, in __getitem__
+    return self._session[key]
+KeyError: 'username'
+INFO anonymous
+INFO anonymous
+INFO anonymous
+INFO anonymous
+INFO anonymous
+INFO anonymous
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan

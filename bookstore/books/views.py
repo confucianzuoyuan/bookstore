@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from books.models import Books
 from books.enums import *
 from django.core.urlresolvers import reverse
@@ -41,7 +41,10 @@ def index(request):
         'database_hot': database_hot,
     }
     # 使用模板
-    logger.info(request.session["username"])
+    if request.session.has_key('username'):
+        logger.info(request.session["username"])
+    else:
+        logger.info('anonymous')
     return render(request, 'books/index.html', context)
 
 def detail(request, books_id):
