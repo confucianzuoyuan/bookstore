@@ -3402,6 +3402,7 @@ from users.models import Passport
 from django.views.decorators.csrf import csrf_exempt
 import json
 import redis
+from utils.decorators import login_required
 # Create your views here.
 # 设置过期时间
 EXPIRE_TIME = 60 * 10
@@ -3411,6 +3412,7 @@ redis_db = redis.Redis(connection_pool=pool)
 
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
+@login_required
 def comment(request, books_id):
     book_id = books_id
     if request.method == 'GET':
