@@ -1951,7 +1951,7 @@ def cart_show(request):
         <li class="col06">
             <div class="num_add">
                 <a href="javascript:;" class="add fl">+</a>
-                <input type="text" books_id={{ book.id }} class="num_show fl" value="{{ book.count }}">
+                <input type="text" books_id="{{ book.id }}" class="num_show fl" value="{{ book.count }}">
                 <a href="javascript:;" class="minus fl">-</a>   
             </div>
         </li>
