@@ -178,7 +178,7 @@ def get_hash(str):
 接下来我们将Users的表映射到数据库中去。
 
 ```
-mysql> create database bookstore;
+mysql> create database bookstore charset=utf8;
 $ python manage.py makemigrations users
 $ python manage.py migrate
 ```
