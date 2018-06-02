@@ -2071,6 +2071,8 @@ url(r'^del/$', views.cart_del, name='delete'), # 购物车商品记录删除
                     }
                     // 更新页面购物车商品总数
                     update_cart_count()
+                    // 更新选择框状态
+                    $('.settlements').find(":checkbox").prop('checked', false)
                 }
             })
         })
