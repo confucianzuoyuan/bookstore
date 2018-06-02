@@ -80,3 +80,55 @@ INFO zuoyuan
 INFO zuoyuan
 INFO zuoyuan
 INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+ERROR Internal Server Error: /order/check_pay/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/order/views.py", line 290, in check_pay
+    result = alipay.api_alipay_trade_query(order_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 305, in api_alipay_trade_query
+    return self._verify_and_return_sync_response(raw_string, "alipay_trade_query_response")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 525, in _verify_and_return_sync_response
+    raise AliPayValidationError
+alipay.exceptions.AliPayValidationError
+ERROR Internal Server Error: /order/check_pay/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/order/views.py", line 290, in check_pay
+    result = alipay.api_alipay_trade_query(order_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 305, in api_alipay_trade_query
+    return self._verify_and_return_sync_response(raw_string, "alipay_trade_query_response")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 525, in _verify_and_return_sync_response
+    raise AliPayValidationError
+alipay.exceptions.AliPayValidationError
+ERROR Internal Server Error: /order/check_pay/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/order/views.py", line 290, in check_pay
+    result = alipay.api_alipay_trade_query(order_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 305, in api_alipay_trade_query
+    return self._verify_and_return_sync_response(raw_string, "alipay_trade_query_response")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 525, in _verify_and_return_sync_response
+    raise AliPayValidationError
+alipay.exceptions.AliPayValidationError
+ERROR Internal Server Error: /order/check_pay/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/order/views.py", line 290, in check_pay
+    result = alipay.api_alipay_trade_query(order_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 305, in api_alipay_trade_query
+    return self._verify_and_return_sync_response(raw_string, "alipay_trade_query_response")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 525, in _verify_and_return_sync_response
+    raise AliPayValidationError
+alipay.exceptions.AliPayValidationError
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan
+INFO zuoyuan

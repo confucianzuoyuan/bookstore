@@ -2001,6 +2001,7 @@ url(r'^del/$', views.cart_del, name='delete'), # 购物车商品记录删除
 {% block topfiles %}
     <script>
     $(function () {
+        update_cart_count()
         // 计算所有被选中商品的总价，总数目和商品的小计
         function update_total_price() {
             total_count = 0
