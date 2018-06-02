@@ -2570,22 +2570,6 @@ urlpatterns = [
         <div class="mask"></div>
     </div>
 {% endblock bottom %}
-{% block bottomfiles %}
-    <script type="text/javascript">
-        $('#order_btn').click(function() {
-            localStorage.setItem('order_finish',2);
-
-            $('.popup_con').fadeIn('fast', function() {
-
-                setTimeout(function(){
-                    $('.popup_con').fadeOut('fast',function(){
-                        window.location.href = 'index.html';
-                    });
-                },3000)
-            });
-        });
-    </script>
-{% endblock bottomfiles %}
 ```
 
 然后将模板中的对应元素修改为后端渲染的代码。
