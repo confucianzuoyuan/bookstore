@@ -2768,7 +2768,7 @@ def order_commit(request):
 ```py
     url(r'^commit/$', views.order_commit, name='commit'), # 生成订单
 ```
-然后改写前端页面，来调用后端提交订单的接口。
+然后改写前端页面`place_order.html`，来调用后端提交订单的接口。
 ```js
 {% block bottomfiles %}
     <script type="text/javascript">
