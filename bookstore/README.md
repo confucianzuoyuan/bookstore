@@ -2987,7 +2987,7 @@ def address(request):
 from django.core.paginator import Paginator
 
 @login_required
-def order(request):
+def order(request, page):
     '''用户中心-订单页'''
     # 查询用户的订单信息
     passport_id = request.session.get('passport_id')
