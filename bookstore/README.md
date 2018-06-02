@@ -2636,22 +2636,6 @@ urlpatterns = [
         <div class="mask"></div>
     </div>
 {% endblock bottom %}
-{% block bottomfiles %}
-    <script type="text/javascript">
-        $('#order_btn').click(function() {
-            localStorage.setItem('order_finish',2);
-
-            $('.popup_con').fadeIn('fast', function() {
-
-                setTimeout(function(){
-                    $('.popup_con').fadeOut('fast',function(){
-                        window.location.href = 'index.html';
-                    });
-                },3000)
-            });
-        });
-    </script>
-{% endblock bottomfiles %}
 ```
 那么订单显示页面就初步开发完了。
 
@@ -2805,7 +2789,6 @@ def order_commit(request):
             $.post('/order/commit/', params, function (data) {
                 // 根据json进行处理
                 if (data.res == 6){
-                    localStorage.setItem('order_finish',2);
                     $('.popup_con').fadeIn('fast', function() {
                         setTimeout(function(){
                             $('.popup_con').fadeOut('fast',function(){
