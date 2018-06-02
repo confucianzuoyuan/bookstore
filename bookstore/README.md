@@ -3094,11 +3094,11 @@ def order(request, page):
                         <a href="{% url 'user:order' page=books_li.previous_page_number %}">上一页</a>
                     {% endif %}
                     {% for page in pages %}
-                        {% ifequal page books_li.number %}
+                        {% if page == books_li.number %}
                             <a href="{% url 'user:order' page=page %}" class="active">{{ page }}</a>
                         {% else %}
                             <a href="{% url 'user:order' page=page %}">{{ page }}</a>
-                        {% endifequal %}
+                        {% endif %}
                     {% endfor %}
                     {% if order_li.has_next %}
                         <a href="{% url 'user:order' page=books_li.next_page_number %}">下一页</a>
