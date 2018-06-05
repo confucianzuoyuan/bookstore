@@ -2771,6 +2771,15 @@ def order_commit(request):
 然后改写前端页面`place_order.html`，来调用后端提交订单的接口。
 ```js
 {% block bottomfiles %}
+
+    <div class="popup_con">
+		<div class="popup">
+			<p>订单提交成功！</p>
+		</div>
+
+		<div class="mask"></div>
+	</div>
+
     <script type="text/javascript">
         $('#order_btn').click(function() {
             // 获取收货地址的id, 支付方式，用户购买的商品id
@@ -3059,17 +3068,17 @@ def order(request, page):
 
                 <div class="pagenation">
                     {% if order_li.has_previous %}
-                        <a href="{% url 'user:order' page=books_li.previous_page_number %}">上一页</a>
+                        <a href="{% url 'user:order' page=order_li.previous_page_number %}">上一页</a>
                     {% endif %}
                     {% for page in pages %}
-                        {% if page == books_li.number %}
+                        {% if page == order_li.number %}
                             <a href="{% url 'user:order' page=page %}" class="active">{{ page }}</a>
                         {% else %}
                             <a href="{% url 'user:order' page=page %}">{{ page }}</a>
                         {% endif %}
                     {% endfor %}
                     {% if order_li.has_next %}
-                        <a href="{% url 'user:order' page=books_li.next_page_number %}">下一页</a>
+                        <a href="{% url 'user:order' page=order_li.next_page_number %}">下一页</a>
                     {% endif %}
                 </div>
         </div>
