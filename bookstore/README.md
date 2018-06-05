@@ -3720,9 +3720,13 @@ $ celery -A bookstore worker -l info
 
 # <a id="10">10，登陆验证码功能实现</a>
 
+将项目中的`Ubuntu-RI.ttf`字体文件拷贝到你的项目的根目录下面。
+
 ```python
 # users/views.py
 from django.http import HttpResponse
+from django.conf import settings
+import os
 def verifycode(request):
     #引入绘图模块
     from PIL import Image, ImageDraw, ImageFont
@@ -3749,7 +3753,7 @@ def verifycode(request):
     for i in range(0, 4):
         rand_str += str1[random.randrange(0, len(str1))]
     #构造字体对象
-    font = ImageFont.truetype("/Library/Fonts/Arial.ttf", 15)
+    font = ImageFont.truetype(os.path.join(settings.BASE_DIR, "Ubuntu-RI.ttf"), 15)
     #构造字体颜色
     fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
     #绘制4个字
@@ -3774,8 +3778,8 @@ def verifycode(request):
     url(r'^verifycode/$', views.verifycode, name='verifycode'), # 验证码功能
 ```
 编写前端代码。在前段代码中的Form里添加以下代码。
-```
-# templates/users/login.html
+```html
+// templates/users/login.html
 <div style="top: 100px; position: absolute;">
     <input type="text" id="vc" name="vc">
     <img id='verifycode' src="/user/verifycode/" onclick="this.src='/user/verifycode/?'+Math.random()" alt="CheckCode"/>
@@ -3783,19 +3787,19 @@ def verifycode(request):
 ```
 前端需要向后端post数据。post以下数据
 ```javascript
-            var username = $('#username').val()
-            var password = $('#pwd').val()
-            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
-            var remember = $('input[name="remember"]').prop('checked')
-            var vc = $('input[name="vc"]').val()
-            // 发起ajax请求
-            var params = {
-                'username': username,
-                'password': password,
-                'csrfmiddlewaretoken': csrf,
-                'remember': remember,
-                'verifycode': vc,
-            }
+var username = $('#username').val()
+var password = $('#pwd').val()
+var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+var remember = $('input[name="remember"]').prop('checked')
+var vc = $('input[name="vc"]').val()
+// 发起ajax请求
+var params = {
+    'username': username,
+    'password': password,
+    'csrfmiddlewaretoken': csrf,
+    'remember': remember,
+    'verifycode': vc,
+}
 ```
 然后在后端进行校验。login_check函数改为以下代码实现。
 ```python
