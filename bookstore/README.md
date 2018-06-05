@@ -3246,7 +3246,7 @@ ALIPAY_URL='https://openapi.alipaydev.com/gateway.do'
     url(r'^pay/$', views.order_pay, name='pay'), # 订单支付
     url(r'^check_pay/$', views.check_pay, name='check_pay'), # 查询支付结果
 ```
-然后编写前端jquery代码，来处理支付后的结果，比如支付成功以后刷新页面。
+然后编写前端jquery代码，来处理支付后的结果，比如支付成功以后刷新页面。以下代码写入`templates/users/user_center_order.html`中。
 ```js
 {% block bottomfiles%}
     <script>
