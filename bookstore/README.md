@@ -2774,13 +2774,13 @@ def order_commit(request):
     <script type="text/javascript">
         $('#order_btn').click(function() {
             // 获取收货地址的id, 支付方式，用户购买的商品id
-            addr_id = $('input[name="addr_id"]').val()
-            pay_method = $('input[name="pay_style"]:checked').val()
-            books_ids = $(this).attr('books_ids')
-            csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            var addr_id = $('input[name="addr_id"]').val()
+            var pay_method = $('input[name="pay_style"]:checked').val()
+            var books_ids = $(this).attr('books_ids')
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
             // alert(addr_id+':'+pay_method+':'+books_ids)
             // 发起post请求， 访问/order/commit/
-            params = {
+            var params = {
                 'addr_id': addr_id,
                 'pay_method': pay_method,
                 'books_ids': books_ids,
@@ -3778,18 +3778,18 @@ def verifycode(request):
 # templates/users/login.html
 <div style="top: 100px; position: absolute;">
     <input type="text" id="vc" name="vc">
-    <img id='verifycode' src="/user/verifycode/" alt="CheckCode"/>
+    <img id='verifycode' src="/user/verifycode/" onclick="this.src='/user/verifycode/?'+Math.random()" alt="CheckCode"/>
 </div>
 ```
 前端需要向后端post数据。post以下数据
 ```javascript
-            username = $('#username').val()
-            password = $('#pwd').val()
-            csrf = $('input[name="csrfmiddlewaretoken"]').val()
-            remember = $('input[name="remember"]').prop('checked')
-            vc = $('input[name="vc"]').val()
+            var username = $('#username').val()
+            var password = $('#pwd').val()
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            var remember = $('input[name="remember"]').prop('checked')
+            var vc = $('input[name="vc"]').val()
             // 发起ajax请求
-            params = {
+            var params = {
                 'username': username,
                 'password': password,
                 'csrfmiddlewaretoken': csrf,

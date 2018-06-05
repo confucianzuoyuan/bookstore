@@ -5,6 +5,8 @@
     <script>
     $(function () {
         // 计算所有被选中商品的总价，总数目和商品的小计
+        update_cart_count()
+
         function update_total_price() {
             total_count = 0
             total_price = 0
@@ -106,6 +108,10 @@
         function update_cart_count() {
             $.get('/cart/count/', function (data) {
                 $('.total_count').children('em').text(data.res)
+            })
+            $.get('/cart/count/', function (data) {
+                // {'res':商品的总数}
+                $('#show_count').html(data.res)
             })
         }
 
