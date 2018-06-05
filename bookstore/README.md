@@ -3982,18 +3982,23 @@ def ChineseAnalyzer():
 ```
 复制whoosh_backend.py文件，改名为whoosh_cn_backend.py
 注意：复制出来的文件名，末尾会有一个空格，记得要删除这个空格
+然后将下面这一行代码写入`whoosh_cn_backend.py`文件中。
+```py
+from .ChineseAnalyzer import ChineseAnalyzer
 ```
-from .ChineseAnalyzer import ChineseAnalyzer 
-查找
+然后查找下面的这一行代码
+```py
 analyzer=StemmingAnalyzer()
+```
 改为
+```py
 analyzer=ChineseAnalyzer()
 ```
 生成索引
-```
+```py
 $ python manage.py rebuild_index
 ```
-在模板中创建搜索栏
+在模板`base.html`中创建搜索栏
 ```
 <form method='get' action="/search/" target="_blank">
     <input type="text" name="q">
