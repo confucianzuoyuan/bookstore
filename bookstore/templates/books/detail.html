@@ -119,16 +119,6 @@ $(function () {
 				<a href="javascript:;" books_id="{{ books.id }}" class="add_cart" id="add_cart">加入购物车</a>
 				<a href="#" id="write-comment" class="comment">我要写评论</a>
 			</div>
-			<div style="display:flex;" id="comment-input" data-bookid="{{ books.id }}" data-userid="{{ request.session.passport_id }}">
-			  <div>
-			    <input type="text" placeholder="评论内容">
-			  </div>
-			  <div id="submit-comment">
-			    <button>
-			      提交评论
-			    </button>
-			  </div>
-			</div>
 		</div>
 	</div>
 
@@ -169,8 +159,6 @@ $(function () {
 {% endblock body %}
 {% block bottomfiles %}
 <script type="text/javascript">
-	$('#comment-input').hide()
-
 	$('#add_cart').click(function(){
         // 获取商品的id和商品数量
         var books_id = $(this).attr('books_id');
@@ -197,64 +185,8 @@ $(function () {
         })
 	})
 
-	// 获取评论
-	$.ajax({
-		url: '/comment/comment/' + $('#comment-input').data('bookid'),
-		success: function (res) {
-			if (res.code === 200) {
-				var data = res.data;
-				console.log(data);
-				var div_head = '<div>';
-				var div_tail = '</div>';
-				var dom_element = ''
-				for(i = 0; i < data.length; i++) {
-					var head = '<div>';
-					var tail = '</div>';
-					var temp = head + '<span>' + data[i].user_id + '</span>' + '<br>' + '<span>' + data[i].content + '</span>';
-					dom_element += temp;
-				}
-				dom_element = div_head + dom_element + div_tail;
-				$('#book_comment').append(dom_element);
-			}
-		}
-	})
-
-	$('#detail').click(function () {
-		$(this).addClass('active');
-		$('#comment').removeClass('active');
-		$('#book_comment').hide();
-		$('#book_detail').show();
-	})
-	$('#comment').click(function () {
-		$(this).addClass('active');
-		$('#detail').removeClass('active');
-		$('#book_comment').show();
-		$('#book_detail').hide();
-	})
-	$('#write-comment').click(function () {
-		$('#comment-input').show();
-	})
-	$('#submit-comment').click(function () {
-		var book_id = $('#comment-input').data('bookid');
-		var user_id = $('#comment-input').data('userid');
-		var content = $('#comment-input input').val();
-		var data = {
-			book_id: book_id,
-			user_id: user_id,
-			content: content,
-		}
-		console.log('content: ', content);
-		$.ajax({
-			type: 'POST',
-			url: '/comment/comment/' + book_id + '/',
-			data: JSON.stringify(data),
-			success: function (res) {
-				if (res.code === 200) {
-					// console.log('res: ', res)
-					$('#comment-input').hide();
-				}
-			}
-		})
+	$('#write-comment').click(function() {
+		window.open("{% url 'comment:comment' book_id=books.id %}")
 	})
 </script>
     <style type="text/css">

@@ -65,3 +65,35 @@ def comment(request, books_id):
                 'code': 200,
                 'msg': '评论成功',
             })
+
+def new_comment(request, book_id):
+    book = Books.objects.get_books_by_id(book_id)
+    user_id = request.session.get('passport_id')
+    user = Passport.objects.get(id=user_id)
+    return render(request, "books/comment.html", {
+        'book_id': book_id,
+        'book': book,
+        'user': user,
+    })
+
+def submit(request):
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+    user_id = request.session.get('passport_id')
+    book_id = request.POST.get('book_id')
+    rating = request.POST.get('rating')
+
+    book = Books.objects.get_books_by_id(book_id)
+
+    Comments.objects.create(
+        user_id=user_id,
+        book_id=book_id,
+        content=content,
+        title=title,
+        rating=int(rating)
+    )
+
+    return render(request, "books/comment.html", {
+        'msg': '评论成功！',
+        'book': book,
+    })

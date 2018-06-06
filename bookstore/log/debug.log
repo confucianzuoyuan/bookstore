@@ -184,3 +184,1009 @@ Traceback (most recent call last):
   File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/alipay/__init__.py", line 525, in _verify_and_return_sync_response
     raise AliPayValidationError
 alipay.exceptions.AliPayValidationError
+INFO anonymous
+INFO anonymous
+WARNING Not Found: /comment
+WARNING Not Found: /comment
+WARNING Not Found: /comment/
+WARNING Not Found: /comment/
+INFO anonymous
+INFO anonymous
+ERROR Internal Server Error: /comment/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: new_comment() missing 2 required positional arguments: 'user_id' and 'book_id'
+ERROR Internal Server Error: /comment/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: new_comment() missing 2 required positional arguments: 'user_id' and 'book_id'
+ERROR Internal Server Error: /books/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 79, in detail
+    return render(request, 'books/detail.html', context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{'book_id': 2}' not found. 1 pattern(s) tried: ['comment/$']
+ERROR Internal Server Error: /books/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/books/views.py", line 79, in detail
+    return render(request, 'books/detail.html', context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{'book_id': 2}' not found. 1 pattern(s) tried: ['comment/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 70, in new_comment
+    return render(request, "books/comment.html")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'submit' with arguments '()' and keyword arguments '{}' not found. 0 pattern(s) tried: []
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 70, in new_comment
+    return render(request, "books/comment.html")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'submit' with arguments '()' and keyword arguments '{}' not found. 0 pattern(s) tried: []
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 71, in new_comment
+    return render(request, "books/comment.html")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 71, in new_comment
+    return render(request, "books/comment.html")
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 72, in new_comment
+    'book_id': book_id
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 72, in new_comment
+    'book_id': book_id
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 71, in new_comment
+    'book_id': book_id
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 71, in new_comment
+    'book_id': book_id
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 71, in new_comment
+    'book_id': book_id
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/2/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 565, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'bookstore.comment'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 501, in render
+    current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 575, in reverse
+    key)
+django.core.urlresolvers.NoReverseMatch: 'bookstore.comment' is not a registered namespace
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 71, in new_comment
+    'book_id': book_id
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/shortcuts.py", line 67, in render
+    template_name, context, request=request, using=using)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader.py", line 99, in render_to_string
+    return template.render(context, request)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/backends/django.py", line 74, in render
+    return self.template.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 209, in render
+    return self._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 135, in render
+    return compiled_parent._render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 201, in _render
+    return self.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/base.py", line 903, in render
+    bit = self.render_node(node, context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/debug.py", line 79, in render_node
+    return node.render(context)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 507, in render
+    six.reraise(*exc_info)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 659, in reraise
+    raise value
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/template/defaulttags.py", line 493, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 579, in reverse
+    return force_text(iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs)))
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/urlresolvers.py", line 496, in _reverse_with_prefix
+    (lookup_view_s, args, kwargs, len(patterns), patterns))
+django.core.urlresolvers.NoReverseMatch: Reverse for 'comment' with arguments '()' and keyword arguments '{}' not found. 1 pattern(s) tried: ['comment/(?P<book_id>\\d+)/$']
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 84, in submit
+    title=title
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 346, in create
+    obj = self.model(**kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 468, in __init__
+    setattr(self, field.name, rel_obj)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/related.py", line 619, in __set__
+    (instance._meta.object_name, self.field.name)
+ValueError: Cannot assign None: "Comments.user" does not allow null values.
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 84, in submit
+    title=title
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 346, in create
+    obj = self.model(**kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 468, in __init__
+    setattr(self, field.name, rel_obj)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/related.py", line 619, in __set__
+    (instance._meta.object_name, self.field.name)
+ValueError: Cannot assign None: "Comments.user" does not allow null values.
+INFO zuoyuan
+INFO zuoyuan
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 84, in submit
+    title=title
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 346, in create
+    obj = self.model(**kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 468, in __init__
+    setattr(self, field.name, rel_obj)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/related.py", line 627, in __set__
+    self.field.rel.to._meta.object_name,
+ValueError: Cannot assign "1": "Comments.user" must be a "Passport" instance.
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 84, in submit
+    title=title
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 346, in create
+    obj = self.model(**kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 468, in __init__
+    setattr(self, field.name, rel_obj)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/fields/related.py", line 627, in __set__
+    self.field.rel.to._meta.object_name,
+ValueError: Cannot assign "1": "Comments.user" must be a "Passport" instance.
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 856, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1057, in _read_query_result
+    result.read()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1340, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1014, in _read_packet
+    packet.check_error()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'title' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 84, in submit
+    title=title
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 348, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 974, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/utils.py", line 97, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 856, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1057, in _read_query_result
+    result.read()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1340, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1014, in _read_packet
+    packet.check_error()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+django.db.utils.InternalError: (1054, "Unknown column 'title' in 'field list'")
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 856, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1057, in _read_query_result
+    result.read()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1340, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1014, in _read_packet
+    packet.check_error()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'title' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 84, in submit
+    title=title
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 348, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 710, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 738, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 822, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/base.py", line 861, in _do_insert
+    using=using, raw=raw)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/manager.py", line 127, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/query.py", line 920, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 974, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 79, in execute
+    return super(CursorDebugWrapper, self).execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/utils.py", line 97, in __exit__
+    six.reraise(dj_exc_type, dj_exc_value, traceback)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/utils/six.py", line 658, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/utils.py", line 64, in execute
+    return self.cursor.execute(sql, params)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 124, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 166, in execute
+    result = self._query(query)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 856, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1057, in _read_query_result
+    result.read()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1340, in read
+    first_packet = self.connection._read_packet()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 1014, in _read_packet
+    packet.check_error()
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/connections.py", line 393, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+django.db.utils.InternalError: (1054, "Unknown column 'title' in 'field list'")
+INFO zuoyuan
+INFO zuoyuan
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 83, in submit
+    book = Books.objects.get_books_by_id(books_id)
+NameError: name 'books_id' is not defined
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 83, in submit
+    book = Books.objects.get_books_by_id(books_id)
+NameError: name 'books_id' is not defined
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 83, in submit
+    book = Books.objects.get_books_by_id(books_id)
+NameError: name 'books_id' is not defined
+ERROR Internal Server Error: /comment/submit/
+Traceback (most recent call last):
+  File "/Users/yuanzuo/bookstore/lib/python3.6/site-packages/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/yuanzuo/Desktop/bookstore/bookstore/comments/views.py", line 83, in submit
+    book = Books.objects.get_books_by_id(books_id)
+NameError: name 'books_id' is not defined
+WARNING Forbidden (CSRF token missing or incorrect.): /comment/submit/
+WARNING Forbidden (CSRF token missing or incorrect.): /comment/submit/
+WARNING Not Found: /comment/2/books/book002_BYhkTpE.jpg
+WARNING Not Found: /comment/2/books/book002_BYhkTpE.jpg
+WARNING Not Found: /comment/2/books/book002_BYhkTpE.jpg
+WARNING Not Found: /comment/2/books/book002_BYhkTpE.jpg
+INFO zuoyuan
+INFO zuoyuan
