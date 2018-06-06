@@ -4325,6 +4325,7 @@ logger.info(request.body)
 在`utils`文件夹中新建`middleware.py`文件。
 
 ```py
+from django import http
 # 中间件示例，打印中间件执行语句
 class BookMiddleware(object):
     def process_request(self, request):

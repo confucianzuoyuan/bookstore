@@ -1,3 +1,4 @@
+from django import http
 # 中间件示例，打印中间件执行语句
 class BookMiddleware(object):
     def process_request(self, request):
