@@ -4243,12 +4243,20 @@ http {
         }
 }
 ```
+如果`nginx`没启动，则执行
+```s
+$ nginx
+```
+如果`nginx`已经启动，则执行以下命令重启
+```s
+$ nginx -s reload
+```
 然后在根目录bookstore新建文件夹collect_static。
-注意要在配置文件settings.py中写一行
+注意要在配置文件`settings.py`中写一行
 ```py
 STATIC_ROOT = os.path.join(BASE_DIR, 'collect_static')
 ```
-然后在根目录运行python manage.py collectstatic命令。
+然后在根目录运行`python manage.py collectstatic`命令，这个命令用来收集静态文件。
 并将books/models.py中添加代码：
 ```py
 from django.core.files.storage import FileSystemStorage
@@ -4258,7 +4266,7 @@ class Books(BaseModel):
     image = models.ImageField(storage=fs, upload_to='books', verbose_name='商品图片')
     ...
 ```
-然后在根目录运行gunicorn。安装gunicorn，`pip install gunicorn`
+然后在根目录运行`gunicorn`。安装`gunicorn`，`pip install gunicorn`
 ```
 nohup gunicorn -w 3 -b 0.0.0.0:8000 bookstore.wsgi:application &
 ```
