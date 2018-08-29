@@ -10,7 +10,7 @@ jieba==0.39
 kombu==4.1.0
 olefile==0.44
 Pillow==4.3.0
-pycryptodome==3.4.7
+pycryptodome==3.6.6
 PyMySQL==0.7.11
 python-alipay-sdk==1.7.0
 pytz==2017.2
