@@ -62,7 +62,7 @@ gunicorn
 安装环境（在虚拟环境中）
 
 ```
-$ pip install -r requirements.txt
+$ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
 ## 3，修改项目配置文件，将默认sqlite改为mysql
