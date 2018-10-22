@@ -53,9 +53,10 @@ PyMySQL==0.7.11
 python-alipay-sdk==1.7.0
 pytz==2017.2
 redis==2.10.6
-uWSGI==2.0.15
+#uWSGI==2.0.15
 vine==1.1.4
 Whoosh==2.7.4
+gunicorn
 ```
 
 安装环境（在虚拟环境中）
