@@ -21,6 +21,9 @@
 # <a id="1">1，新建项目</a>
 
 ## 1，新建项目
+
+新建项目之前需要先看`2.`，把包都安装了！
+
 ```
 $ django-admin startproject bookstore
 ```
@@ -81,7 +84,7 @@ DATABASES = {
 }
 ```
 
-为了使用mysql的驱动，在根应用的`__init__.py`文件中加入以下两行代码：
+为了使用mysql的驱动，在主app的`__init__.py`文件中加入以下两行代码：
 
 ```py
 import pymysql
@@ -144,9 +147,11 @@ class Passport(BaseModel):
         db_table = 's_user_account'
 ```
 
-接下来我们在PassportManager()中实现添加和查找账户信息的功能，这样抽象性更好。
+接下来我们在PassportManager()中实现添加和查找账户信息的功能，这样抽象性更好。下面这个类需要写在`Passport`的上面。
 
 ```python
+from utils.get_hash import get_hash
+
 # Create your models here.
 class PassportManager(models.Manager):
     def add_one_passport(self, username, password, email):
