@@ -1,0 +1,97 @@
+{# 首页 登录 注册 的父模板 #}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load staticfiles %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    {# 网页顶部标题块 #}
+	<title>{% block title %}{% endblock title %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bulma.css' %}">
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+    {# 网页顶部引入文件块 #}
+	{% block topfiles %}
+	{% endblock topfiles %}
+</head>
+<body>
+{# 网页顶部欢迎信息块 #}
+{% block header_con %}
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到尚硅谷书店!</div>
+			<div class="fr">
+                {% if request.session.islogin %}
+				<div class="login_btn fl">
+					欢迎您：<em>{{ request.session.username }}</em>
+                    <span>|</span>
+					<a href="{% url 'user:logout' %}">退出</a>
+				</div>
+                {% else %}
+				<div class="login_btn fl">
+					<a href="{% url 'user:login' %}">登录</a>
+					<span>|</span>
+					<a href="{% url 'user:register' %}">注册</a>
+				</div>
+                {% endif %}
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="{% url 'user:user' %}">用户中心</a>
+					<span>|</span>
+					<a href="{% url 'cart:show' %}">我的购物车</a>
+					<span>|</span>
+					<a href="{% url 'order:place' %}">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+{% endblock header_con %}
+{# 网页顶部搜索框块 #}
+{% block search_bar %}
+	<div class="search_bar clearfix">
+		<a href="{% url 'books:index' %}" class="logo fl"><img src="{% static 'images/logo.png' %}" style="width: 160px; height: 53px;"></a>
+		<div class="search_con fl">
+            <form method="get" action="/search/">
+                <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+                <input type="submit" class="input_btn fr" name="" value="搜索">
+            </form>
+		</div>
+		<div class="guest_cart fr">
+			<a href="{% url 'cart:show' %}" class="cart_name fl">我的购物车</a>
+			<div class="book_count fl" id="show_count">0</div>
+		</div>
+	</div>
+{% endblock search_bar %}
+{# 网页主体内容块 #}
+{% block body %}{% endblock body %}
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2016 北京尚硅谷信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    {# 获取用户购物车中商品的数目 #}
+    {% block cart_count %}
+        <script>
+            $.get('/cart/count/', function (data) {
+                // {'res':商品的总数}
+                $('#show_count').html(data.res)
+            })
+        </script>
+    {% endblock cart_count %}
+    {# 网页底部html元素块 #}
+    {% block bottom %}{% endblock bottom %}
+    {# 网页底部引入文件块 #}
+	{% block bottomfiles %}{% endblock bottomfiles %}
+</body>
+</html>

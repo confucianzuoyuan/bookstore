@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}尚硅谷书城-书籍搜索结果列表{% endblock title %}
+{% block body %}
+	<div class="breadcrumb">
+		<a href="#">{{ query }}</a>
+		<span>></span>
+		<a href="#">搜索结果如下:</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+			<ul class="goods_type_list clearfix">
+                {% for item in page %}
+                    <li>
+                        <a href="{% url 'goods:detail' goods_id=item.object.id %}"><img src="{% static item.object.image %}"></a>
+                        <h4><a href="{% url 'goods:detail' goods_id=item.object.id %}">{{ item.object.name }}</a></h4>
+                        <div class="operate">
+                            <span class="prize">￥{{ item.object.price }}</span>
+                            <span class="unit">{{ item.object.unite }}</span>
+                            <a href="#" class="add_goods" title="加入购物车"></a>
+                        </div>
+                    </li>
+				{% endfor %}
+			</ul>
+			<div class="pagenation">
+                {% if page.has_previous %}
+				    <a href="/search/?q={{ query }}&page={{ page.previous_page_number }}"><上一页</a>
+                {% endif %}
+                {% for pindex in paginator.page_range %}
+                    {% if pindex == page.number %}
+                        <a href="/search/?q={{ query }}&page={{ pindex }}" class="active">{{ pindex }}</a>
+                    {% else %}
+                        <a href="/search/?q={{ query }}&page={{ pindex }}">{{ pindex }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page.has_next %}
+				    <a href="/search/?q={{ query }}&page={{ page.next_page_number }}">下一页></a>
+                {% endif %}
+			</div>
+	</div>
+{% endblock body %}
