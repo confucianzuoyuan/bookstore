@@ -35,22 +35,22 @@
 		<a href="#">{{ type_title }}</a>
 	</div>
 
-	<div class="main_wrap clearfix">
+	<div class="main_wrap clearfix" id="app">
 		<div class="l_wrap fl clearfix">
 			<div class="new_book">
-				<h3>新品推荐</h3>
+{% verbatim %}
+   <h3> {{ message }}</h3>
 				<ul>
-                    {% for book in books_new %}
-					<li>
-						<a href="{% url 'books:detail' books_id=book.id %}"><img src="{% static book.image.url %}"></a>
-						<h4><a href="{% url 'books:detail' books_id=book.id %}">{{ book.name }}</a></h4>
-						<div class="prize">￥{{ book.price }}</div>
+					<li v-for="book in new_books">
+						<a href="#"><img :src="'/static/'+book.fields.image"></a>
+						<h4><a href="#">{{book.fields.name}}</a></h4>
+						<div class="prize">￥{{ book.fields.price }}</div>
 					</li>
-					{% endfor %}
 				</ul>
 			</div>
 		</div>
 
+{% endverbatim %}
 		<div class="r_wrap fr clearfix">
 			<div class="sort_bar">
 				<a href="/list/{{ type_id }}/1/" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
@@ -89,4 +89,24 @@
 			</div>
 		</div>
 	</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!',
+    new_books: [],
+  },
+  mounted: function () {
+    var that = this
+    this.$nextTick(function () {
+      $.get('http://localhost:8000/newbooks/', function(data) {
+        that.new_books = JSON.parse(data);
+    })
+  })
+}
+})
+
+
+
+</script>
 {% endblock body %}

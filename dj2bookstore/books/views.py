@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from books.models import Books
 from books.enums import *
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.views.decorators.cache import cache_page
 from django_redis import get_redis_connection
+from django.core import serializers
 # Create your views here.
 import logging
 logger = logging.getLogger('django.request')
@@ -138,4 +142,9 @@ def list(request, type_id, page):
     # 使用模板
     return render(request, 'books/list.html', context)
 
-
+@csrf_exempt
+def new_books(request):
+    type_id = request.GET.get('type_id', '1')
+    books_new = Books.objects.get_books_by_type(type_id=type_id, limit=2, sort='new')
+    res = serializers.serialize("json", books_new) 
+    return HttpResponse(res)
