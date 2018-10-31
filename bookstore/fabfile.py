@@ -11,8 +11,9 @@ env.password = 'xxxxxxxx' # 密码
 
 def deploy():
   run('rm -rf bookstore/')
-  run('rm -rf py2/ && rm -rf py3/')
-  run('virtualenv -p python py2')
   run('pip install django==1.8.2 && django-admin startproject bookstore')
   with cd('bookstore'):
-    run('python manage.py runserver 0.0.0.0:8000')
+    try:
+      run('python manage.py runserver 0.0.0.0:8000')
+    except:
+      run('python3 manage.py runserver 0.0.0.0:8000')
