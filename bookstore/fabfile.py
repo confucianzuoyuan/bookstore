@@ -1,8 +1,11 @@
+# 进入python3的虚拟环境
+# pip install fabric3
+
 from fabric.api import *
 
-env.user = 'root'
-env.hosts = ['www.zuoyuanandbaiyuan.com']
-env.password = 'xxxxxxxxxx'
+env.user = 'root' # 阿里云一般都是root
+env.hosts = ['www.zuoyuanandbaiyuan.com'] # 公网ip
+env.password = 'BaiYuan329064BY' # 密码
 
 def deploy():
   run('rm -rf bookstore/')
