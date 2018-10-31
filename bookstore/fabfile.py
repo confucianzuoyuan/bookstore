@@ -1,5 +1,7 @@
 # 进入python3的虚拟环境
 # pip install fabric3
+# 运行程序为'fab 函数名'
+# fab deploy
 
 from fabric.api import *
 
