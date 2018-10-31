@@ -5,7 +5,7 @@ from fabric.api import *
 
 env.user = 'root' # 阿里云一般都是root
 env.hosts = ['www.zuoyuanandbaiyuan.com'] # 公网ip
-env.password = 'BaiYuan329064BY' # 密码
+env.password = 'xxxxxxxx' # 密码
 
 def deploy():
   run('rm -rf bookstore/')
