@@ -6,12 +6,16 @@ from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 from drfbookstore.settings import MEDIA_ROOT
 from books.views import BooksListViewSet
+from users.views import UserViewset
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework.authtoken import views
+
 
 router = DefaultRouter()
 
-# 配置goods的url,这个basename是干啥的
 router.register(r'books', BooksListViewSet, base_name="books")
+router.register(r'users', UserViewset, base_name="users")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,5 +25,9 @@ urlpatterns = [
     re_path('^', include(router.urls)),
     # 自动化文档,1.11版本中注意此处前往不要加$符号
     path('docs/', include_docs_urls(title='书城文档')),
+    path('login/', obtain_jwt_token),
+    path('api-token-auth/', views.obtain_auth_token),
+    path('api-auth/', include('rest_framework.urls')),
+    path('login-page/', TemplateView.as_view(template_name='login.html'), name='login'),
 ]
 

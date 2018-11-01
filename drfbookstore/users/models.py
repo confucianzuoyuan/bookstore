@@ -1,25 +1,26 @@
+from datetime import datetime
 from django.db import models
-from db.base_model import BaseModel
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-class Passport(BaseModel):
-    '''用户模型类'''
-    username = models.CharField(max_length=20, verbose_name='用户名称')
-    password = models.CharField(max_length=40, verbose_name='用户密码')
-    email = models.EmailField(verbose_name='用户邮箱')
-    is_active = models.BooleanField(default=False, verbose_name='激活状态')
-
-    class Meta:
-        db_table = 's_user_account'
-
-class Address(BaseModel):
-    '''地址模型类'''
-    recipient_name = models.CharField(max_length=20, verbose_name='收件人')
-    recipient_addr = models.CharField(max_length=256, verbose_name='收件地址')
-    zip_code = models.CharField(max_length=6, verbose_name='邮政编码')
-    recipient_phone = models.CharField(max_length=11, verbose_name='联系电话')
-    is_default = models.BooleanField(default=False, verbose_name='是否默认')
-    passport = models.ForeignKey('Passport', verbose_name='账户', on_delete=models.CASCADE)
+class UserProfile(AbstractUser):
+    """
+    用户表，新增字段如下
+    """
+    GENDER_CHOICES = (
+        ("male", u"男"),
+        ("female", u"女")
+    )
+    # 用户注册时我们要新建user_profile 但是我们只有手机号
+    name = models.CharField(max_length=30, null=True, blank=True, verbose_name="姓名")
+    # 保存出生日期，年龄通过出生日期推算
+    birthday = models.DateField(null=True, blank=True, verbose_name="出生年月")
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default="female", verbose_name="性别")
+    mobile = models.CharField(null=True, blank=True, max_length=11, verbose_name="电话", help_text="电话号码")
+    email = models.EmailField(max_length=100, null=True, blank=True, verbose_name="邮箱")
 
     class Meta:
-        db_table = 's_user_address'
+        verbose_name = "用户信息"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.username
