@@ -42,8 +42,8 @@ $ vim requirements.txt
 amqp==2.2.2
 billiard==3.5.0.3
 celery==4.1.0
-Django==1.8.2
-django-haystack==2.6.1
+Django==1.11
+#django-haystack==2.6.1
 django-redis==4.8.0
 django-tinymce==2.6.0
 itsdangerous==0.24
