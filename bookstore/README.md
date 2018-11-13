@@ -38,12 +38,10 @@ $ vim requirements.txt
 安装包文件如下:
 
 ```python
-# requirements.txt
 amqp==2.2.2
 billiard==3.5.0.3
 celery==4.1.0
 Django==1.11
-#django-haystack==2.6.1
 django-redis==4.8.0
 django-tinymce==2.6.0
 itsdangerous==0.24
@@ -56,7 +54,6 @@ PyMySQL==0.7.11
 python-alipay-sdk==1.7.0
 pytz==2017.2
 redis==2.10.6
-#uWSGI==2.0.15
 vine==1.1.4
 Whoosh==2.7.4
 gunicorn
@@ -261,6 +258,9 @@ STATICFILES_DIRS = [
 3，写入数据库。
 4，返回注册页（因为还没做首页）。
 ```python
+from users.models import Passport
+import re
+from django.shortcuts import render, redirect, reverse
 # users/views.py
 def register_handle(request):
     '''进行用户注册处理'''
@@ -283,7 +283,8 @@ def register_handle(request):
     # Passport.objects.create(username=username, password=password, email=email)
     try:
         Passport.objects.add_one_passport(username=username, password=password, email=email)
-    except:
+    except Exception as e:
+        print("e: ", e) # 把异常打印出来
         return render(request, 'users/register.html', {'errmsg': '用户名已存在！'})
 
     # 注册完，还是返回注册页。
