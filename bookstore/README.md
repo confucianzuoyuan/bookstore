@@ -824,7 +824,7 @@ def detail(request, books_id):
     type_title = BOOKS_TYPE[books.type_id]
     
     # 定义上下文
-    context = {'books': books, 'books_li': books_li，'type_title':type_title}
+    context = {'books': books, 'books_li': books_li, 'type_title':type_title}
 
     # 使用模板
     return render(request, 'books/detail.html', context)
