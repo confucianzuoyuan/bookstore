@@ -2053,8 +2053,6 @@ url(r'^del/$', views.cart_del, name='delete'), # 购物车商品记录删除
             #  更新列表上方商品总数
             $.get('/cart/count/', function (data) {
                 $('.total_count').children('em').text(data.res)
-            #  更新页面右上方购物车商品总数
-            $.get('/cart/count/', function (data) {
                 $('#show_count').html(data.res)
             })
         }
