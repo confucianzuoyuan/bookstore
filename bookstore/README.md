@@ -2365,7 +2365,7 @@ class OrderInfo(BaseModel):
 ```
 由于每一笔订单都是由不同的商品组成，所以我们需要把一笔订单拆分开，来建立一个订单中每种商品的信息数据表。关系数据库的一个好处就是强约束，冗余也很少，这点比mongodb好。
 ```py
-class OrderGoods(BaseModel):
+class OrderBooks(BaseModel):
     '''订单商品模型类'''
     order = models.ForeignKey('OrderInfo', verbose_name='所属订单')
     books = models.ForeignKey('books.Books', verbose_name='订单商品')
@@ -2392,7 +2392,7 @@ from utils.decorators import login_required
 from django.http import HttpResponse,JsonResponse
 from users.models import Address
 from books.models import Books
-from order.models import OrderInfo, OrderGoods
+from order.models import OrderInfo, OrderBooks
 from django_redis import get_redis_connection
 from datetime import datetime
 from django.conf import settings
@@ -2738,7 +2738,7 @@ def order_commit(request):
                 return JsonResponse({'res': 5, 'errmsg': '商品库存不足'})
 
             # 创建一条订单商品记录
-            OrderGoods.objects.create(order_id=order_id,
+            OrderBooks.objects.create(order_id=order_id,
                                       books_id=id,
                                       count=count,
                                       price=books.price)
@@ -2758,6 +2758,7 @@ def order_commit(request):
         order.save()
     except Exception as e:
         # 操作数据库出错，进行回滚操作
+        print("e: ", e)
         transaction.savepoint_rollback(sid)
         return JsonResponse({'res': 7, 'errmsg': '服务器错误'})
 
