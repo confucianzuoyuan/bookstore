@@ -2607,7 +2607,7 @@ urlpatterns = [
             <li class="col05">小计</li>
         </ul>
         {% for book in books_li %}
-        <ul class="books_list_td clearfix">
+        <ul class="book_list_td clearfix">
             <li class="col01">{{ forloop.counter }}</li>
             <li class="col02"><img src="{% static book.image %}"></li>
             <li class="col03">{{ book.name }}</li>
