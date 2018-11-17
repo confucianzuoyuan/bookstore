@@ -2964,10 +2964,10 @@ def order(request, page):
     for order in order_li:
         # 根据订单id查询订单商品信息
         order_id = order.order_id
-        order_books_li = OrderGoods.objects.filter(order_id=order_id)
+        order_books_li = OrderBooks.objects.filter(order_id=order_id)
 
         # 计算商品的小计
-        # order_books ->OrderGoods实例对象
+        # order_books ->OrderBooks实例对象
         for order_books in order_books_li:
             count = order_books.count
             price = order_books.price
@@ -3045,7 +3045,7 @@ def order(request, page):
                     <tbody>
                         <tr>
                             <td width="55%">
-                                {# 遍历出来的order_books是一个OrderGoods对象 #}
+                                {# 遍历出来的order_books是一个OrderBooks对象 #}
                                 {% for order_books in order.order_books_li %}
                                 <ul class="order_book_list clearfix">                   
                                     <li class="col01"><img src="{% static order_books.books.image %}"></li>
