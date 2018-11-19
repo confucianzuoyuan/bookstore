@@ -1,7 +1,4 @@
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.core.urlresolvers import reverse
-
+from django.shortcuts import redirect, reverse
 
 def login_required(view_func):
     '''登录判断装饰器'''

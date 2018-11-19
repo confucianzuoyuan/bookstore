@@ -1,23 +1,27 @@
-from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
-import re
+from django.shortcuts import render, redirect, reverse
+from django.http import JsonResponse
+from django.contrib.auth.backends import ModelBackend
 from users.models import Passport, Address
-from django.http import HttpResponse, JsonResponse
+from order.models import OrderInfo, OrderBooks
+import re
+from django.shortcuts import render, redirect, reverse
 from utils.decorators import login_required
-from order.models import OrderInfo, OrderGoods
+from django_redis import get_redis_connection
+import redis
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 from users.tasks import send_active_email
-from django.core.mail import send_mail
 from django.conf import settings
-import os
-from django_redis import get_redis_connection
 from books.models import Books
+
+
 # Create your views here.
 def register(request):
     '''显示用户注册页面'''
     return render(request, 'users/register.html')
 
+
+# users/views.py
 def register_handle(request):
     '''进行用户注册处理'''
     # 接收数据
@@ -28,29 +32,26 @@ def register_handle(request):
     # 进行数据校验
     if not all([username, password, email]):
         # 有数据为空
-        return render(request, 'users/register.html', {'errmsg':'参数不能为空!'})
+        return render(request, 'users/register.html', {'errmsg': '参数不能为空!'})
 
     # 判断邮箱是否合法
     if not re.match(r'^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
         # 邮箱不合法
-        return render(request, 'users/register.html', {'errmsg':'邮箱不合法!'})
-
-    p = Passport.objects.check_passport(username=username)
-
-    if p:
-        return render(request, 'users/register.html', {'errmsg': '用户名已存在！'})
+        return render(request, 'users/register.html', {'errmsg': '邮箱不合法!'})
 
     # 进行业务处理:注册，向账户系统中添加账户
     # Passport.objects.create(username=username, password=password, email=email)
-    passport = Passport.objects.add_one_passport(username=username, password=password, email=email)
+    try:
+        passport = Passport.objects.add_one_passport(username=username, password=password, email=email)
+    except Exception as e:
+        print("e: ", e) # 把异常打印出来
+        return render(request, 'users/register.html', {'errmsg': '用户名已存在！'})
 
-    # 生成激活的token itsdangerous
     serializer = Serializer(settings.SECRET_KEY, 3600)
     token = serializer.dumps({'confirm':passport.id}) # 返回bytes
     token = token.decode()
 
-    # 给用户的邮箱发激活邮件
-    # send_mail('尚硅谷书城用户激活', '', settings.EMAIL_FROM, [email], html_message='<a href="http://127.0.0.1:8000/user/active/%s/">http://127.0.0.1:8000/user/active/</a>' % token)
+    #send_mail('尚硅谷书城用户激活', '', settings.EMAIL_FROM, [email], html_message='<a href="http://127.0.0.1:8000/user/active/%s/">http://127.0.0.1:8000/user/active/</a>' % token)
     send_active_email.delay(token, username, email)
 
     # 注册完，还是返回注册页。
@@ -58,23 +59,18 @@ def register_handle(request):
 
 def login(request):
     '''显示登录页面'''
-    username = ''
-    checked = ''
-
+    if request.COOKIES.get("username"):
+        username = request.COOKIES.get("username")
+        checked = 'checked'
+    else:
+        username = ''
+        checked = ''
     context = {
         'username': username,
         'checked': checked,
     }
 
     return render(request, 'users/login.html', context)
-
-# /user/logout
-def logout(request):
-    '''用户退出登录'''
-    # 清空用户的session信息
-    request.session.flush()
-    # 跳转到首页
-    return redirect(reverse('books:index'))
 
 def login_check(request):
     '''进行用户登录校验'''
@@ -87,7 +83,7 @@ def login_check(request):
     # 2.数据校验
     if not all([username, password, remember, verifycode]):
         # 有数据为空
-        return JsonResponse({'res': 2})
+        return JsonResponse({'res': 2, 'errmsg': 'data cannot be null'})
 
     if verifycode.upper() != request.session['verifycode']:
         return JsonResponse({'res': 2})
@@ -96,13 +92,7 @@ def login_check(request):
     passport = Passport.objects.get_one_passport(username=username, password=password)
 
     if passport:
-        # 用户名密码正确
-        # 获取session中的url_path
-        # if request.session.has_key('url_path'):
-        #     next_url = request.session.get('url_path')
-        # else:
-        #     next_url = reverse('books:index')
-        next_url = reverse('books:index') # /user/
+        next_url = reverse('books:index')
         jres = JsonResponse({'res': 1, 'next_url': next_url})
 
         # 判断是否需要记住用户名
@@ -117,10 +107,35 @@ def login_check(request):
         request.session['islogin'] = True
         request.session['username'] = username
         request.session['passport_id'] = passport.id
+        cache_clean()
         return jres
     else:
         # 用户名或密码错误
-        return JsonResponse({'res': 0})
+        return JsonResponse({'res': 0, 'errmsg': 'username or password cannot be wrong.'})
+
+def logout(request):
+    '''用户退出登录'''
+    # 清空用户的session信息
+    request.session.flush()
+    cache_clean()
+    # 跳转到首页
+    return redirect(reverse('books:index'))
+
+def cache_clean():
+    r = redis.StrictRedis(host='localhost', port=6379, db=2)
+    for key in r.keys():
+        if 'bookstore-index' in key.decode('utf8'):
+            print('key: ', key)
+            r.delete(key) 
+
+class CustomBackend(ModelBackend):
+    def authenticate(self, username=None, password=None, **kwargs):
+        try:
+            user = Passport.objects.get_one_passport(username, password)
+            return user
+        except Exception as e:
+            print("e: ", e)
+            return None
 
 @login_required
 def user(request):
@@ -129,11 +144,10 @@ def user(request):
     # 获取用户的基本信息
     addr = Address.objects.get_default_address(passport_id=passport_id)
 
-    # 获取用户的最近浏览信息
-    con = get_redis_connection('default')
+    conn = get_redis_connection('default')
     key = 'history_%d' % passport_id
     # 取出用户最近浏览的5个商品的id
-    history_li = con.lrange(key, 0, 4)
+    history_li = conn.lrange(key, 0, 4)
     # history_li = [21,20,11]
     # print(history_li)
     # 查询数据库,获取用户最近浏览的商品信息
@@ -143,9 +157,13 @@ def user(request):
         books = Books.objects.get_books_by_id(books_id=id)
         books_li.append(books)
 
-    return render(request, 'users/user_center_info.html', {'addr': addr,
-                                                           'page': 'user',
-                                                           'books_li': books_li})
+    context = {
+        'addr': addr,
+        'page': 'user',
+        'books_li': books_li
+    }
+
+    return render(request, 'users/user_center_info.html', context)
 
 @login_required
 def address(request):
@@ -168,7 +186,7 @@ def address(request):
 
         # 2.进行校验
         if not all([recipient_name, recipient_addr, zip_code, recipient_phone]):
-            return render(request, 'users/user_center_site.html', {'errmsg': '参数不必为空!'})
+            return render(request, 'users/user_center_site.html', {'errmsg': '参数不能为空!'})
 
         # 3.添加收货地址
         Address.objects.add_one_address(passport_id=passport_id,
@@ -180,8 +198,10 @@ def address(request):
         # 4.返回应答
         return redirect(reverse('user:address'))
 
+from django.core.paginator import Paginator
+
 @login_required
-def order(request):
+def order(request, page):
     '''用户中心-订单页'''
     # 查询用户的订单信息
     passport_id = request.session.get('passport_id')
@@ -194,10 +214,10 @@ def order(request):
     for order in order_li:
         # 根据订单id查询订单商品信息
         order_id = order.order_id
-        order_books_li = OrderGoods.objects.filter(order_id=order_id)
+        order_books_li = OrderBooks.objects.filter(order_id=order_id)
 
         # 计算商品的小计
-        # order_books ->OrderBooks实例对象
+        # order_books ->OrderGoods实例对象
         for order_books in order_books_li:
             count = order_books.count
             price = order_books.price
@@ -205,17 +225,58 @@ def order(request):
             # 保存订单中每一个商品的小计
             order_books.amount = amount
 
-        # 给order对象动态增加一个属性order_goods_li,保存订单中商品的信息
+        # 给order对象动态增加一个属性order_books_li,保存订单中商品的信息
         order.order_books_li = order_books_li
+    
+    paginator = Paginator(order_li, 3)      # 每页显示3个订单
+    
+    num_pages = paginator.num_pages
+    
+    if not page:        # 首次进入时默认进入第一页
+        page = 1
+    if page == '' or int(page) > num_pages:
+        page = 1
+    else:
+        page = int(page)
+        
+    order_li = paginator.page(page)
+    
+    if num_pages < 5:
+        pages = range(1, num_pages + 1)
+    elif page <= 3:
+        pages = range(1, 6)
+    elif num_pages - page <= 2:
+        pages = range(num_pages - 4, num_pages + 1)
+    else:
+        pages = range(page - 2, page + 3)
 
     context = {
         'order_li': order_li,
-        'page': 'order'
+        'pages': pages,
     }
 
     return render(request, 'users/user_center_order.html', context)
 
+def register_active(request, token):
+    '''用户账户激活'''
+    serializer = Serializer(settings.SECRET_KEY, 3600)
+    try:
+        info = serializer.loads(token)
+        passport_id = info['confirm']
+        # 进行用户激活
+        passport = Passport.objects.get(id=passport_id)
+        passport.is_active = True
+        passport.save()
+        # 跳转的登录页
+        return redirect(reverse('user:login'))
+    except SignatureExpired:
+        # 链接过期
+        return HttpResponse('激活链接已过期')
+
+# users/views.py
 from django.http import HttpResponse
+from django.conf import settings
+import os
 def verifycode(request):
     #引入绘图模块
     from PIL import Image, ImageDraw, ImageFont
@@ -242,7 +303,7 @@ def verifycode(request):
     for i in range(0, 4):
         rand_str += str1[random.randrange(0, len(str1))]
     #构造字体对象
-    font = ImageFont.truetype(os.path.join(settings.BASE_DIR, 'Ubuntu-RI.ttf'), 15)
+    font = ImageFont.truetype(os.path.join(settings.BASE_DIR, "Ubuntu-RI.ttf"), 15)
     #构造字体颜色
     fontcolor = (255, random.randrange(0, 255), random.randrange(0, 255))
     #绘制4个字
@@ -261,19 +322,3 @@ def verifycode(request):
     im.save(buf, 'png')
     #将内存中的图片数据返回给客户端，MIME类型为图片png
     return HttpResponse(buf.getvalue(), 'image/png')
-
-def register_active(request, token):
-    '''用户账户激活'''
-    serializer = Serializer(settings.SECRET_KEY, 3600)
-    try:
-        info = serializer.loads(token)
-        passport_id = info['confirm']
-        # 进行用户激活
-        passport = Passport.objects.get(id=passport_id)
-        passport.is_active = True
-        passport.save()
-        # 跳转的登录页
-        return redirect(reverse('user:login'))
-    except SignatureExpired:
-        # 链接过期
-        return HttpResponse('激活链接已过期')

@@ -1,14 +1,7 @@
 from django.db import models
 from db.base_model import BaseModel
-from hashlib import sha1
+from utils.get_hash import get_hash
 
-def get_hash(str):
-    '''取一个字符串的hash值'''
-    sh = sha1()
-    sh.update(str.encode('utf8'))
-    return sh.hexdigest()
-
-# Create your models here.
 class PassportManager(models.Manager):
     def add_one_passport(self, username, password, email):
         '''添加一个账户信息'''
@@ -25,22 +18,14 @@ class PassportManager(models.Manager):
             passport = None
         return passport
 
-    def check_passport(self, username):
-        '''检查是否存在用户名'''
-        try:
-            passport = self.get(username=username)
-        except self.model.DoesNotExist:
-            passport = None
-        return passport
-        
-# Create your models here.
 class Passport(BaseModel):
     '''用户模型类'''
-    username = models.CharField(max_length=20, verbose_name='用户名称')
+    username = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
     password = models.CharField(max_length=40, verbose_name='用户密码')
     email = models.EmailField(verbose_name='用户邮箱')
     is_active = models.BooleanField(default=False, verbose_name='激活状态')
 
+    # 用户表的管理器
     objects = PassportManager()
 
     class Meta:
@@ -77,7 +62,6 @@ class AddressManager(models.Manager):
                            recipient_phone=recipient_phone,
                            is_default=is_default)
         return addr
-
 
 class Address(BaseModel):
     '''地址模型类'''

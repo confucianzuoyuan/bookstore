@@ -6,92 +6,92 @@
 {% endblock topfiles %}
 {% block body %}
 
-	<div class="main_con clearfix">
-		<div class="left_menu_con clearfix">
-			<h3>用户中心</h3>
-			<ul>
-				<li><a href="{% url 'user:user' %}">· 个人信息</a></li>
-				<li><a href="{% url 'user:order' %}" class="active">· 全部订单</a></li>
-				<li><a href="{% url 'user:address' %}">· 收货地址</a></li>
-			</ul>
-		</div>
-		<div class="right_content clearfix">
+    <div class="main_con clearfix">
+        {% csrf_token %}
+        <div class="left_menu_con clearfix">
+            <h3>用户中心</h3>
+            <ul>
+                <li><a href="{% url 'user:user' %}">· 个人信息</a></li>
+                <li><a href="{% url 'user:order' %}" class="active">· 全部订单</a></li>
+                <li><a href="{% url 'user:address' %}">· 收货地址</a></li>
+            </ul>
+        </div>
+        <div class="right_content clearfix">
                 {% csrf_token %}
-				<h3 class="common_title2">全部订单</h3>
+                <h3 class="common_title2">全部订单</h3>
                 {# OrderInfo #}
                 {% for order in order_li %}
-				<ul class="order_list_th w978 clearfix">
-					<li class="col01">{{ order.create_time }}</li>
-					<li class="col02">订单号：{{ order.order_id }}</li>
-					<li class="col02 stress">{{ order.status }}</li>
-				</ul>
+                <ul class="order_list_th w978 clearfix">
+                    <li class="col01">{{ order.create_time }}</li>
+                    <li class="col02">订单号：{{ order.order_id }}</li>
+                    <li class="col02 stress">{{ order.status | order_status }}</li>
+                </ul>
 
-				<table class="order_list_table w980">
-					<tbody>
-						<tr>
-							<td width="55%">
-                                {# 遍历出来的order_goods是一个OrderGoods对象 #}
+                <table class="order_list_table w980">
+                    <tbody>
+                        <tr>
+                            <td width="55%">
+                                {# 遍历出来的order_books是一个OrderGoods对象 #}
                                 {% for order_books in order.order_books_li %}
-								<ul class="order_book_list clearfix">					
-									<li class="col01"><img src="{% static order_books.books.image %}"></li>
-									<li class="col02">{{ order_books.books.name }}<em>{{ order_books.books.price }}元/{{ order_books.books.unit }}</em></li>
-									<li class="col03">{{ order_books.count }}</li>
-									<li class="col04">{{ order_books.amount }}元</li>
-								</ul>
+                                <ul class="order_book_list clearfix">                   
+                                    <li class="col01"><img src="{% static order_books.books.image %}"></li>
+                                    <li class="col02">{{ order_books.books.name }}<em>{{ order_books.books.price }}元/{{ order_books.books.unit }}</em></li>
+                                    <li class="col03">{{ order_books.count }}</li>
+                                    <li class="col04">{{ order_books.amount }}元</li>
+                                </ul>
                                 {% endfor %}
-							</td>
-							<td width="15%">{{ order.total_price }}元</td>
-							<td width="15%">{{ order.status | order_status }}</td>
-							<td width="15%"><a href="#" pay_method="{{ order.pay_method }}" order_id="{{ order.order_id }}" order_status="{{ order.status }}" class="oper_btn">去付款</a></td>
-						</tr>
-					</tbody>
-				</table>
+                            </td>
+                            <td width="15%">{{ order.total_price }}元</td>
+                            <td width="15%">{{ order.status | order_status}}</td>
+                            <td width="15%"><a href="#" pay_method="{{ order.pay_method }}" order_id="{{ order.order_id }}" order_status="{{ order.status }}" class="oper_btn">去付款</a></td>
+                        </tr>
+                    </tbody>
+                </table>
                 {% endfor %}
 
-				<div class="pagenation">
-					<a href="#"><上一页</a>
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">下一页></a>
-				</div>
-		</div>
-	</div>
+                <div class="pagenation">
+                    {% if order_li.has_previous %}
+                        <a href="{% url 'user:order' page=order_li.previous_page_number %}">上一页</a>
+                    {% endif %}
+                    {% for page in pages %}
+                        {% if page == order_li.number %}
+                            <a href="{% url 'user:order' page=page %}" class="active">{{ page }}</a>
+                        {% else %}
+                            <a href="{% url 'user:order' page=page %}">{{ page }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if order_li.has_next %}
+                        <a href="{% url 'user:order' page=order_li.next_page_number %}">下一页</a>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
 {% endblock body %}
 {% block bottomfiles%}
-    <script>
-    $(function () {
-        $('.oper_btn').click(function () {
-            // 获取订单id和订单的状态
-            order_id = $(this).attr('order_id')
-            order_status = $(this).attr('order_status')
-            csrf = $('input[name="csrfmiddlewaretoken"]').val()
-            params = {'order_id':order_id, 'csrfmiddlewaretoken':csrf}
-            if (order_status == 1){
-                $.post('/order/pay/', params, function (data) {
-                    if (data.res == 3){
-                        // 把用户引导支付页面
-                        window.open(data.pay_url)
-                        // 查询用户的支付结果
-                        $.post('/order/check_pay/', params, function (data) {
-                            if (data.res == 3){
-                                alert('支付成功')
-                                // 重新刷新页面
-                                location.reload()
-                            }
-                            else{
-                                alert(data.errmsg)
-                            }
-                        })
-                    }
-                    else{
-                        alert(data.errmsg)
-                    }
-                })
-            }
-        })
+<script>
+$(function () {
+    $('.oper_btn').click(function () {
+        // 获取订单id和订单的状态
+        var order_id = $(this).attr('order_id')
+        var order_status = $(this).attr('order_status')
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        var params = {
+            'order_id': order_id,
+            'csrfmiddlewaretoken': csrf
+        }
+        if (order_status == 1){
+            $.post('/order/pay/', params, function (data) {
+                if (data.res == 3){
+                    // 把用户引导支付页面
+                    window.open(data.pay_url)
+                    // 查询用户的支付结果
+                }
+                else{
+                    alert(data.errmsg)
+                }
+            })
+        }
     })
-    </script>
+})
+</script>
 {% endblock bottomfiles %}

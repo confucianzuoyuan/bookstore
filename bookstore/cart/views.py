@@ -3,16 +3,10 @@ from django.http import JsonResponse
 from books.models import Books
 from utils.decorators import login_required
 from django_redis import get_redis_connection
-# Create your views here.
 
-
-# 前端发过来的数据：商品id 商品数目 books_id books_count
-# 涉及到数据的修改，使用post方式
+@login_required
 def cart_add(request):
     '''向购物车中添加数据'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res':0, 'errmsg':'请先登录'})
 
     # 接收数据
     books_id = request.POST.get('books_id')
@@ -56,11 +50,9 @@ def cart_add(request):
     # 返回结果
     return JsonResponse({'res': 5})
 
+@login_required
 def cart_count(request):
     '''获取用户购物车中商品的数目'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0})
 
     # 计算用户购物车商品的数量
     conn = get_redis_connection('default')
@@ -75,7 +67,6 @@ def cart_count(request):
     # 返回结果
     return JsonResponse({'res': res})
 
-# http://127.0.0.1:8000/cart/
 @login_required
 def cart_show(request):
     '''显示用户购物车页面'''
@@ -92,9 +83,9 @@ def cart_show(request):
     total_price = 0
 
     # 遍历res_dict获取商品的数据
-    for id, count in res_dict.items():
+    for books_id, count in res_dict.items():
         # 根据id获取商品的信息
-        books = Books.objects.get_books_by_id(books_id=id)
+        books = Books.objects.get_books_by_id(books_id=books_id)
         # 保存商品的数目
         books.count = count
         # 保存商品的小计
@@ -114,14 +105,9 @@ def cart_show(request):
 
     return render(request, 'cart/cart.html', context)
 
-# 前端传过来的参数:商品id books_id
-# post
-# /cart/del/
+@login_required
 def cart_del(request):
     '''删除用户购物车中商品的信息'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg': '请先登录'})
 
     # 接收数据
     books_id = request.POST.get('books_id')
@@ -132,7 +118,7 @@ def cart_del(request):
 
     books = Books.objects.get_books_by_id(books_id=books_id)
     if books is None:
-        return JsonResponse({'res': 2, 'errmsg': '商品不存存'})
+        return JsonResponse({'res': 2, 'errmsg': '商品不存在'})
 
     # 删除购物车商品信息
     conn = get_redis_connection('default')
@@ -142,14 +128,9 @@ def cart_del(request):
     # 返回信息
     return JsonResponse({'res': 3})
 
-# 前端传过来的参数:商品id books_id 更新数目 books_count
-# post
-# /cart/update/
+@login_required
 def cart_update(request):
     '''更新购物车商品数目'''
-    # 判断用户是否登录
-    if not request.session.has_key('islogin'):
-        return JsonResponse({'res': 0, 'errmsg':'请先登录'})
 
     # 接收数据
     books_id = request.POST.get('books_id')
@@ -166,6 +147,7 @@ def cart_update(request):
     try:
         books_count = int(books_count)
     except Exception as e:
+        print("e: ", e)
         return JsonResponse({'res': 3, 'errmsg': '商品数目必须为数字'})
 
     # 更新操作
