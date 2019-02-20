@@ -3724,6 +3724,16 @@ __all__ = ['celery_app']
 ```
 $ celery -A bookstore worker -l info
 ```
+在win10上运行celery4.x会出现bug
+解决方案:
+1. 安装eventlet
+```
+pip install eventlet
+```
+2. 启动celery的时候添加参数
+```
+celery -A bookstore worker -l info -P eventlet
+```
 
 # <a id="10">10，登陆验证码功能实现</a>
 
