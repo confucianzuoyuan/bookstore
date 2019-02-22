@@ -4366,13 +4366,14 @@ logger.info(request.body)
 
 ```py
 from django import http
+from django.utils.deprecation import MiddlewareMixin
 # 中间件示例，打印中间件执行语句
-class BookMiddleware(object):
+class BookMiddleware(MiddlewareMixin):
     def process_request(self, request):
         print("Middleware executed")
 
 # 分别处理收到的请求和发出去的相应，要理解中间件的原理。
-class AnotherMiddleware(object):
+class AnotherMiddleware(MiddlewareMixin):
     def process_request(self, request):
         print("Another middleware executed")
 
@@ -4381,7 +4382,7 @@ class AnotherMiddleware(object):
         return response
 
 # 记录用户访问的url地址
-class UrlPathRecordMiddleware(object):
+class UrlPathRecordMiddleware(MiddlewareMixin):
     '''记录用户访问的url地址'''
     EXCLUDE_URLS = ['/user/login/', '/user/logout/', '/user/register/']
     # 1./user/ 记录 url_path = /user/
@@ -4394,7 +4395,7 @@ class UrlPathRecordMiddleware(object):
 
 BLOCKED_IPS = []
 # 拦截在BLOCKED_IPS中的IP
-class BlockedIpMiddleware(object):
+class BlockedIpMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if request.META['REMOTE_ADDR'] in BLOCKED_IPS:
             return http.HttpResponseForbidden('<h1>Forbidden</h1>')
