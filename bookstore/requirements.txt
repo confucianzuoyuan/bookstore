@@ -5,7 +5,7 @@ celery==4.1.0
 certifi==2018.10.15
 cffi==1.11.5
 chardet==3.0.4
-cryptography==2.3.1
+cryptography==3.2
 Django==1.11.15
 django-cors-headers==2.4.0
 django-redis==4.8.0
