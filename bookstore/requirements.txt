@@ -10,7 +10,7 @@ Django==1.11.15
 django-cors-headers==2.4.0
 django-redis==4.8.0
 django-tinymce==2.6.0
-djangorestframework==3.7.7
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 gunicorn==19.9.0
 idna==2.7
