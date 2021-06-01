@@ -28,7 +28,7 @@ python-alipay-sdk==1.7.0
 pytz==2017.2
 redis==2.10.6
 six==1.11.0
-urllib3==1.23
+urllib3==1.26.5
 vine==1.1.4
 Whoosh==2.7.4
 django-haystack==2.8.1
