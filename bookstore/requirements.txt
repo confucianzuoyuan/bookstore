@@ -18,7 +18,7 @@ itsdangerous==0.24
 jieba==0.39
 kombu==4.1.0
 olefile==0.44
-Pillow==4.3.0
+Pillow==9.0.0
 pycparser==2.19
 pycryptodome==3.6.6
 pycryptodomex==3.6.6
