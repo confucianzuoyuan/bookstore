@@ -22,7 +22,7 @@ Pillow==4.3.0
 pycparser==2.19
 pycryptodome==3.6.6
 pycryptodomex==3.6.6
-PyJWT==1.6.4
+PyJWT==2.4.0
 PyMySQL==0.9.2
 python-alipay-sdk==1.7.0
 pytz==2017.2
